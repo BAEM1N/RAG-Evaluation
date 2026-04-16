@@ -1,0 +1,135 @@
+{
+  "model": "kure-v1",
+  "dim": 1024,
+  "vram_gb": 1.0,
+  "total_chunks": 3166,
+  "embed_time_sec": 236.37,
+  "embed_speed": 13.4,
+  "metrics": {
+    "total": 300,
+    "mrr": 0.6412,
+    "page_hit@1": 0.56,
+    "file_hit@1": 0.87,
+    "page_hit@3": 0.72,
+    "file_hit@3": 0.8967,
+    "page_hit@5": 0.75,
+    "file_hit@5": 0.91,
+    "page_hit@10": 0.78,
+    "file_hit@10": 0.9267,
+    "embed_speed_chunks_per_sec": 13.4,
+    "dim": 1024,
+    "vram_gb": 1.0
+  },
+  "by_domain": {
+    "finance": {
+      "total": 60,
+      "mrr": 0.4929,
+      "page_hit@1": 0.4167,
+      "file_hit@1": 0.8333,
+      "page_hit@3": 0.5833,
+      "file_hit@3": 0.85,
+      "page_hit@5": 0.6167,
+      "file_hit@5": 0.85,
+      "page_hit@10": 0.6333,
+      "file_hit@10": 0.9
+    },
+    "public": {
+      "total": 60,
+      "mrr": 0.5904,
+      "page_hit@1": 0.5333,
+      "file_hit@1": 0.85,
+      "page_hit@3": 0.65,
+      "file_hit@3": 0.9,
+      "page_hit@5": 0.6667,
+      "file_hit@5": 0.9333,
+      "page_hit@10": 0.7,
+      "file_hit@10": 0.9667
+    },
+    "medical": {
+      "total": 60,
+      "mrr": 0.8056,
+      "page_hit@1": 0.7167,
+      "file_hit@1": 0.9167,
+      "page_hit@3": 0.8833,
+      "file_hit@3": 0.9333,
+      "page_hit@5": 0.9167,
+      "file_hit@5": 0.95,
+      "page_hit@10": 0.9333,
+      "file_hit@10": 0.95
+    },
+    "law": {
+      "total": 60,
+      "mrr": 0.5951,
+      "page_hit@1": 0.4833,
+      "file_hit@1": 0.9,
+      "page_hit@3": 0.7,
+      "file_hit@3": 0.9333,
+      "page_hit@5": 0.7333,
+      "file_hit@5": 0.95,
+      "page_hit@10": 0.7833,
+      "file_hit@10": 0.95
+    },
+    "commerce": {
+      "total": 60,
+      "mrr": 0.722,
+      "page_hit@1": 0.65,
+      "file_hit@1": 0.85,
+      "page_hit@3": 0.7833,
+      "file_hit@3": 0.8667,
+      "page_hit@5": 0.8167,
+      "file_hit@5": 0.8667,
+      "page_hit@10": 0.85,
+      "file_hit@10": 0.8667
+    }
+  },
+  "by_context_type": {
+    "paragraph": {
+      "total": 148,
+      "mrr": 0.7226,
+      "page_hit@1": 0.6419,
+      "file_hit@1": 0.9122,
+      "page_hit@3": 0.8041,
+      "file_hit@3": 0.9392,
+      "page_hit@5": 0.8378,
+      "file_hit@5": 0.9459,
+      "page_hit@10": 0.8649,
+      "file_hit@10": 0.9527
+    },
+    "table": {
+      "total": 50,
+      "mrr": 0.553,
+      "page_hit@1": 0.46,
+      "file_hit@1": 0.82,
+      "page_hit@3": 0.64,
+      "file_hit@3": 0.88,
+      "page_hit@5": 0.68,
+      "file_hit@5": 0.9,
+      "page_hit@10": 0.74,
+      "file_hit@10": 0.94
+    },
+    "image": {
+      "total": 57,
+      "mrr": 0.3525,
+      "page_hit@1": 0.2807,
+      "file_hit@1": 0.7719,
+      "page_hit@3": 0.4035,
+      "file_hit@3": 0.7719,
+      "page_hit@5": 0.4386,
+      "file_hit@5": 0.7895,
+      "page_hit@10": 0.4737,
+      "file_hit@10": 0.8246
+    },
+    "text": {
+      "total": 45,
+      "mrr": 0.837,
+      "page_hit@1": 0.7556,
+      "file_hit@1": 0.9111,
+      "page_hit@3": 0.9333,
+      "file_hit@3": 0.9333,
+      "page_hit@5": 0.9333,
+      "file_hit@5": 0.9556,
+      "page_hit@10": 0.9333,
+      "file_hit@10": 0.9556
+    }
+  }
+}

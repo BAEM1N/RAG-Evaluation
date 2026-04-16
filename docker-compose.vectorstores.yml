@@ -1,0 +1,105 @@
+version: "3.8"
+
+# T7910 (192.168.50.250) 벡터스토어 벤치마크용
+# 기존 서비스와 포트 충돌 방지
+
+services:
+  # pgvector (기존 postgres:16에 확장 추가)
+  pgvector-bench:
+    image: pgvector/pgvector:pg16
+    ports: ["5433:5432"]
+    environment:
+      POSTGRES_USER: bench
+      POSTGRES_PASSWORD: bench
+      POSTGRES_DB: ragbench
+    volumes:
+      - pgvector_data:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+
+  # Chroma
+  chroma-bench:
+    image: chromadb/chroma:latest
+    ports: ["8100:8000"]
+    volumes:
+      - chroma_data:/chroma/chroma
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+
+  # Milvus standalone
+  milvus-etcd:
+    image: quay.io/coreos/etcd:v3.5.18
+    environment:
+      ETCD_AUTO_COMPACTION_MODE: revision
+      ETCD_AUTO_COMPACTION_RETENTION: "1000"
+      ETCD_QUOTA_BACKEND_BYTES: "4294967296"
+    volumes:
+      - milvus_etcd:/etcd
+    command: etcd -advertise-client-urls=http://127.0.0.1:2379 -listen-client-urls http://0.0.0.0:2379 --data-dir /etcd
+
+  milvus-minio:
+    image: minio/minio:RELEASE.2023-03-20T20-16-18Z
+    environment:
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+    volumes:
+      - milvus_minio:/minio_data
+    command: minio server /minio_data
+
+  milvus-bench:
+    image: milvusdb/milvus:v2.6.14
+    command: ["milvus", "run", "standalone"]
+    ports: ["19530:19530", "9091:9091"]
+    environment:
+      ETCD_ENDPOINTS: milvus-etcd:2379
+      MINIO_ADDRESS: milvus-minio:9000
+    volumes:
+      - milvus_data:/var/lib/milvus
+    depends_on:
+      - milvus-etcd
+      - milvus-minio
+    deploy:
+      resources:
+        limits:
+          memory: 16G
+
+  # Weaviate
+  weaviate-bench:
+    image: cr.weaviate.io/semitechnologies/weaviate:1.28.4
+    ports: ["8101:8080", "50052:50051"]
+    environment:
+      PERSISTENCE_DATA_PATH: /var/lib/weaviate
+      QUERY_DEFAULTS_LIMIT: 25
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: "true"
+      DEFAULT_VECTORIZER_MODULE: none
+      CLUSTER_HOSTNAME: node1
+    volumes:
+      - weaviate_data:/var/lib/weaviate
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+
+  # Qdrant (기존 deploy-qdrant-1 과 별도 포트)
+  qdrant-bench:
+    image: qdrant/qdrant:latest
+    ports: ["6340:6333", "6341:6334"]
+    volumes:
+      - qdrant_data:/qdrant/storage
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+
+volumes:
+  pgvector_data:
+  chroma_data:
+  milvus_etcd:
+  milvus_minio:
+  milvus_data:
+  weaviate_data:
+  qdrant_data:
