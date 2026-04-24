@@ -31,3 +31,6 @@ results/**/*.log
 # 환경변수
 .env
 .env.local
+
+# Local-only notes (planning, drafts)
+_internal/

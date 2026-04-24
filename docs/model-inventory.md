@@ -1,138 +1,152 @@
-# AI 모델 인벤토리
+# Model Inventory
 
-> 서버: 192.168.50.245 (AI-395)  
-> GPU: AMD Instinct MI100 96GB VRAM  
-> 모델 경로: `/home/baeumai/models/gguf/`  
-> 총 디스크: 183GB / 468GB (58%)  
-> 게이트웨이: `http://192.168.50.245:8080`  
-> 최종 업데이트: 2026-04-09
+Complete list of models used in this benchmark, grouped by role (embedding, generation LLM, judge LLM) and by runtime (llama.cpp vs Ollama).
 
----
+Local hosts referenced in this doc:
 
-## 실행 현황 (60 / 96 GB VRAM)
+| Host | GPU / memory | Runtime |
+|------|--------------|---------|
+| GPU host (llama.cpp) | AMD MI100, 96 GB VRAM | llama-server / llama.cpp gateway |
+| Unified-memory host (Ollama) | GB10, 128 GB unified memory | Ollama |
+| Local Mac (Ollama) | — | Ollama |
 
-| 모델 | 용도 | VRAM | 포트 | 상시 |
-|------|------|------|------|------|
-| Qwen3-Embedding-8B | 임베딩 | 9 GB | auto | O |
-| Qwen3-Reranker-4B | 리랭커 | 5 GB | auto | O |
-| Qwen3.5-27B (Q4_K_M) | LLM | 26 GB | auto | O |
-| Qwen3.5-35B-A3B (IQ4_XS) | LLM | 20 GB | auto | O |
-
-여유 VRAM: **36 GB** (온디맨드 모델 로드 가능)
+All weights are GGUF unless noted otherwise.
 
 ---
 
-## LLM (채팅) — 3개
+## 1. Embedding Models (Phase 4, 27 configs — all local)
 
-| # | alias | 파일 | 양자화 | 크기 | ctx | 상시 | 비고 |
-|---|-------|------|--------|------|-----|------|------|
-| 1 | qwen3.5-27b | Qwen3.5-27B-Q4_K_M.gguf | Q4_K_M | 16 GB | 262144 | O | Dense, 256K ctx |
-| 2 | qwen3.5-35b-a3b | Qwen3.5-35B-A3B-UD-IQ4_XS.gguf | IQ4_XS | 17 GB | 262144 | O | MoE 3B active, 256K ctx |
-| 3 | nemotron-120b | (별도 디렉토리) | IQ4_XS | ~44 GB | 65536 | X | MoE 12B active, 온디맨드 |
+Format: GGUF (Q8_0 unless noted). Served via llama.cpp on the GPU host.
 
----
+### Tier 1 — Large (7B+)
 
-## 임베딩 — 28개
+| alias | dim | Size | Phase 4 MRR | Notes |
+|-------|----:|-----:|------------:|-------|
+| qwen3-embed-8b | 4096 | 7.5 GB | 0.5325 | Qwen3, strong on MTEB multilingual |
+| nemotron-embed-8b | 4096 | 7.5 GB | 0.4640 | NVIDIA |
+| llama-embed-nemotron-8b | 4096 | 7.5 GB | — | same arch/weights as nemotron-embed-8b |
+| e5-mistral-7b-instruct | 4096 | 7.2 GB | — | E5 on Mistral backbone |
 
-### Tier 1: 대형 (7B+)
-| # | alias | 파일 | 크기 | dim | 특징 |
-|---|-------|------|------|-----|------|
-| 1 | qwen3-embed-8b | Qwen3-Embedding-8B-Q8_0.gguf | 7.5 GB | 4096 | **현재 사용**, MTEB 다국어 상위 |
-| 2 | llama-embed-nemotron-8b | llama-embed-nemotron-8b.Q8_0.gguf | 7.5 GB | 4096 | MTEB 다국어 1위, decoder-based **(신규)** |
-| 3 | nemotron-embed-8b | Nemotron-Embed-8B-Q8_0.gguf | 7.5 GB | 4096 | NVIDIA 구버전 |
-| 4 | e5-mistral-7b-instruct | e5-mistral-7b-instruct-Q8_0.gguf | 7.2 GB | 4096 | MS, Mistral 기반 **(신규)** |
+### Tier 2 — Medium (1B–4B)
 
-### Tier 2: 중형 (1B~4B)
-| # | alias | 파일 | 크기 | dim | 특징 |
-|---|-------|------|------|-----|------|
-| 5 | qwen3-embed-4b | Qwen3-Embedding-4B-Q8_0.gguf | 4.0 GB | 4096 | |
-| 6 | jina-v4-retrieval | jina-v4-retrieval-Q8_0.gguf | 3.1 GB | 4096 | 멀티모달 가능 |
-| 7 | jina-v4-code | jina-v4-code-Q8_0.gguf | 3.1 GB | 4096 | 코드 특화 |
-| 8 | jina-code-1.5b | jina-code-embeddings-1.5b-Q8_0.gguf | 1.6 GB | 1024 | 코드 전용 |
+| alias | dim | Size | Phase 4 MRR | Notes |
+|-------|----:|-----:|------------:|-------|
+| qwen3-embed-4b | 4096 | 4.0 GB | 0.5862 | |
+| jina-v4-retrieval | 4096 | 3.1 GB | 0.6489 | multimodal-capable |
+| jina-v4-code | 4096 | 3.1 GB | 0.5442 | code-specialized |
+| jina-code-1.5b | 1024 | 1.6 GB | 0.3288 | code-only |
 
-### Tier 3: 소형 (~335M, 한국어 특화)
-| # | alias | 파일 | 크기 | dim | 특징 |
-|---|-------|------|------|-----|------|
-| 9 | snowflake-arctic-ko | snowflake-arctic-embed-l-v2.0-ko-Q8_0.gguf | 605 MB | 1024 | **한국어 1위** (84.77) **(신규, GGUF 자체변환)** |
-| 10 | pixie-rune-v1 | PIXIE-Rune-v1.0-Q8_0.gguf | 605 MB | 1024 | **한국어 2위** (84.68) **(신규, GGUF 자체변환)** |
-| 11 | kure-v1 | KURE-v1-Q8_0.gguf | 606 MB | 1024 | 한국어 4위 (83.10) |
-| 12 | koe5 | koe5-q5_k_m.gguf | 417 MB | 1024 | 한국어 전용 E5 **(신규)** |
+### Tier 3 — Small, Korean-tuned (~300–600M)
 
-### Tier 4: 소형 (~335M, 다국어/범용)
-| # | alias | 파일 | 크기 | dim | 특징 |
-|---|-------|------|------|-----|------|
-| 13 | qwen3-embed-0.6b | Qwen3-Embedding-0.6B-Q8_0.gguf | 610 MB | 1024 | |
-| 14 | snowflake-arctic-l-v2 | snowflake-arctic-embed-l-v2.0-q8_0.gguf | 606 MB | 1024 | |
-| 15 | bge-m3 | bge-m3-Q8_0.gguf | 606 MB | 1024 | 다국어, hybrid(dense+sparse+colbert) |
-| 16 | me5-large-instruct | multilingual-e5-large-instruct-q8_0.gguf | 576 MB | 1024 | 다국어 |
-| 17 | jina-v5-small-retrieval | v5-small-retrieval-Q8_0.gguf | 610 MB | 1024 | |
-| 18 | harrier-0.6b | harrier-oss-v1-0.6b-Q8_0.gguf | 610 MB | 1024 | MS |
-| 19 | labse | labse.Q8_0.gguf | 492 MB | 768 | Google, 109개 언어 |
-| 20 | nomic-embed-v2-moe | nomic-embed-text-v2-moe.Q8_0.gguf | 489 MB | 768 | MoE |
+| alias | dim | Size | Phase 4 MRR | Notes |
+|-------|----:|-----:|------------:|-------|
+| koe5 | 1024 | 417 MB | **0.6871** | Phase 4 rank 1 |
+| snowflake-arctic-ko | 1024 | 605 MB | 0.6612 | |
+| pixie-rune-v1 | 1024 | 605 MB | 0.6627 | |
+| kure-v1 | 1024 | 606 MB | 0.6267 | |
 
-### Tier 5: 초소형 (~100M)
-| # | alias | 파일 | 크기 | dim | 특징 |
-|---|-------|------|------|-----|------|
-| 21 | mxbai-embed-large-v1 | mxbai-embed-large-v1.Q8_0.gguf | 342 MB | 1024 | BERT-large SOTA **(신규)** |
-| 22 | voyage-4-nano | voyage-4-nano-q8_0.gguf | 355 MB | 1024 | MoE, Apache 2.0 **(신규)** |
-| 23 | gemma-embed-300m | embeddinggemma-300M-Q8_0.gguf | 314 MB | 768 | Google |
-| 24 | granite-278m | granite-embedding-278m-multilingual-Q8_0.gguf | 290 MB | 768 | IBM, 한국어 |
-| 25 | harrier-270m | harrier-oss-v1-270M-Q8_0.gguf | 279 MB | 1024 | MS |
-| 26 | jina-v5-nano-matching | v5-nano-text-matching-Q8_0.gguf | 223 MB | 512 | |
-| 27 | granite-107m | granite-embedding-107m-multilingual-Q8_0.gguf | 116 MB | 768 | IBM |
+### Tier 4 — Small, multilingual / general (~300–600M)
 
-### 특수: 초대형
-| # | alias | 파일 | 크기 | dim | 특징 |
-|---|-------|------|------|-----|------|
-| 28 | harrier-27b | harrier-27b-Q8_0.gguf | 27 GB | 4096 | MS, 27B 임베딩 |
+| alias | dim | Size | Phase 4 MRR | Notes |
+|-------|----:|-----:|------------:|-------|
+| snowflake-arctic-l-v2 | 1024 | 606 MB | 0.6495 | |
+| nomic-embed-v2-moe | 768 | 489 MB | 0.6435 | MoE |
+| qwen3-embed-0.6b | 1024 | 610 MB | 0.5621 | |
+| harrier-0.6b | 1024 | 610 MB | 0.6131 | pooling=last |
+| me5-large-instruct | 1024 | 576 MB | 0.5853 | multilingual |
+| bge-m3 | 1024 | 606 MB | 0.5745 | dense+sparse+colbert hybrid |
+| jina-v5-small-retrieval | 1024 | 610 MB | 0.3868 | |
+| labse | 768 | 492 MB | 0.0472 | legacy, 109 languages |
 
----
+### Tier 5 — Tiny (~100–300M)
 
-## 리랭커 — 9개
+| alias | dim | Size | Phase 4 MRR | Notes |
+|-------|----:|-----:|------------:|-------|
+| gemma-embed-300m | 768 | 314 MB | **0.6650** | Phase 4 rank 2; used as fixed embedding for Phase 5 judge runs |
+| granite-278m | 768 | 290 MB | 0.5969 | IBM, Korean-capable |
+| harrier-270m | 1024 | 279 MB | 0.5594 | |
+| voyage-4-nano | 1024 | 355 MB | — | MoE, Apache 2.0 |
+| mxbai-embed-large-v1 | 1024 | 342 MB | 0.1157 | English-only on this dataset |
+| granite-107m | 768 | 116 MB | 0.4806 | |
+| jina-v5-nano-matching | 512 | 223 MB | 0.1821 | |
 
-| # | alias | 파일 | 크기 | 언어 | 비고 |
-|---|-------|------|------|------|------|
-| 1 | qwen3-reranker-4b | Qwen3-Reranker-4B-Q8_0.gguf | 4.4 GB | 다국어 | **현재 사용** |
-| 2 | qwen3-reranker-0.6b | Qwen3-Reranker-0.6B-Q8_0.gguf | 610 MB | 다국어 | |
-| 3 | mxbai-rerank-large-v2 | mxbai-rerank-large-v2-q8_0.gguf | 1.6 GB | 영어 | |
-| 4 | jina-reranker-m0 | jina-reranker-m0-Q8_0.gguf | 1.6 GB | 다국어 | |
-| 5 | jina-reranker-v3 | jina-reranker-v3-Q8_0.gguf | 611 MB | 다국어 | |
-| 6 | BGE-Reranker-v2-m3 | BGE-Reranker-v2-m3-Q8_0.gguf | 607 MB | 다국어 | |
-| 7 | gte-multi-reranker | gte-multilingual-reranker-base-Q8_0.gguf | 317 MB | 다국어 | llama.cpp 미지원 (arch=new) |
-| 8 | jina-reranker-v2-multi | jina-reranker-v2-base-multilingual-Q8_0.gguf | 292 MB | 다국어 | |
-| 9 | bce-reranker | bce-reranker-base_v1-Q8_0.gguf | 290 MB | 중/영/일/**한** | 한국어 명시 지원 |
+### Outlier — Very Large
+
+| alias | dim | Size | Phase 4 MRR | Notes |
+|-------|----:|-----:|------------:|-------|
+| harrier-27b | 5376 | 27 GB | 0.0170 | variance < 1e-4, ~97% dead dims on Korean → excluded from practical use |
+
+### Self-converted GGUF
+
+| Model | HuggingFace repo |
+|-------|------------------|
+| snowflake-arctic-embed-l-v2.0-ko | [BAEM1N/snowflake-arctic-embed-l-v2.0-ko-GGUF](https://huggingface.co/BAEM1N/snowflake-arctic-embed-l-v2.0-ko-GGUF) |
+| PIXIE-Rune-v1.0 | [BAEM1N/PIXIE-Rune-v1.0-GGUF](https://huggingface.co/BAEM1N/PIXIE-Rune-v1.0-GGUF) |
+
+Full Phase 4 leaderboard: `results/phase4_embedding/LEADERBOARD.md`.
 
 ---
 
-## HuggingFace 업로드 (자체 변환)
+## 2. Generation LLMs (Phase 5A, 12 configs)
 
-| 모델 | URL | 비고 |
-|------|-----|------|
-| snowflake-arctic-embed-l-v2.0-ko | [BAEM1N/snowflake-arctic-embed-l-v2.0-ko-GGUF](https://huggingface.co/BAEM1N/snowflake-arctic-embed-l-v2.0-ko-GGUF) | F16 + Q8_0 |
-| PIXIE-Rune-v1.0 | [BAEM1N/PIXIE-Rune-v1.0-GGUF](https://huggingface.co/BAEM1N/PIXIE-Rune-v1.0-GGUF) | F16 + Q8_0 |
+### GPU host (llama.cpp)
+
+| Model | Arch | Total params | Active | Quant | VRAM |
+|-------|------|-------------:|-------:|-------|-----:|
+| qwen3.5-27b | Dense | 27B | 27B | Q8_0 | 29 GB |
+| qwen3.5-9b | Dense | 9B | 9B | Q4_K_M / Q8_0 | 6.6–10 GB |
+| gpt-oss-120b | MoE | 120B | ~12B | MXFP4 | 65 GB |
+| gpt-oss-20b | MoE | 20B | ~2B | MXFP4 | 13 GB |
+
+### Unified-memory host (Ollama)
+
+| Model | Arch | Total params | Active | Quant | Size |
+|-------|------|-------------:|-------:|-------|-----:|
+| qwen3.5:122b-a10b (nothink) | MoE | 122B | 10B | Q4_K_M | 81 GB |
+| qwen3.5:122b-a10b (think) | MoE | 122B | 10B | Q4_K_M | 81 GB |
+| deepseek-r1:70b | Dense | 70B | 70B | Q4 | 42 GB |
+| exaone3.5:32b | Dense | 32B | 32B | default | 19 GB |
+| mistral-small:24b | Dense | 24B | 24B | Q4 | 14 GB |
+| lfm2:24b | Dense | 24B | 24B | Q4 | 14 GB |
+| phi4:14b | Dense | 14B | 14B | Q4 | 9.1 GB |
 
 ---
 
-## 게이트웨이 미등록 (다운로드만 완료)
+## 3. Judge LLMs (Phase 5B, 6-judge ensemble)
 
-아래 모델들은 GGUF 다운로드 완료되었으나 `gateway/config.py`에 미등록. 필요시 추가 후 게이트웨이 재시작.
+| Judge | Host | Coverage |
+|-------|------|----------|
+| gemma4:31b (nothink) | Local Mac Ollama | full (12/12) |
+| nemotron-120b (nothink) | GPU host, llama-server | full (12/12) |
+| qwen3.5:122b-a10b (nothink) | Local Mac Ollama | full (12/12) |
+| qwen3.6-35b-a3b (nothink) | GPU host, llama-server | full (12/12) |
+| supergemma4-26b (nothink) | GPU host, llama-server | full (12/12) |
+| qwen3-next:80b (nothink) | Unified-memory host, Ollama | partial |
+| qwen3.5-27b-claude-distill (nothink) | GPU host, llama-server | partial |
 
-| 모델 | VRAM 예상 | 등록 alias 제안 |
-|------|-----------|----------------|
-| llama-embed-nemotron-8b | ~9 GB | `llama-embed-nemotron-8b` |
-| e5-mistral-7b-instruct | ~8 GB | `e5-mistral-7b` |
-| KoE5 | ~1 GB | `koe5` |
-| voyage-4-nano | ~0.5 GB | `voyage-4-nano` |
-| mxbai-embed-large-v1 | ~0.5 GB | `mxbai-embed-large` |
-| gte-multilingual-reranker | ~0.5 GB | (llama.cpp 미지원) |
+Excluded: **solar-open-100b** — the ollama custom Modelfile's `TEMPLATE {{ .Prompt }}` skips the chat template, and the glm4moe backbone then runs in completion mode and never emits the 1–5 integer scores the rubric requires. Rerun path: `llama-server --jinja` using the GGUF's built-in chat template.
 
 ---
 
-## 요약
+## 4. Optional: Hosted-API extension (27 configs)
 
-| 카테고리 | 수량 | 비고 |
-|----------|------|------|
-| LLM (채팅) | 3 | 2 상시 + 1 온디맨드 |
-| 임베딩 | 28 | 신규 7개 포함 |
-| 리랭커 | 9 | |
-| **합계** | **40** | 디스크 183GB |
+The benchmark can be extended to hosted APIs for generation and / or judging; this is not required for Phases 1–5 but documents the budget envelope.
+
+| Provider | Direct Batch API | Generation configs used |
+|----------|:-:|------------------------|
+| OpenAI | yes | gpt-5.4-pro, gpt-5.4, gpt-5.4-mini, gpt-5.4-nano, gpt-5.3-chat, o4-mini |
+| Anthropic | yes | claude-opus-4.7, claude-sonnet-4.6, claude-sonnet-4.5, claude-haiku-4.5 |
+| Google | yes | gemini-3.1-pro, gemini-3.1-flash, gemini-3.1-flash-lite, gemini-3-pro |
+| OpenRouter | no | grok-4.20, kimi-k2.5, minimax-m2.7, qwen3-max-thinking, qwen3.6-plus, glm-5.1, sonar-reasoning-pro, command-a, mistral-large-3 |
+
+See `docs/cost-report.md` for per-model pricing, judge caching math, and timeline.
+
+---
+
+## 5. Summary
+
+| Role | Count | Location |
+|------|------:|----------|
+| Embedding | 27 | GPU host (llama.cpp) |
+| Generation LLM | 12 | GPU host (4) + Unified-memory host (7) + mixed 9B (1) |
+| Judge LLM | 7 (6 active + 1 excluded) | GPU host (3) + Local Mac (2) + Unified-memory host (1) + 1 excluded |

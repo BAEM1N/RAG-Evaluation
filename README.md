@@ -9,12 +9,12 @@
 
 ## 목표
 
-원본 allganize 실험은 상용 API(OpenAI, Cohere, Upstage)만 테스트.  
-우리는 **100% 로컬 오픈소스**로 각 컴포넌트(Parser, Chunking, VectorStore, Embedding, LLM)를 분해 비교.
+원본 allganize 실험은 상용 API(OpenAI, Cohere, Upstage)만 테스트.
+본 벤치마크는 **100% 로컬 오픈소스**로 각 컴포넌트(Parser, Chunking, VectorStore, Embedding, LLM)를 분해 비교한다.
 
 ### 기존 연구 대비 차별점
 
-| 항목 | allganize | AutoRAG | ssisOneTeam | **우리** |
+| 항목 | allganize | AutoRAG | ssisOneTeam | **본 실험** |
 |------|-----------|---------|-------------|---------|
 | 데이터 | 300 Q&A | ? | 106 Q&A | 300 Q&A |
 | Parser | PyPDF 고정 | ? | ? | **3종 비교** |
@@ -97,12 +97,8 @@ RAG-Evaluation/
 | 5B | LLM-as-Judge (6 judge × 12 LLM × 4 metric) | 72 | 86,400 | 3~5일 |
 | **합계** | | **105+** | **~102,000** | **~5-7일** |
 
-**현재 진행 상태** (2026-04-24):
-- ✅ Phase 1~4 완료 — [results/phase4_embedding/LEADERBOARD.md](results/phase4_embedding/LEADERBOARD.md)
-- 🔄 Phase 5 생성 12/12 완료, 판정 진행 중 (AI-395 claude-distill + DGX Spark qwen3-next)
-- ⏳ solar-open-100b judge 재판정 대기 (ollama custom modelfile의 빈 chat template → llama-server `--jinja`로 GGUF 내장 Jinja 사용 예정)
-
-자세한 계획: [docs/rag-benchmark-plan.md](docs/rag-benchmark-plan.md)
+결과 스냅샷: [RESULTS.md](RESULTS.md)
+실험 설계: [docs/experiment-design.md](docs/experiment-design.md)
 
 ---
 
@@ -159,7 +155,7 @@ python scripts/bench_all.py --summary
 
 **리더보드 결과:** GPT-4-Turbo 기준 **61.0%** (183/300)
 
-### 우리 실험의 변수 치환 방식
+### 변수 치환 방식
 
 각 Phase에서 이 baseline의 **한 컴포넌트만** 바꿔가며 비교:
 
@@ -231,8 +227,8 @@ allganize 원본 방식: MLflow answer_similarity/v1 + correctness/v1 기반 4 m
 | qwen3.5:122b-a10b | Mac ollama | ✅ 12/12 |
 | qwen3.6-35b-a3b | AI-395 | ✅ 12/12 |
 | supergemma4-26b | AI-395 | ✅ 12/12 |
-| qwen3-next:80b | DGX Spark | 🔄 진행 중 |
-| qwen3.5-27b-claude-distill | AI-395 | 🔄 진행 중 |
-| solar-open-100b | DGX Spark | ⏳ 재판정 대기 (llama-server `--jinja`로 재기동 예정) |
+| qwen3-next:80b | DGX Spark | partial |
+| qwen3.5-27b-claude-distill | AI-395 | partial |
+| solar-open-100b | DGX Spark | excluded (raw chat template → 1-5 integer parse failure) |
 
 전체 판정 매트릭스 & 중간 리더보드: [results/phase5_judge/LEADERBOARD.md](results/phase5_judge/LEADERBOARD.md)

@@ -178,8 +178,12 @@ def judge_item(idx: int, result_item: dict) -> tuple:
     tgt = result_item['target_answer']
     votes = {}
     t0 = time.time()
-    for m in EVAL_PROMPTS:
-        votes[m] = call_judge_once(m, q, tgt, generated)
+    # 4 metric을 동시에 병렬 호출 — 서버에 동시 4배 부하, 판정 latency 1/4
+    with ThreadPoolExecutor(max_workers=len(EVAL_PROMPTS)) as metric_ex:
+        futs = {m: metric_ex.submit(call_judge_once, m, q, tgt, generated)
+                for m in EVAL_PROMPTS}
+        for m, fut in futs.items():
+            votes[m] = fut.result()
 
     o_count = sum(1 for s in votes.values() if s >= THRESHOLD)
     result = "O" if o_count >= 2 else "X"
