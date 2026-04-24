@@ -126,9 +126,15 @@
 | supergemma4-26b (nothink) | AI-395 llama-server | ✅ 12/12 |
 | **qwen3-next:80b** (nothink) | DGX Spark ollama | 🔄 3/12 진행 중 |
 | **qwen3.5-27b-claude-distill** (nothink) | AI-395 llama-server | 🔄 0/12 진행 중 |
-| ~~solar-open-100b~~ | DGX Spark ollama | ❌ 제외 |
+| **solar-open-100b** | DGX Spark → 재설정 | ⏳ 재판정 대기 |
 
-**solar-open-100b 제외 사유**: 1,200 vote 전부 0점 (파싱 실패 100%). 원인 조사 결과 ollama custom modelfile의 `TEMPLATE {{ .Prompt }}` 로 chat template 생략 → glm4moe 모델이 completion 모드로 동작 → 1-5 출력 실패.
+**solar-open-100b 1차 실패 & 재판정 계획**:
+- 1차 결과: 1,200 vote 전부 0점 (파싱 실패 100%), 12 파일 모두 acc=0.000
+- 원인: ollama custom modelfile의 `TEMPLATE {{ .Prompt }}` 가 chat template 생략 → glm4moe 모델이 completion 모드로 동작 → 1-5 정수 출력 안 나옴
+- 재판정: ollama 우회, **llama-server `--jinja`** 옵션으로 GGUF 내장 공식 Jinja template 직접 사용
+  - Solar-Open-100B의 chat 포맷: `<|begin|>role<|content|>msg<|end|>` + 별도 `<|think|>` 블록
+  - 반영 시 qwen3-next / claude-distill 처럼 정상 1-5 출력 기대
+- 실행 시점: qwen3-next:80b judge 12/12 완료 후 DGX Spark에서 이어 진행
 
 ### 중간 리더보드 (5-judge 기준, partial)
 

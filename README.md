@@ -100,7 +100,7 @@ RAG-Evaluation/
 **현재 진행 상태** (2026-04-24):
 - ✅ Phase 1~4 완료 — [results/phase4_embedding/LEADERBOARD.md](results/phase4_embedding/LEADERBOARD.md)
 - 🔄 Phase 5 생성 12/12 완료, 판정 진행 중 (AI-395 claude-distill + DGX Spark qwen3-next)
-- ❌ solar-open-100b judge 제외 (chat template 미설정 이슈)
+- ⏳ solar-open-100b judge 재판정 대기 (ollama custom modelfile의 빈 chat template → llama-server `--jinja`로 GGUF 내장 Jinja 사용 예정)
 
 자세한 계획: [docs/rag-benchmark-plan.md](docs/rag-benchmark-plan.md)
 
@@ -233,6 +233,6 @@ allganize 원본 방식: MLflow answer_similarity/v1 + correctness/v1 기반 4 m
 | supergemma4-26b | AI-395 | ✅ 12/12 |
 | qwen3-next:80b | DGX Spark | 🔄 진행 중 |
 | qwen3.5-27b-claude-distill | AI-395 | 🔄 진행 중 |
-| ~~solar-open-100b~~ | DGX Spark | ❌ 제외 (chat template 미설정 → 파싱 실패 100%) |
+| solar-open-100b | DGX Spark | ⏳ 재판정 대기 (llama-server `--jinja`로 재기동 예정) |
 
 전체 판정 매트릭스 & 중간 리더보드: [results/phase5_judge/LEADERBOARD.md](results/phase5_judge/LEADERBOARD.md)
