@@ -19,9 +19,10 @@
 | 데이터 | 300 Q&A | ? | 106 Q&A | 300 Q&A |
 | Parser | PyPDF 고정 | ? | ? | **3종 비교** |
 | Chunking | 1000/200 고정 | ? | ? | **4종 비교** |
-| Embedding | OpenAI 1종 | 16종 혼합 | 24종 혼합 | **28종 (로컬 GGUF)** |
+| Embedding | OpenAI 1종 | 16종 혼합 | 24종 혼합 | **27종 (로컬 GGUF)** |
 | VectorStore | 미명시 | ? | ? | **7종 비교** |
-| LLM | GPT-4 (상용) | X | X | **로컬 + RunPod 확장** |
+| LLM 생성 | GPT-4 (상용) | X | X | **12종 (AI-395 llama.cpp + DGX Spark ollama)** |
+| Judge | — | — | — | **6종 LLM-as-Judge (allganize 방식, 4 metric × majority vote)** |
 
 ---
 
@@ -62,11 +63,12 @@ RAG-Evaluation/
 
 ## 인프라
 
-| 서버 | IP | 역할 | 사양 |
-|------|-----|------|------|
-| AI-395 | 192.168.50.245 | 임베딩/LLM 모델 서빙 (게이트웨이) | MI100 96GB VRAM |
-| Mac Mini | 192.168.50.241 | 실험 스크립트 | M2 16GB |
-| **T7910** | **192.168.50.250** | **벡터스토어 서빙** | Dual Xeon 72T, 128GB RAM |
+| 서버 | 역할 | 사양 |
+|------|------|------|
+| AI-395 | 임베딩/LLM 모델 서빙 (llama.cpp) | 96GB VRAM |
+| DGX Spark | 대형 LLM 판정 (ollama) | 단일 GB10, 통합 메모리 128GB |
+| Mac Mini | 실험 스크립트 실행 | M4 16GB |
+| **T7910** | **벡터스토어 서빙** | Dual Xeon 72T, 128GB RAM |
 
 ### T7910 벡터스토어 (7/7 가동)
 
@@ -87,12 +89,18 @@ RAG-Evaluation/
 | Phase | 변수 | 조합 | 질의 | 소요 |
 |-------|------|------|------|------|
 | 0 | 데이터 준비 | - | - | 완료 |
-| 1 | Parser (PyPDF, pymupdf4llm, docling) | 3 | 900 | 30분 |
+| 1 | Parser (pypdf, pymupdf, pymupdf4llm) | 3 | 900 | 30분 |
 | 2 | Chunking (500~2000 × overlap) | 4 | 1,200 | 30분 |
 | 3 | VectorStore (7종) | 7 | 2,100 | 1시간 |
-| 4 | **Embedding (28종)** ⭐ | 28 | 8,400 | 4~6시간 |
-| 5 | LLM (Qwen3.5-27B, 35B-A3B, +GPT-4o) | 3+ | 900+ | 2~3시간 |
-| **합계** | | **45+** | **~13,500** | **~1.5일** |
+| 4 | **Embedding (27종)** ⭐ | 27 | 8,100 | 4~6시간 |
+| 5A | LLM 생성 (12종) | 12 | 3,600 | 1~2일 |
+| 5B | LLM-as-Judge (6 judge × 12 LLM × 4 metric) | 72 | 86,400 | 3~5일 |
+| **합계** | | **105+** | **~102,000** | **~5-7일** |
+
+**현재 진행 상태** (2026-04-24):
+- ✅ Phase 1~4 완료 — [results/phase4_embedding/LEADERBOARD.md](results/phase4_embedding/LEADERBOARD.md)
+- 🔄 Phase 5 생성 12/12 완료, 판정 진행 중 (AI-395 claude-distill + DGX Spark qwen3-next)
+- ❌ solar-open-100b judge 제외 (chat template 미설정 이슈)
 
 자세한 계획: [docs/rag-benchmark-plan.md](docs/rag-benchmark-plan.md)
 
@@ -182,21 +190,49 @@ python scripts/bench_all.py --summary
 
 ## 사용 모델
 
-### 임베딩 (AI-395, 28종)
-| Tier | 모델 |
-|------|------|
-| Large (7B+) | qwen3-embed-8b, llama-embed-nemotron-8b, nemotron-embed-8b, e5-mistral-7b |
-| Medium (1~4B) | qwen3-embed-4b, jina-v4-retrieval, jina-v4-code, jina-code-1.5b |
-| Korean (~335M) | **snowflake-arctic-ko**, **pixie-rune-v1**, kure-v1, koe5 |
-| Multilingual (~335M) | qwen3-0.6b, snowflake-l-v2, bge-m3, me5-large, jina-v5-small, harrier-0.6b, labse, nomic-v2-moe |
-| Tiny (<300M) | mxbai-embed-large, voyage-4-nano, gemma-300m, granite-278m, harrier-270m, jina-v5-nano, granite-107m |
-| XL | harrier-27b |
+### 임베딩 (AI-395, 27종 실측 완료)
+
+Phase 4 최종 리더보드 (MRR 상위 10):
+
+| Rank | Model | dim | MRR | Hit@1 | Hit@5 |
+|---:|---|---:|---:|---:|---:|
+| 🥇 | **koe5** | 1024 | 0.6871 | 60.7% | 80.7% |
+| 🥈 | gemma-embed-300m | 768 | 0.6650 | 57.3% | 79.7% |
+| 🥉 | pixie-rune-v1 | 1024 | 0.6627 | 58.7% | 76.0% |
+| 4 | snowflake-arctic-ko | 1024 | 0.6612 | 58.3% | 75.0% |
+| 5 | snowflake-arctic-l-v2 | 1024 | 0.6495 | 58.3% | 73.0% |
+
+전체 27종 결과: [results/phase4_embedding/LEADERBOARD.md](results/phase4_embedding/LEADERBOARD.md)
 
 **자체 변환 GGUF:**
-- [BAEM1N/snowflake-arctic-embed-l-v2.0-ko-GGUF](https://huggingface.co/BAEM1N/snowflake-arctic-embed-l-v2.0-ko-GGUF) — 한국어 1위 (84.77)
-- [BAEM1N/PIXIE-Rune-v1.0-GGUF](https://huggingface.co/BAEM1N/PIXIE-Rune-v1.0-GGUF) — 한국어 2위 (84.68)
+- [BAEM1N/snowflake-arctic-embed-l-v2.0-ko-GGUF](https://huggingface.co/BAEM1N/snowflake-arctic-embed-l-v2.0-ko-GGUF)
+- [BAEM1N/PIXIE-Rune-v1.0-GGUF](https://huggingface.co/BAEM1N/PIXIE-Rune-v1.0-GGUF)
 
-### LLM (AI-395)
-- Qwen3.5-27B (26GB)
-- Qwen3.5-35B-A3B (20GB, MoE)
-- (추후) RunPod + Gemma4/Llama4 확장
+### Phase 5 생성 LLM (12종)
+
+AI-395(llama.cpp) + DGX Spark(ollama) 혼합 운영:
+
+- **Qwen3.5 시리즈**: 9b-Q4/Q8, 27b-Q8, 122b-a10b-Q4 (think/nothink 각 1)
+- **DeepSeek-R1**: 70B (nothink)
+- **GPT-OSS**: 20B, 120B (AI-395)
+- **ExaOne**: 3.5-32B
+- **Mistral-Small**: 24B
+- **Phi**: 4-14B
+- **LFM**: 2-24B
+
+### Phase 5 Judge (LLM-as-Judge, 6종 + 1 제외)
+
+allganize 원본 방식: MLflow answer_similarity/v1 + correctness/v1 기반 4 metric × threshold 4 × majority vote → O/X 판정
+
+| Judge | 장비 | 상태 |
+|---|---|---|
+| gemma4:31b | Mac ollama | ✅ 12/12 |
+| nemotron-120b | AI-395 | ✅ 12/12 |
+| qwen3.5:122b-a10b | Mac ollama | ✅ 12/12 |
+| qwen3.6-35b-a3b | AI-395 | ✅ 12/12 |
+| supergemma4-26b | AI-395 | ✅ 12/12 |
+| qwen3-next:80b | DGX Spark | 🔄 진행 중 |
+| qwen3.5-27b-claude-distill | AI-395 | 🔄 진행 중 |
+| ~~solar-open-100b~~ | DGX Spark | ❌ 제외 (chat template 미설정 → 파싱 실패 100%) |
+
+전체 판정 매트릭스 & 중간 리더보드: [results/phase5_judge/LEADERBOARD.md](results/phase5_judge/LEADERBOARD.md)

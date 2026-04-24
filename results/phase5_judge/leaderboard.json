@@ -1,0 +1,106 @@
+{
+  "judges": [
+    "gemma4:31b_nothink",
+    "nemotron-120b_nothink",
+    "qwen3.5-27b-claude-distill_nothink",
+    "qwen3.5:122b-a10b-q4_K_M_nothink",
+    "qwen3.6-35b-a3b_nothink",
+    "supergemma4-26b_nothink"
+  ],
+  "excluded": [
+    "solar-open-100b_nothink"
+  ],
+  "ranking": [
+    {
+      "llm": "deepseek-r1_70b_nothink",
+      "scores": {
+        "gemma4:31b_nothink": 0.6033,
+        "nemotron-120b_nothink": 0.7167,
+        "qwen3.5-27b-claude-distill_nothink": 0.36,
+        "qwen3.5:122b-a10b-q4_K_M_nothink": 0.62,
+        "qwen3.6-35b-a3b_nothink": 0.7233,
+        "supergemma4-26b_nothink": 0.7233
+      },
+      "avg": 0.6244333333333333
+    }
+  ],
+  "partial": {
+    "exaone3.5_32b": {
+      "gemma4:31b_nothink": 0.6267,
+      "nemotron-120b_nothink": 0.72,
+      "qwen3.5:122b-a10b-q4_K_M_nothink": 0.6567,
+      "qwen3.6-35b-a3b_nothink": 0.7233,
+      "supergemma4-26b_nothink": 0.7133
+    },
+    "gpt-oss_120b": {
+      "gemma4:31b_nothink": 0.7333,
+      "nemotron-120b_nothink": 0.7867,
+      "qwen3.5:122b-a10b-q4_K_M_nothink": 0.73,
+      "qwen3.6-35b-a3b_nothink": 0.8,
+      "supergemma4-26b_nothink": 0.7933
+    },
+    "gpt-oss_20b": {
+      "gemma4:31b_nothink": 0.7067,
+      "nemotron-120b_nothink": 0.7867,
+      "qwen3.5:122b-a10b-q4_K_M_nothink": 0.7033,
+      "qwen3.6-35b-a3b_nothink": 0.79,
+      "supergemma4-26b_nothink": 0.81
+    },
+    "lfm2_24b": {
+      "gemma4:31b_nothink": 0.4167,
+      "nemotron-120b_nothink": 0.5733,
+      "qwen3.5:122b-a10b-q4_K_M_nothink": 0.39,
+      "qwen3.6-35b-a3b_nothink": 0.5433,
+      "supergemma4-26b_nothink": 0.54
+    },
+    "mistral-small_24b": {
+      "gemma4:31b_nothink": 0.6167,
+      "nemotron-120b_nothink": 0.6933,
+      "qwen3.5:122b-a10b-q4_K_M_nothink": 0.63,
+      "qwen3.6-35b-a3b_nothink": 0.72,
+      "supergemma4-26b_nothink": 0.7
+    },
+    "phi4_14b": {
+      "gemma4:31b_nothink": 0.6233,
+      "nemotron-120b_nothink": 0.69,
+      "qwen3.5:122b-a10b-q4_K_M_nothink": 0.6433,
+      "qwen3.6-35b-a3b_nothink": 0.73,
+      "supergemma4-26b_nothink": 0.7167
+    },
+    "qwen3.5_122b-a10b-q4_K_M_nothink": {
+      "gemma4:31b_nothink": 0.6733,
+      "nemotron-120b_nothink": 0.7433,
+      "qwen3.5:122b-a10b-q4_K_M_nothink": 0.68,
+      "qwen3.6-35b-a3b_nothink": 0.7233,
+      "supergemma4-26b_nothink": 0.7333
+    },
+    "qwen3.5_122b-a10b-q4_K_M_think": {
+      "gemma4:31b_nothink": 0.6833,
+      "nemotron-120b_nothink": 0.7333,
+      "qwen3.5:122b-a10b-q4_K_M_nothink": 0.6967,
+      "qwen3.6-35b-a3b_nothink": 0.7367,
+      "supergemma4-26b_nothink": 0.75
+    },
+    "qwen3.5_27b-q8_0_nothink": {
+      "gemma4:31b_nothink": 0.67,
+      "nemotron-120b_nothink": 0.74,
+      "qwen3.5:122b-a10b-q4_K_M_nothink": 0.6767,
+      "qwen3.6-35b-a3b_nothink": 0.73,
+      "supergemma4-26b_nothink": 0.74
+    },
+    "qwen3.5_9b-q4_K_M_nothink": {
+      "gemma4:31b_nothink": 0.5833,
+      "nemotron-120b_nothink": 0.6533,
+      "qwen3.5:122b-a10b-q4_K_M_nothink": 0.5967,
+      "qwen3.6-35b-a3b_nothink": 0.6767,
+      "supergemma4-26b_nothink": 0.67
+    },
+    "qwen3.5_9b-q8_0_nothink": {
+      "gemma4:31b_nothink": 0.5633,
+      "nemotron-120b_nothink": 0.6667,
+      "qwen3.5:122b-a10b-q4_K_M_nothink": 0.5867,
+      "qwen3.6-35b-a3b_nothink": 0.6533,
+      "supergemma4-26b_nothink": 0.6667
+    }
+  }
+}

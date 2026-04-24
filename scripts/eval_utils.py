@@ -141,18 +141,16 @@ def get_embeddings_batch(
     base_url: str = "http://192.168.50.245:8080/v1",
     model: str = "qwen3-embed-8b",
     batch_size: int = 8,
-    max_chars: int = 500,
+    max_chars: int = None,
 ) -> List[List[float]]:
-    """AI-395 게이트웨이를 통해 배치 임베딩 생성.
+    """배치 임베딩 생성 — 트렁케이션 없음.
 
-    llama.cpp 서버의 physical batch size(512 토큰) 제한 대응:
-    - 텍스트를 max_chars로 트렁케이트
-    - 배치 실패 시 개별 재시도
-    - 네트워크 단절 시 재연결 대기
+    서버 llama.cpp는 -b 32768 -ub 32768로 실행되므로 입력 길이 제한 없음.
+    배치 실패 시 개별 재시도, 네트워크 단절 시 재연결 대기.
     """
     import httpx
 
-    truncated = [t[:max_chars] for t in texts]
+    truncated = [t[:max_chars] if max_chars else t for t in texts]
     all_embeddings = [None] * len(texts)
     client = httpx.Client(timeout=120)
 

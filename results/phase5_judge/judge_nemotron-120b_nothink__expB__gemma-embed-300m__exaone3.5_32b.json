@@ -1,0 +1,3320 @@
+{
+  "judge_model": "nemotron-120b",
+  "judge_mode": "nothink",
+  "threshold": 4,
+  "metrics": [
+    "similarity",
+    "correctness",
+    "completeness",
+    "faithfulness"
+  ],
+  "original_file": "expB__gemma-embed-300m__exaone3.5_32b.json",
+  "llm": "exaone3.5:32b",
+  "total": 300,
+  "scored": 300,
+  "o_count": 216,
+  "x_count": 84,
+  "accuracy": 0.72,
+  "scores": [
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 47.0
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 46.9
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 46.9
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 3,
+        "faithfulness": 4
+      },
+      "o_count": 3,
+      "result": "O",
+      "latency": 46.9
+    },
+    {
+      "votes": {
+        "similarity": 1,
+        "correctness": 1,
+        "completeness": 1,
+        "faithfulness": 5
+      },
+      "o_count": 1,
+      "result": "X",
+      "latency": 41.2
+    },
+    {
+      "votes": {
+        "similarity": 1,
+        "correctness": 1,
+        "completeness": 1,
+        "faithfulness": 1
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 41.2
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 3,
+        "faithfulness": 4
+      },
+      "o_count": 3,
+      "result": "O",
+      "latency": 41.2
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 41.2
+    },
+    {
+      "votes": {
+        "similarity": 1,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 36.0
+    },
+    {
+      "votes": {
+        "similarity": 1,
+        "correctness": 1,
+        "completeness": 1,
+        "faithfulness": 1
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 36.0
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 3
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 36.0
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 35.9
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 3
+      },
+      "o_count": 3,
+      "result": "O",
+      "latency": 50.2
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 50.3
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 50.3
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 50.2
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 34.6
+    },
+    {
+      "votes": {
+        "similarity": 1,
+        "correctness": 2,
+        "completeness": 1,
+        "faithfulness": 1
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 34.6
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 34.5
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 34.5
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 49.4
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 49.3
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 49.3
+    },
+    {
+      "votes": {
+        "similarity": 3,
+        "correctness": 3,
+        "completeness": 3,
+        "faithfulness": 3
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 49.4
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 65.1
+    },
+    {
+      "votes": {
+        "similarity": 3,
+        "correctness": 3,
+        "completeness": 3,
+        "faithfulness": 3
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 65.4
+    },
+    {
+      "votes": {
+        "similarity": 3,
+        "correctness": 3,
+        "completeness": 2,
+        "faithfulness": 3
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 65.3
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 65.0
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 63.8
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 63.8
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 3,
+        "completeness": 3,
+        "faithfulness": 3
+      },
+      "o_count": 1,
+      "result": "X",
+      "latency": 63.5
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 63.5
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 69.7
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 70.0
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 70.0
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 69.7
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 60.9
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 60.9
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 60.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 3
+      },
+      "o_count": 3,
+      "result": "O",
+      "latency": 60.6
+    },
+    {
+      "votes": {
+        "similarity": 3,
+        "correctness": 3,
+        "completeness": 3,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 65.8
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 65.7
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 65.7
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 65.7
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 56.3
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 56.3
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 56.3
+    },
+    {
+      "votes": {
+        "similarity": 3,
+        "correctness": 3,
+        "completeness": 2,
+        "faithfulness": 4
+      },
+      "o_count": 1,
+      "result": "X",
+      "latency": 56.4
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 55.2
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 55.2
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 55.2
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 55.2
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 1,
+        "completeness": 2,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 56.5
+    },
+    {
+      "votes": {
+        "similarity": 1,
+        "correctness": 2,
+        "completeness": 1,
+        "faithfulness": 5
+      },
+      "o_count": 1,
+      "result": "X",
+      "latency": 56.5
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 2,
+        "completeness": 1,
+        "faithfulness": 3
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 56.5
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 3,
+        "completeness": 2,
+        "faithfulness": 5
+      },
+      "o_count": 1,
+      "result": "X",
+      "latency": 56.4
+    },
+    {
+      "votes": {
+        "similarity": 3,
+        "correctness": 3,
+        "completeness": 3,
+        "faithfulness": 3
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 55.7
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 55.7
+    },
+    {
+      "votes": {
+        "similarity": 1,
+        "correctness": 2,
+        "completeness": 1,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 55.7
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 55.7
+    },
+    {
+      "votes": {
+        "similarity": 3,
+        "correctness": 2,
+        "completeness": 3,
+        "faithfulness": 3
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 51.3
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 2,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 3,
+      "result": "O",
+      "latency": 51.3
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 51.3
+    },
+    {
+      "votes": {
+        "similarity": 1,
+        "correctness": 1,
+        "completeness": 1,
+        "faithfulness": 5
+      },
+      "o_count": 1,
+      "result": "X",
+      "latency": 51.3
+    },
+    {
+      "votes": {
+        "similarity": 1,
+        "correctness": 1,
+        "completeness": 1,
+        "faithfulness": 1
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 46.8
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 46.8
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 46.8
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 46.8
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 1,
+        "completeness": 1,
+        "faithfulness": 1
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 54.4
+    },
+    {
+      "votes": {
+        "similarity": 1,
+        "correctness": 1,
+        "completeness": 1,
+        "faithfulness": 1
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 54.4
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 3,
+        "completeness": 3,
+        "faithfulness": 3
+      },
+      "o_count": 1,
+      "result": "X",
+      "latency": 54.4
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 54.4
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 49.1
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 2,
+        "completeness": 1,
+        "faithfulness": 1
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 49.1
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 49.1
+    },
+    {
+      "votes": {
+        "similarity": 1,
+        "correctness": 1,
+        "completeness": 1,
+        "faithfulness": 5
+      },
+      "o_count": 1,
+      "result": "X",
+      "latency": 49.1
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 3
+      },
+      "o_count": 3,
+      "result": "O",
+      "latency": 55.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 55.5
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 55.5
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 1
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 55.5
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 66.2
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 3,
+        "completeness": 3,
+        "faithfulness": 3
+      },
+      "o_count": 1,
+      "result": "X",
+      "latency": 66.2
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 66.2
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 66.1
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 55.9
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 55.9
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 55.9
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 55.9
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 58.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 58.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 58.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 58.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 58.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 58.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 58.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 58.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 60.3
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 60.3
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 60.3
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 60.3
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 70.4
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 70.4
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 70.4
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 3,
+        "completeness": 3,
+        "faithfulness": 3
+      },
+      "o_count": 1,
+      "result": "X",
+      "latency": 70.4
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 3,
+        "faithfulness": 3
+      },
+      "o_count": 2,
+      "result": "O",
+      "latency": 63.6
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 4
+      },
+      "o_count": 1,
+      "result": "X",
+      "latency": 63.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 3,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 3,
+      "result": "O",
+      "latency": 63.6
+    },
+    {
+      "votes": {
+        "similarity": 3,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 63.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 63.3
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 63.3
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 63.3
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 63.5
+    },
+    {
+      "votes": {
+        "similarity": 3,
+        "correctness": 2,
+        "completeness": 3,
+        "faithfulness": 3
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 62.8
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 62.8
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 62.8
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 62.6
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 65.5
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 4,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 65.4
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 65.5
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 65.4
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 53.6
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 4,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 53.6
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 53.6
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 53.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 49.6
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 49.6
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 1
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 49.6
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 1
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 49.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 65.4
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 65.4
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 65.4
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 65.4
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 54.1
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 54.1
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 54.1
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 1,
+        "completeness": 2,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 54.1
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 59.6
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 59.6
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 59.6
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 59.6
+    },
+    {
+      "votes": {
+        "similarity": 3,
+        "correctness": 2,
+        "completeness": 3,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 50.8
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 50.8
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 50.8
+    },
+    {
+      "votes": {
+        "similarity": 1,
+        "correctness": 1,
+        "completeness": 1,
+        "faithfulness": 1
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 50.8
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 65.0
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 65.0
+    },
+    {
+      "votes": {
+        "similarity": 3,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 65.0
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 65.0
+    },
+    {
+      "votes": {
+        "similarity": 1,
+        "correctness": 1,
+        "completeness": 1,
+        "faithfulness": 1
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 54.4
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 1
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 54.4
+    },
+    {
+      "votes": {
+        "similarity": 3,
+        "correctness": 2,
+        "completeness": 3,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 54.4
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 54.4
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 57.3
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 57.3
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 57.3
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 57.3
+    },
+    {
+      "votes": {
+        "similarity": 3,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 3
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 62.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 62.6
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 62.8
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 62.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 54.9
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 54.9
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 54.9
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 54.7
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 3,
+        "faithfulness": 4
+      },
+      "o_count": 3,
+      "result": "O",
+      "latency": 69.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 69.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 3,
+        "faithfulness": 4
+      },
+      "o_count": 3,
+      "result": "O",
+      "latency": 69.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 69.6
+    },
+    {
+      "votes": {
+        "similarity": 1,
+        "correctness": 1,
+        "completeness": 1,
+        "faithfulness": 5
+      },
+      "o_count": 1,
+      "result": "X",
+      "latency": 47.5
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 47.5
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 1,
+        "completeness": 2,
+        "faithfulness": 1
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 47.5
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 47.5
+    },
+    {
+      "votes": {
+        "similarity": 3,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 55.9
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 55.9
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 55.9
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 55.9
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 69.5
+    },
+    {
+      "votes": {
+        "similarity": 3,
+        "correctness": 4,
+        "completeness": 3,
+        "faithfulness": 3
+      },
+      "o_count": 1,
+      "result": "X",
+      "latency": 69.5
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 69.5
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 69.5
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 64.3
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 1,
+        "completeness": 1,
+        "faithfulness": 1
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 64.3
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 5,
+        "completeness": 2,
+        "faithfulness": 5
+      },
+      "o_count": 2,
+      "result": "O",
+      "latency": 64.3
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 3,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 3,
+      "result": "O",
+      "latency": 64.3
+    },
+    {
+      "votes": {
+        "similarity": 3,
+        "correctness": 3,
+        "completeness": 3,
+        "faithfulness": 4
+      },
+      "o_count": 1,
+      "result": "X",
+      "latency": 55.1
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 55.1
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 55.1
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 55.1
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 4
+      },
+      "o_count": 1,
+      "result": "X",
+      "latency": 59.4
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 59.3
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 5,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 59.3
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 59.3
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 53.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 3,
+        "completeness": 3,
+        "faithfulness": 2
+      },
+      "o_count": 1,
+      "result": "X",
+      "latency": 53.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 53.6
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 53.5
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 66.7
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 66.7
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 66.7
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 66.7
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 52.6
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 52.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 52.6
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 52.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 56.9
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 56.9
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 56.9
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 3,
+        "completeness": 3,
+        "faithfulness": 4
+      },
+      "o_count": 2,
+      "result": "O",
+      "latency": 56.9
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 47.2
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 1
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 47.2
+    },
+    {
+      "votes": {
+        "similarity": 1,
+        "correctness": 1,
+        "completeness": 1,
+        "faithfulness": 1
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 47.2
+    },
+    {
+      "votes": {
+        "similarity": 1,
+        "correctness": 1,
+        "completeness": 1,
+        "faithfulness": 1
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 47.2
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 45.8
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 45.8
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 45.8
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 45.8
+    },
+    {
+      "votes": {
+        "similarity": 3,
+        "correctness": 2,
+        "completeness": 3,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 41.3
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 41.3
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 41.3
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 4,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 41.3
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 74.9
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 74.9
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 74.9
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 74.9
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 58.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 58.6
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 58.6
+    },
+    {
+      "votes": {
+        "similarity": 3,
+        "correctness": 2,
+        "completeness": 3,
+        "faithfulness": 3
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 58.6
+    },
+    {
+      "votes": {
+        "similarity": 3,
+        "correctness": 2,
+        "completeness": 3,
+        "faithfulness": 3
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 43.0
+    },
+    {
+      "votes": {
+        "similarity": 1,
+        "correctness": 1,
+        "completeness": 1,
+        "faithfulness": 4
+      },
+      "o_count": 1,
+      "result": "X",
+      "latency": 43.0
+    },
+    {
+      "votes": {
+        "similarity": 1,
+        "correctness": 1,
+        "completeness": 1,
+        "faithfulness": 1
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 43.0
+    },
+    {
+      "votes": {
+        "similarity": 1,
+        "correctness": 1,
+        "completeness": 1,
+        "faithfulness": 1
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 43.0
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 71.5
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 71.3
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 71.3
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 71.3
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 59.4
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 4,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 59.4
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 5,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 59.4
+    },
+    {
+      "votes": {
+        "similarity": 1,
+        "correctness": 1,
+        "completeness": 2,
+        "faithfulness": 1
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 59.2
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 74.1
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 74.1
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 74.1
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 74.1
+    },
+    {
+      "votes": {
+        "similarity": 1,
+        "correctness": 2,
+        "completeness": 1,
+        "faithfulness": 1
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 47.0
+    },
+    {
+      "votes": {
+        "similarity": 3,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 47.0
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 47.0
+    },
+    {
+      "votes": {
+        "similarity": 1,
+        "correctness": 1,
+        "completeness": 1,
+        "faithfulness": 1
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 47.0
+    },
+    {
+      "votes": {
+        "similarity": 3,
+        "correctness": 3,
+        "completeness": 3,
+        "faithfulness": 3
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 47.7
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 47.7
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 47.7
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 47.7
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 45.8
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 45.8
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 45.8
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 45.8
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 64.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 64.6
+    },
+    {
+      "votes": {
+        "similarity": 3,
+        "correctness": 2,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 2,
+      "result": "O",
+      "latency": 64.6
+    },
+    {
+      "votes": {
+        "similarity": 1,
+        "correctness": 1,
+        "completeness": 1,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 64.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 47.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 3,
+        "faithfulness": 4
+      },
+      "o_count": 3,
+      "result": "O",
+      "latency": 47.6
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 47.6
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 47.6
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 46.0
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 5,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 46.0
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 3
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 46.0
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 46.0
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 59.3
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 59.3
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 59.3
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 59.3
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 50.4
+    },
+    {
+      "votes": {
+        "similarity": 3,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 50.4
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 50.4
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 50.4
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 51.4
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 51.4
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 51.4
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 51.4
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 46.4
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 46.4
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 3
+      },
+      "o_count": 3,
+      "result": "O",
+      "latency": 46.4
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 46.4
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 49.9
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 49.9
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 3,
+        "completeness": 4,
+        "faithfulness": 3
+      },
+      "o_count": 2,
+      "result": "O",
+      "latency": 49.9
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 4,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 49.9
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 54.4
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 54.4
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 54.4
+    },
+    {
+      "votes": {
+        "similarity": 3,
+        "correctness": 3,
+        "completeness": 3,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 54.4
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 64.8
+    },
+    {
+      "votes": {
+        "similarity": 1,
+        "correctness": 1,
+        "completeness": 1,
+        "faithfulness": 1
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 64.8
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 64.8
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 64.8
+    },
+    {
+      "votes": {
+        "similarity": 5,
+        "correctness": 5,
+        "completeness": 5,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 57.5
+    },
+    {
+      "votes": {
+        "similarity": 2,
+        "correctness": 2,
+        "completeness": 2,
+        "faithfulness": 2
+      },
+      "o_count": 0,
+      "result": "X",
+      "latency": 57.5
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 5
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 57.5
+    },
+    {
+      "votes": {
+        "similarity": 4,
+        "correctness": 4,
+        "completeness": 4,
+        "faithfulness": 4
+      },
+      "o_count": 4,
+      "result": "O",
+      "latency": 57.5
+    }
+  ]
+}

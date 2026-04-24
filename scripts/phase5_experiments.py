@@ -35,6 +35,8 @@ FIXED_LLMS_FOR_EMBED_COMPARE = {
         {"name": "qwen3.5-27b", "think": True},
         {"name": "qwen3.5-35b-a3b", "think": False},
         {"name": "qwen3.5-35b-a3b", "think": True},
+        {"name": "qwen3.6-35b-a3b", "think": False},
+        {"name": "qwen3.6-35b-a3b", "think": True},
     ],
     "spark": [
         {"name": "qwen3.5:122b-a10b-q4_K_M", "think": False},
@@ -62,7 +64,6 @@ LLMS_FOR_COMPARE = {
         {"name": "qwen3.5:9b-q4_K_M", "think": False},
         {"name": "qwen3.5:27b-q8_0", "think": False},
         {"name": "exaone3.5:32b", "think": None},
-        {"name": "ingu627/exaone4.0:32b", "think": None},
         {"name": "gpt-oss:20b", "think": None},
         {"name": "gpt-oss:120b", "think": None},
         {"name": "phi4:14b", "think": None},
@@ -108,12 +109,16 @@ def call_llm(base_url, model, question, context, think_mode):
             "model": model,
             "messages": messages,
             "stream": False,
-            "options": {"temperature": 0, "num_predict": 4096},
+            "options": {"temperature": 0},
         }
         if think_mode is False:
             req["think"] = False
+            req["options"]["num_predict"] = 4096
         elif think_mode is True:
             req["think"] = True
+            # no num_predict cap: let reasoning + answer run to completion
+        else:
+            req["options"]["num_predict"] = 4096
         data = api_post(f"{base_url}/api/chat", req)
 
         content = data["message"].get("content", "")
@@ -373,6 +378,10 @@ def run_experiment_b(server):
     logger.info(f"  고정 임베딩: {FIXED_EMBED_FOR_LLM_COMPARE}")
     logger.info(f"  LLM: {len(llms)}개")
     logger.info(f"  서버: {server} ({base_url}), parallel={parallel}")
+
+    def _prio(m):
+        return 0 if m["think"] is False else (1 if m["think"] is None else 2)
+    llms = sorted(llms, key=_prio)
 
     for i, m in enumerate(llms, 1):
         think_label = (
