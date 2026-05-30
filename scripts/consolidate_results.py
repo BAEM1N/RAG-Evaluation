@@ -120,7 +120,7 @@ def collect():
             "File@5": d.get("File@5"),
             "llm_calls": d.get("llm_calls"),
             "elapsed_sec": d.get("elapsed_sec"),
-            "fixed_pipeline": "Hybrid 3:7 + Stage 4-2 winner reranker, LLM=Azure GPT-5.4",
+            "fixed_pipeline": "Hybrid 3:7 + Stage 4-2 winner reranker, LLM=GPT-5.4",
         })
 
     # Stage 4-2: Post-retriever (Reranker)

@@ -13,7 +13,7 @@ Disk cache:
   results/cartesian/judge/<config_key>_<qid>_<metric>.txt
 
 Usage:
-  # 먼저 .env가 AZURE_OPENAI_* 변수 채워져있어야 함
+  # 먼저 .env가 LLM_API_* 변수 채워져있어야 함
   python scripts/cartesian/run_gen_judge.py --workers 100
   # 일부만:
   python scripts/cartesian/run_gen_judge.py --postr ko-reranker bge-reranker-v2-m3-ko
@@ -59,11 +59,11 @@ def get_llm():
     from langchain_openai import ChatOpenAI
     global _llm
     if _llm is None:
-        endpoint = os.environ["AZURE_OPENAI_ENDPOINT"]
-        project = os.environ["AZURE_OPENAI_PROJECT"]
+        endpoint = os.environ["LLM_API_ENDPOINT"]
+        project = os.environ["LLM_API_PROJECT"]
         _llm = ChatOpenAI(
             model=LLM_MODEL,
-            api_key=os.environ["AZURE_OPENAI_API_KEY"],
+            api_key=os.environ["LLM_API_KEY"],
             base_url=f"{endpoint}/api/projects/{project}/openai/v1",
             temperature=0,
             max_tokens=400,

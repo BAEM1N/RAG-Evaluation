@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""End-to-End axis-wise benchmark (시나리오 F) — Azure GPT-5.4 + LangChain.
+"""End-to-End axis-wise benchmark (시나리오 F) — GPT-5.4 + LangChain.
 
 각 axis에서 하나만 변수, 나머지는 winner 고정:
   A. PreR (10): baseline (winner) 외 9개 변형 — R=Hybrid 3:7, PostR=bge-v2-m3-ko
@@ -11,7 +11,7 @@
   2. GPT-5.4로 답변 생성 (RAG_PROMPT)
   3. GPT-5.4로 4-metric judge (similarity/correctness/completeness/faithfulness, 1-5)
 
-비용: 약 $25-30 (Azure GPT-5.4 batch + cache, ~$1/config)
+비용: 약 $25-30 (GPT-5.4 batch + cache, ~$1/config)
 
 Usage:
   python scripts/bench_e2e_axis_wise.py --axes A --dry-run        # 1 config × 3 q
@@ -321,7 +321,7 @@ def parse_keywords(text):
     return [w for w in kws if 1 < len(w) < 30][:5]
 
 
-# ── Azure GPT-5.4 LangChain ────────────────────────────────────────────
+# ── GPT-5.4 LangChain ────────────────────────────────────────────
 
 _llm = None
 
@@ -330,11 +330,11 @@ def get_llm():
     from langchain_openai import ChatOpenAI
     global _llm
     if _llm is None:
-        endpoint = os.environ["AZURE_OPENAI_ENDPOINT"]
-        project = os.environ["AZURE_OPENAI_PROJECT"]
+        endpoint = os.environ["LLM_API_ENDPOINT"]
+        project = os.environ["LLM_API_PROJECT"]
         _llm = ChatOpenAI(
             model=LLM_MODEL,
-            api_key=os.environ["AZURE_OPENAI_API_KEY"],
+            api_key=os.environ["LLM_API_KEY"],
             base_url=f"{endpoint}/api/projects/{project}/openai/v1",
             temperature=0,
             max_tokens=400,
@@ -518,7 +518,7 @@ def main():
     elif args.pilot: gt = gt_full[:50]
     else: gt = gt_full
     print(f"GT: {len(gt)} Q&A (chunks over {len(gt_full)} files)")
-    print(f"LLM: Azure {LLM_MODEL}, workers={LLM_WORKERS}")
+    print(f"LLM: {LLM_MODEL}, workers={LLM_WORKERS}")
 
     print("\n=== building chunks ===")
     chunks_text, meta = build_chunks(gt_full)

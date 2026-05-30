@@ -12,7 +12,7 @@
    no_rerank baseline = 48 outputs (자동 처리)
    둘 다 합쳐 384 top-5 결과 .npy
                               [M5 ~4h, AMD ~5-6h parallel]
-3. run_gen_judge.py         → 384 × 300 gen + 384 × 1200 judge (Azure GPT-5.4)
+3. run_gen_judge.py         → 384 × 300 gen + 384 × 1200 judge (GPT-5.4)
                               [100-worker pool, ~1.5h]
 ```
 

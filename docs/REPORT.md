@@ -193,23 +193,25 @@
 
 ### 10 전략 비교 (R/PostR 고정)
 
-| 순위 | 전략 | MRR | Hit@1 | vs baseline |
-|---:|---|---:|---:|---:|
-| 🥇 | **query_expansion** | **0.7783** | 70.0% | +0.0086 |
-| 2 | hyde | 0.7738 | 70.3% | +0.0041 |
-| 3 | decompose | 0.7786 | 70.7% | +0.0089 |
-| 4 | query2doc | 0.7768 | 70.0% | +0.0071 |
-| 5 | hyde_rrf | 0.7713 | 70.3% | +0.0016 |
-| 6 | multi_query_angle | 0.7770 | 69.3% | +0.0073 |
-| 7 | query_rewrite | 0.7741 | 70.3% | +0.0044 |
-| 8 | multi_query_para | 0.7780 | 70.3% | +0.0083 |
-| 9 | **baseline (no PreR)** | **0.7697** | 70.7% | (기준) |
-| 10 | step_back | 0.7692 | 69.3% | −0.0005 |
+순위는 **end-to-end judge 점수**(생성 답변 품질) 기준. MRR 은 retrieval-only 지표로 함께 표기하며, 전략 간 MRR 차이는 ±0.001 수준(noise)이라 순위 결정에 쓰지 않는다.
+
+| 순위 | 전략 | judge | MRR | Hit@1 | vs baseline (MRR) |
+|---:|---|---:|---:|---:|---:|
+| 🥇 | **query_expansion** | **3.998** | 0.7783 | 70.0% | +0.0086 |
+| 2 | hyde | 3.985 | 0.7738 | 70.3% | +0.0041 |
+| 3 | decompose | 3.967 | 0.7786 | 70.7% | +0.0089 |
+| 4 | query2doc | 3.967 | 0.7768 | 70.0% | +0.0071 |
+| 5 | hyde_rrf | 3.965 | 0.7713 | 70.3% | +0.0016 |
+| 6 | multi_query_angle | 3.962 | 0.7770 | 69.3% | +0.0073 |
+| 7 | query_rewrite | 3.962 | 0.7741 | 70.3% | +0.0044 |
+| 8 | multi_query_para | 3.953 | 0.7780 | 70.3% | +0.0083 |
+| 9 | **baseline (no PreR)** | 3.953 | **0.7697** | 70.7% | (기준) |
+| 10 | step_back | 3.941 | 0.7692 | 69.3% | −0.0005 |
 
 ### 결론
-- **거의 모든 PreR이 baseline 동급 또는 약간 우세** — 단변량으론 효과 미미
+- **거의 모든 PreR이 baseline 동급 또는 약간 우세** — 단변량으론 효과 미미 (judge 편차 3.94~4.00)
 - step_back / multi_query_angle 추상화는 마이너스 또는 무효
-- query_expansion / decompose가 살짝 가장 좋음
+- **query_expansion 이 judge 1위** (3.998) — MRR 도 +0.86pp 상위권(decompose 와 0.0003 차이로 noise). 검색·생성 둘 다 미세 우세라 axis-wise winner 로 채택
 - **상호작용 효과 큼**: Stage 6 cartesian에서 query2doc + jina-m0 조합이 PreR axis 1위로 도약
 
 ---
@@ -462,7 +464,7 @@ PyMuPDFLoader
 
 - **로컬**: M5 Max (Apple Silicon, MPS, 64GB unified), Python 3.12, sentence-transformers
 - **GPU 서버**: HP Z2 Mini (AI 395+), 96GB unified VRAM, PyTorch 2.12 ROCm 7.13 (TheRock builds)
-- **OpenAI**: AI Foundry, `gpt-5.4` deployment, 10M TPM / 100K RPM
+- **OpenAI**: OpenAI-compatible API, `gpt-5.4` deployment, 10M TPM / 100K RPM
 - **LangChain**: `PyMuPDFLoader`, `RecursiveCharacterTextSplitter`, `FAISS`, `BM25Retriever`, `EnsembleRetriever`, `CrossEncoderReranker`, `ChatOpenAI(base_url=...)`
 - **병렬화**: ThreadPoolExecutor 100-worker (gen/judge)
 
@@ -476,7 +478,9 @@ PyMuPDFLoader
 - **공개 baseline retrieval API**: `POST https://rag.baeum.ai.kr/api/retrieve` — winner 전단(PyMuPDFLoader · RecursiveChar 300/50 · embeddinggemma-300m) 기반 FAISS + BM25-KIWI + Hybrid 검색을 누구나 호출 가능 (재현·비교용)
 - **요약 대시보드**: [rag.baeum.ai.kr](https://rag.baeum.ai.kr) — 단계별 차트·리더보드(GPT-5.4/Qwen3.6 judge)·RAG 결과 탐색
 
-## 부록 D: 벡터스토어 백엔드 확장성 (별도 운영 벤치)
+## 부록 D: 벡터스토어 백엔드 확장성 (별도 운영 벤치) — 🚧 진행 중
+
+> ⚠️ **진행 중 (WIP)** — 이 벤치는 아직 완료되지 않았습니다. 일부 시스템·스케일은 측정 중이거나 실패(timeout/OOM) 재시도 대기 상태이며, 수치는 변동될 수 있습니다.
 
 retrieval *품질*(본문)과 별개로, 동일 1536d 벡터·top_k=10 조건에서 **17개 벡터 검색 시스템의 운영 확장성**(QPS·p50/p95/p99·insert·RAM·recall)을 1K~10M 청크 단계 게이트로 비교했다 (전용 벡터 DB·검색엔진·분석 DB·라이브러리 8 카테고리).
 

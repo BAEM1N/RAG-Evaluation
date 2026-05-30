@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Pre-retriever 비교 — Stage 4-1 (LangChain + Azure GPT-5.4).
+"""Pre-retriever 비교 — Stage 4-1 (LangChain + GPT-5.4).
 
 고정 파이프라인 (Stage 1~4 winner):
   Loader   : PyMuPDFLoader (LangChain)
@@ -7,7 +7,7 @@
   Embedding: HuggingFaceEmbeddings(google/embeddinggemma-300m)
   Retriever: EnsembleRetriever(FAISS dense + BM25Retriever[KIWI], weights=[0.3, 0.7])
 
-LLM (Pre-retriever 변형용): Azure GPT-5.4 (AI Foundry endpoint), via langchain_openai.ChatOpenAI
+LLM (Pre-retriever 변형용): GPT-5.4 (OpenAI-compatible endpoint), via langchain_openai.ChatOpenAI
 
 10 전략:
   baseline             — 원 query 그대로
@@ -35,7 +35,7 @@ import numpy as np
 
 LLM_WORKERS = int(os.environ.get("LLM_WORKERS", "20"))
 
-# .env 로드 (Azure 자격증명)
+# .env 로드 (API 자격증명)
 ROOT = Path(__file__).parent.parent
 for ln in (ROOT / ".env").read_text().splitlines() if (ROOT / ".env").exists() else []:
     if "=" in ln and not ln.startswith("#"):
@@ -57,7 +57,7 @@ CHUNK_OVERLAP = 50
 RRF_K = 60
 TOP_K = 5
 
-LLM_MODEL = "gpt-5.4"  # Azure deployment name
+LLM_MODEL = "gpt-5.4"  # deployment name
 
 
 # ── chunk / index setup ────────────────────────────────────────────────
@@ -94,21 +94,21 @@ def kiwi_tokenize(text):
     return [t.form for t in kiwi_tokenize._k.tokenize(text) if t.tag.startswith(keep)]
 
 
-# ── Azure GPT-5.4 via LangChain ────────────────────────────────────────
+# ── GPT-5.4 via LangChain ────────────────────────────────────────
 
 _llm = None
 
 
 def get_llm():
-    """ChatOpenAI(base_url=AI Foundry endpoint) — Azure GPT-5.4."""
+    """ChatOpenAI(base_url=OpenAI-compatible endpoint) — GPT-5.4."""
     global _llm
     if _llm is None:
         from langchain_openai import ChatOpenAI
-        endpoint = os.environ["AZURE_OPENAI_ENDPOINT"]
-        project = os.environ["AZURE_OPENAI_PROJECT"]
+        endpoint = os.environ["LLM_API_ENDPOINT"]
+        project = os.environ["LLM_API_PROJECT"]
         _llm = ChatOpenAI(
             model=LLM_MODEL,
-            api_key=os.environ["AZURE_OPENAI_API_KEY"],
+            api_key=os.environ["LLM_API_KEY"],
             base_url=f"{endpoint}/api/projects/{project}/openai/v1",
             temperature=0.3,
             max_tokens=400,
@@ -421,7 +421,7 @@ def main():
     else:
         gt = gt_full; tag = ""
     print(f"GT: {len(gt)} Q&A{tag} (chunks built over {len(gt_full)} files)")
-    print(f"LLM: Azure {LLM_MODEL}")
+    print(f"LLM: {LLM_MODEL}")
 
     print("\n=== building chunks ===")
     chunks_text, meta = build_chunks(gt_full)
@@ -480,7 +480,7 @@ def main():
         print(f"\n=== {s} ===")
         topk, elapsed, llm_secs, llm_calls = run_strategy(s, gt)
         m = compute_metrics(topk, meta, gt)
-        r = {"strategy": s, "llm_model": LLM_MODEL, "llm_provider": "azure_ai_foundry",
+        r = {"strategy": s, "llm_model": LLM_MODEL, "llm_provider": "openai_compatible",
              "n_q": len(gt),
              "elapsed_sec": elapsed, "llm_seconds": llm_secs, "llm_calls": llm_calls, **m}
         results[s] = r

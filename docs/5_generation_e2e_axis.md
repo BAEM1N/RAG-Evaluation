@@ -2,7 +2,7 @@
 
 > **데이터셋**: allganize/RAG-Evaluation-Dataset-KO (300 Q&A × 58 PDFs)
 >
-> **생성·평가 모델**: **GPT-5.4** (`gpt-5.4` deployment, AI Foundry endpoint)
+> **생성·평가 모델**: **GPT-5.4** (`gpt-5.4` deployment, OpenAI-compatible endpoint)
 > via `langchain_openai.ChatOpenAI(base_url=...)`, temperature=0
 >
 > **고정 winner pipeline**:
@@ -148,8 +148,8 @@ PyMuPDFLoader
 ## 6. 레퍼런스
 
 ### 모델
-- GPT-5.4 (deployment `gpt-5.4`, version 2026-03-05, GlobalStandard) → [docs](https://learn.microsoft.com/azure/ai-services/openai/)
-- LangChain `ChatOpenAI` (AI Foundry 호환 모드) → [API ref](https://python.langchain.com/api_reference/openai/chat_models/langchain_openai.chat_models.base.ChatOpenAI.html)
+- GPT-5.4 (gpt-5.4) → [docs](https://platform.openai.com/docs/)
+- LangChain `ChatOpenAI` (OpenAI-compatible API 호환 모드) → [API ref](https://python.langchain.com/api_reference/openai/chat_models/langchain_openai.chat_models.base.ChatOpenAI.html)
 
 ### 평가 방법
 - 4-metric LLM-as-Judge rubric — Phase 5 동일 (`scripts/llm_judge.py::EVAL_PROMPTS`)

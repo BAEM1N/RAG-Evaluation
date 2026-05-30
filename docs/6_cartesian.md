@@ -190,7 +190,7 @@ PyMuPDFLoader
 
 ### OpenAI 설정
 - Deployment: `gpt-5.4` (gpt-5.4 v2026-03-05, GlobalStandard, 10M TPM / 100K RPM)
-- Endpoint: AI Foundry (`/api/projects/.../openai/v1`)
+- Endpoint: OpenAI-compatible endpoint
 - LangChain `ChatOpenAI(base_url=...)`, 100-worker ThreadPoolExecutor
 
 ## 7. 다음 단계 (선택)

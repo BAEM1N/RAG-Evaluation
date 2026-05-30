@@ -152,6 +152,6 @@ embedding 호출 또는 LLM 호출이 필요한 비싼 chunker. Stage 4 winner(H
 - KSS — [hyunwoongko/kss](https://github.com/hyunwoongko/kss) (mecab backend 권장)
 
 ### 임베딩 / API
-- text-embedding-3-small / 3-large (OpenAI) — [OpenAI docs](https://learn.microsoft.com/azure/ai-services/openai/concepts/models#embeddings)
+- text-embedding-3-small / 3-large (OpenAI) — [OpenAI docs](https://platform.openai.com/docs/guides/embeddings)
 - google/embeddinggemma-300m — [HuggingFace](https://huggingface.co/google/embeddinggemma-300m)
-- gpt-5.4 (Slumber genie) — AI Foundry endpoint, json_schema structured output + reasoning_effort=none
+- gpt-5.4 (Slumber genie) — OpenAI-compatible endpoint, json_schema structured output + reasoning_effort=none
