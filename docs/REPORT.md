@@ -218,7 +218,7 @@
 
 > 상세: [`4-2_post_retriever.md`](./4-2_post_retriever.md)
 >
-> **27 reranker 비교** (M5 Max + AMD AI 395+ 분산)
+> **25 reranker + no_rerank baseline 비교** (시도 실패 5종 별도) (M5 Max + AMD AI 395+ 분산)
 
 ### Top 12 reranker leaderboard
 
@@ -226,7 +226,7 @@
 |---:|---|---:|---:|---:|---|
 | 🥇 | **dragonkue/bge-reranker-v2-m3-ko** | 0.6B (m3 KR 튜닝) | **0.7697** | **74.0%** | retrieval winner |
 | 🥈 | jinaai/jina-reranker-m0 | 2.4B 멀티모달 | 0.7631 | 72.3% | cartesian winner 후보 |
-| 🥉 | Qwen/Qwen3-Reranker-4B | 4B (2025-06) | 0.7508 | 70.3% | |
+| 🥉 | Qwen/Qwen3-Reranker-4B | 4B (2025-06) | 0.7514 | 70.3% | |
 | 4 | BAAI/bge-reranker-v2-m3 | 0.6B | 0.7488 | 70.0% | |
 | 5 | Dongjin-kr/ko-reranker | 0.6B KR | 0.7320 | 67.3% | axis-wise gen winner |
 | 6 | mixedbread-ai/mxbai-rerank-base-v2 | 0.5B (Apache) | 0.7319 | 67.3% | |
@@ -243,7 +243,7 @@
 - ⚠ bge-reranker-v2-gemma 0.4152, modernReranker 0.5159, pixie-spell-reranker 0.3276: baseline 한참 미달
 
 ### 결론
-- **한국어 fine-tune이 SOTA를 압도**: dragonkue ko-reranker가 Qwen3-Reranker-4B(2025 SOTA, 6.7× 큰 모델)를 +1.89pp
+- **한국어 fine-tune이 SOTA를 압도**: dragonkue ko-reranker가 Qwen3-Reranker-4B(2025 SOTA, 약 6.7배 큰 4B 모델)를 +1.83pp MRR
 - 한국어 정렬 > 모델 신선도·크기
 - **mxbai-base > mxbai-large 역전** — 큰 모델이 항상 좋진 않음
 
@@ -256,6 +256,7 @@
 ### 별도 trajectory — Open vs Closed weights 비교
 
 - **46 generation 모델** (Open 27 + Closed 19) × **18 judge 모델** (3-judge flagship ensemble) × 300 Q&A
+  - *(이후 공개 대시보드 [rag.baeum.ai.kr](https://rag.baeum.ai.kr)에서는 judge 를 20종(API 9 + open-weight 11)으로 확장 — 본 보고서 수치는 Phase 5 평가 시점의 18-judge 기준)*
 - 목적: GPT-5.4-pro / GPT-5.4 같은 closed API 모델을 대체할 수 있는 로컬 모델 탐색
 - 비용: ~$240 (Anthropic Opus 4.7, GPT-5.4-pro, Gemini-3.1-pro 3-judge)
 
@@ -345,6 +346,19 @@
 
 → **RAG 파이프라인 최적화가 모델 업그레이드보다 큼**: 동일 GPT-5.4 사용 시 단순 retrieval 0.787 → cartesian winner 0.827 (+4.0pp), GPT-5.4-pro로 업그레이드한 것보다 +6.0pp 높음.
 
+### 10.1 Judge Robustness — GPT-5.4(closed) vs Qwen3.6 35B-A3B(open) 재채점
+
+384 cartesian 조합을 closed judge(GPT-5.4) 외에 **open-weight judge(Qwen3.6 35B-A3B, self-host)** 로 한 번 더 전수 채점해 순위 안정성을 검증했다.
+
+| Judge | 채점 조합 | 평균 accuracy | 성격 |
+|---|---|---:|---|
+| GPT-5.4 (closed, API) | 384 | 78.0% | 기준 |
+| Qwen3.6 35B-A3B (open, self-host) | 384 | **82.1%** | 더 관대(higher leniency) |
+
+- open judge 가 평균 +4.1pp 더 후하게 채점하나, **조합 간 상대 순위(rank)는 대체로 보존** — winner 계열(query2doc·hybrid·jina-m0)이 양쪽 judge 에서 모두 상위.
+- 시사점: judge 절대값은 calibration 차이로 ±4pp 흔들리므로 **단일 judge 절대 점수보다 다수 judge·상대 순위로 해석**해야 한다. open judge 는 비용 0 으로 rank 검증·대규모 재채점에 실용적.
+- 두 judge 의 조합별 비교는 공개 대시보드 [rag.baeum.ai.kr](https://rag.baeum.ai.kr) 리더보드의 JUDGE 탭에서 직접 전환 가능.
+
 ---
 
 ## 11. 통합 분석
@@ -385,7 +399,7 @@
 
 - Embedding: KoE5 > Qwen3-Embed-8B (+0.16 MRR)
 - BM25: KIWI > whitespace (+14.4pp)
-- Reranker: dragonkue/bge-v2-m3-ko > Qwen3-Reranker-4B (+1.89pp, 6.7× 작은 모델로)
+- Reranker: dragonkue/bge-v2-m3-ko(0.6B) > Qwen3-Reranker-4B (+1.83pp, 약 6.7배 작은 모델로)
 
 **일관된 패턴**: 한국어 정렬 > 모델 신선도/크기
 
@@ -459,6 +473,18 @@ PyMuPDFLoader
 - Cartesian 384 결과: [HuggingFace 데이터셋](https://huggingface.co/datasets/BAEM1N/Korean-RAG-LLM-Judge-Benchmark)
 - 단계별 분석: 본 docs/ 의 1~6 단계 보고서
 - 재현 스크립트: [`scripts/`](../scripts/)
+- **공개 baseline retrieval API**: `POST https://rag.baeum.ai.kr/api/retrieve` — winner 전단(PyMuPDFLoader · RecursiveChar 300/50 · embeddinggemma-300m) 기반 FAISS + BM25-KIWI + Hybrid 검색을 누구나 호출 가능 (재현·비교용)
+- **요약 대시보드**: [rag.baeum.ai.kr](https://rag.baeum.ai.kr) — 단계별 차트·리더보드(GPT-5.4/Qwen3.6 judge)·RAG 결과 탐색
+
+## 부록 D: 벡터스토어 백엔드 확장성 (별도 운영 벤치)
+
+retrieval *품질*(본문)과 별개로, 동일 1536d 벡터·top_k=10 조건에서 **17개 벡터 검색 시스템의 운영 확장성**(QPS·p50/p95/p99·insert·RAM·recall)을 1K~10M 청크 단계 게이트로 비교했다 (전용 벡터 DB·검색엔진·분석 DB·라이브러리 8 카테고리).
+
+- 작은~중간 코퍼스(≤10K): `scann`·`hnswlib`·`faiss_cpu` 가 수만 QPS 로 압도
+- 대규모(10M): `faiss_gpu` 가 QPS·지연 평탄 유지 — 확장성 1위
+- `elasticsearch`/`opensearch` 는 RAM 40GB대로 무거움
+- 본 RAG 평가의 기본 retrieval backend = **FAISS CPU** (3,166 청크 소규모라 충분)
+- 상세: [rag.baeum.ai.kr](https://rag.baeum.ai.kr) → 벡터스토어 벤치
 
 ## 부록 C: 학술 레퍼런스
 

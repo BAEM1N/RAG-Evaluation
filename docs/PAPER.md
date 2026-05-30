@@ -10,7 +10,7 @@
 
 ## 초록
 
-본 연구는 한국어 Retrieval-Augmented Generation (RAG) 파이프라인의 각 컴포넌트가 최종 답변 품질에 미치는 효과를 정량적으로 분해한다. allganize/RAG-Evaluation-Dataset-KO (300 Q&A × 58 PDFs × 5 도메인)를 사용해 (1) 단변량 비교(6 stage, 총 95+ 구성 요소), (2) end-to-end axis-wise 평가(28 configs), (3) Cartesian 전수 탐색(384 configs = 8 PreR × 6 R × 8 PostR)을 수행하여 약 1.2M LLM 호출의 평가 데이터를 산출했다. 주요 발견은 다음과 같다. (i) 단순한 character-level recursive splitter(300/50)가 LLM-기반 chunker 등 39종 비교에서 winner임을 확인했다. (ii) 한국어 fine-tune reranker(dragonkue/bge-reranker-v2-m3-ko)가 2025 SOTA multilingual reranker(Qwen3-Reranker-4B, 6.7배 큰 모델)를 +1.89pp 능가했다. (iii) Pre-retriever 단변량 효과는 미미(±1%)했으나 Cartesian에서 query2doc × jina-reranker-m0 상호작용을 통해 답변 품질 1위(judge 4.067)에 도달했다. (iv) 컴포넌트 영향력 순서는 PostR > R > PreR이며, 가장 단순한 baseline 대비 누적 개선은 MRR +15.2%, Hit@1 +27.1%, judge +5.6%였다.
+본 연구는 한국어 Retrieval-Augmented Generation (RAG) 파이프라인의 각 컴포넌트가 최종 답변 품질에 미치는 효과를 정량적으로 분해한다. allganize/RAG-Evaluation-Dataset-KO (300 Q&A × 58 PDFs × 5 도메인)를 사용해 (1) 단변량 비교(6 stage, 총 95+ 구성 요소), (2) end-to-end axis-wise 평가(28 configs), (3) Cartesian 전수 탐색(384 configs = 8 PreR × 6 R × 8 PostR)을 수행하여 약 1.2M LLM 호출의 평가 데이터를 산출했다. 주요 발견은 다음과 같다. (i) 단순한 character-level recursive splitter(300/50)가 LLM-기반 chunker 등 39종 비교에서 winner임을 확인했다. (ii) 한국어 fine-tune reranker(dragonkue/bge-reranker-v2-m3-ko)가 2025 SOTA multilingual reranker(Qwen3-Reranker-4B, 약 6.7배 큰 모델)를 +1.83pp MRR 능가했다. (iii) Pre-retriever 단변량 효과는 미미(±1%)했으나 Cartesian에서 query2doc × jina-reranker-m0 상호작용을 통해 답변 품질 1위(judge 4.067)에 도달했다. (iv) 컴포넌트 영향력 순서는 PostR > R > PreR이며, 가장 단순한 baseline 대비 누적 개선은 MRR +15.5%, Hit@1 +16.0pp(+27.1% 상대), judge +5.6%였다.
 
 **키워드**: Korean RAG, retrieval evaluation, reranker, LLM-as-judge, cartesian benchmark
 
