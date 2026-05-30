@@ -1,0 +1,289 @@
+% Korean RAG evaluation paper draft.
+% Build (verified locally): tectonic -X compile docs/PAPER_KIISE_STYLE.tex --outdir docs
+% Format note: KIISE/KCC-style sectioning with portable article + xeCJK instead of vendoring external kcc.cls.
+\documentclass[10pt,a4paper,twocolumn]{article}
+
+\usepackage[top=20mm,bottom=22mm,left=18mm,right=18mm,columnsep=7mm]{geometry}
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+
+% Keep Korean text readable in narrow two-column layout. The default xeCJK
+% stretch can over-expand inter-syllable glue during full justification.
+\xeCJKsetup{
+  CJKspace=true,
+  CJKglue={\hskip 0pt plus 0.02pt},
+  CJKecglue={\hskip 0.25em plus 0.05em minus 0.05em}
+}
+
+\IfFontExistsTF{Times New Roman}{\setmainfont{Times New Roman}}{\setmainfont{TeX Gyre Termes}}
+\IfFontExistsTF{AppleMyungjo}{\setCJKmainfont{AppleMyungjo}}{%
+  \IfFontExistsTF{Noto Serif CJK KR}{\setCJKmainfont{Noto Serif CJK KR}}{\setCJKmainfont{Apple SD Gothic Neo}}}
+\IfFontExistsTF{Apple SD Gothic Neo}{\setCJKsansfont{Apple SD Gothic Neo}}{%
+  \IfFontExistsTF{Noto Sans CJK KR}{\setCJKsansfont{Noto Sans CJK KR}}{\setCJKsansfont{AppleGothic}}}
+
+\newcommand{\eng}[1]{\textit{#1}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\dataset}{\code{allganize/RAG-Evaluation-Dataset-KO}}
+\newcommand{\repo}{\code{BAEM1N/RAG-Evaluation}}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\setlist[itemize]{leftmargin=*, itemsep=1pt, topsep=2pt}
+\setlist[enumerate]{leftmargin=*, itemsep=1pt, topsep=2pt}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{한국어 RAG 컴포넌트 평가}
+\rhead{BAEM1N, 2026}
+\cfoot{\thepage}
+\renewcommand{\headrulewidth}{0.2pt}
+\linespread{0.98}
+
+\begin{document}
+\makeatletter
+\twocolumn[
+\begin{@twocolumnfalse}
+\begin{center}
+{\LARGE\bfseries 한국어 RAG 파이프라인의 컴포넌트별 효과 분해:\par}
+\vspace{2mm}
+{\Large\bfseries 단변량 비교와 Cartesian 전수 탐색을 통한 실증 연구\par}
+\vspace{2mm}
+{\large Component-wise Decomposition of Korean RAG Pipelines via Univariate and Cartesian Evaluation\par}
+\vspace{4mm}
+{BAEM1N$^{\circ}$}\par
+{\small Independent Research, \repo}\par
+{\small Repository: \url{https://github.com/BAEM1N/RAG-Evaluation} \quad Dataset: \url{https://huggingface.co/datasets/BAEM1N/Korean-RAG-LLM-Judge-Benchmark}}\par
+\end{center}
+\vspace{2mm}
+{\raggedright
+\noindent\textbf{초록}\quad
+본 연구는 한국어 Retrieval-Augmented Generation(RAG) 파이프라인에서 문서 로더, 청킹, 임베딩, 검색기, 쿼리 변환기, 재순위화기, 생성 모델이 최종 답변 품질에 미치는 영향을 분해한다. \dataset{}의 300개 질의응답과 58개 PDF를 사용하여 7개 로더, 42개 청커, 27개 임베딩, 7개 검색 전략, 10개 pre-retriever, 25개 reranker, 46개 생성 모델을 비교했다. 또한 8개 PreR $\times$ 6개 R $\times$ 8개 PostR의 384개 조합을 전수 평가하여 컴포넌트 상호작용을 측정했다. 실험 결과, 단순한 문자 기반 recursive chunking이 LLM/semantic chunking보다 비용 대비 우수했고, 한국어 fine-tune 임베딩 및 reranker가 대형 multilingual 모델을 안정적으로 앞섰다. 특히 Cartesian 평가에서는 \code{query2doc + hybrid\_7\_3 + jina-reranker-m0} 조합이 judge 4.067/5로 최고 답변 품질을 보였고, 검색 정확도 기준으로는 \code{multi\_query\_para + hybrid\_5\_5 + jina-reranker-m0}가 MRR 0.7874를 기록했다. 컴포넌트 영향력은 PostR $>$ R $>$ PreR 순서였으며, 단순 dense baseline 대비 최대 MRR +15.5\%, Hit@1 +16.0pp, judge +5.6\%의 누적 개선을 확인했다.
+
+\vspace{1mm}
+\noindent\textbf{Abstract}\quad
+This study decomposes the effects of individual components in Korean retrieval-augmented generation (RAG) pipelines. Using 300 Korean QA pairs grounded in 58 PDFs, we benchmark loaders, chunkers, embedding models, retrievers, query transformations, rerankers, and generators. Beyond univariate comparisons, we exhaustively evaluate 384 Cartesian combinations of pre-retriever, retriever, and post-retriever choices. Results show that simple character-level recursive chunking is stronger and far cheaper than semantic or LLM-based chunkers, and Korean-aligned embedding/reranking models outperform larger multilingual alternatives. The best answer-quality pipeline combines \code{query2doc}, \code{hybrid\_7\_3}, and \code{jina-reranker-m0}, achieving a 4.067/5 judge score. The largest retrieval gain is obtained by \code{multi\_query\_para + hybrid\_5\_5 + jina-reranker-m0}, reaching 0.7874 MRR. Overall impact follows PostR $>$ R $>$ PreR, demonstrating that reranker selection dominates Korean RAG quality.
+
+\vspace{1mm}
+\noindent\textbf{키워드}\quad 한국어 RAG, 정보검색, reranker, LLM-as-judge, Cartesian benchmark, query transformation\par
+}\vspace{5mm}
+\end{@twocolumnfalse}
+]
+\makeatother
+
+\section{서론}
+Retrieval-Augmented Generation(RAG)은 외부 문서 검색 결과를 대형 언어 모델의 입력 맥락으로 제공하여 최신성 부족과 환각을 완화하는 대표적 접근이다\cite{lewis2020rag}. 그러나 실제 RAG 시스템은 단일 모델이 아니라 문서 로더, 청킹, 임베딩, 검색, 쿼리 변환, 재순위화, 생성 모델의 조합으로 구성된다. 따라서 최종 답변 품질이 낮을 때 어느 컴포넌트가 병목인지, 단변량 최적화 결과를 단순히 합치면 실제 최적 조합이 되는지 판단하기 어렵다.
+
+한국어 RAG에서는 이러한 문제가 더 크다. 한국어는 띄어쓰기와 형태소 분석 품질에 따라 sparse retrieval 성능이 크게 달라지고, multilingual 모델이 한국어 도메인 정렬을 충분히 반영하지 못하는 경우가 많다. 반면 공개 RAG 벤치마크는 영어 중심이며, 한국어 데이터에서 검색 지표와 생성 품질을 동시에 측정한 대규모 컴포넌트 분해 결과는 제한적이다.
+
+본 연구의 질문은 다음과 같다.
+\begin{enumerate}
+  \item 각 컴포넌트가 한국어 RAG의 검색 성능과 생성 품질에 미치는 단변량 효과는 무엇인가?
+  \item PreR, R, PostR 간 상호작용은 존재하며, Cartesian 전수 평가는 단변량 평가 대비 어떤 추가 가치를 제공하는가?
+  \item 한국어 fine-tune 모델은 최신 대형 multilingual 모델 대비 어떤 장단점을 갖는가?
+  \item 단순 dense baseline에서 누적 최적화를 적용했을 때 개선 한계는 어느 정도인가?
+\end{enumerate}
+
+기여는 세 가지다. 첫째, 한국어 RAG 파이프라인의 95개 이상 구성요소를 동일 데이터셋에서 비교했다. 둘째, 384개 PreR--R--PostR 조합을 전수 평가하여 단변량 분석에서 보이지 않는 상호작용을 확인했다. 셋째, 검색 지표(MRR, Hit@k, File@k)와 LLM-as-Judge 기반 생성 품질을 함께 보고하여 운영 목적에 따른 파이프라인 선택 기준을 제시한다.
+
+\section{관련 연구}
+RAG는 지식 집약적 NLP 태스크에서 검색기와 생성기를 결합하는 방식으로 제안되었다\cite{lewis2020rag}. 이후 검색 품질 향상을 위해 BM25\cite{robertson2009bm25}, dense retrieval, Reciprocal Rank Fusion(RRF)\cite{cormack2009rrf}, cross-encoder reranking 등이 널리 사용됐다. 쿼리 변환 계열에서는 HyDE\cite{gao2023hyde}, Query2doc\cite{wang2023query2doc}, Step-back prompting\cite{zheng2024stepback}, Self-Ask\cite{press2023selfask}, query rewriting\cite{ma2023query} 등이 제안됐다.
+
+최근 임베딩과 reranker는 multilingual 및 long-context 방향으로 빠르게 발전했다. BGE-M3는 dense, sparse, multi-vector retrieval을 통합한 multilingual embedding을 제안했으며\cite{chen2024bge}, Qwen 및 Jina 계열 reranker는 대규모 multilingual/멀티모달 백본을 활용한다. 그러나 본 연구의 결과는 한국어 질의응답 RAG에서는 모델 크기보다 한국어 정렬 및 사용 목적 적합성이 더 중요할 수 있음을 보인다.
+
+생성 품질 평가는 사람이 직접 평가하기 어렵기 때문에 LLM-as-Judge가 많이 사용된다. G-Eval은 LLM을 사용한 자연어 생성 평가가 사람 평가와 더 잘 정렬될 수 있음을 보고했다\cite{liu2023geval}. 본 연구도 similarity, correctness, completeness, faithfulness 네 지표를 분리 평가한 뒤 평균을 사용한다.
+
+\section{실험 설계}
+\subsection{데이터셋}
+실험은 \dataset{}를 사용했다. 데이터셋은 5개 도메인(finance, public, medical, law, commerce)에서 도메인별 60문항, 총 300개 질의응답으로 구성된다. 근거 문서는 총 58개 PDF이며, ground truth는 정답 텍스트, 정답 PDF 파일명, 페이지 정보를 포함한다. 컨텍스트 유형은 paragraph 148개, image 57개, table 50개, text 45개로 분포한다.
+
+\subsection{비교 축}
+표~\ref{tab:scope}는 평가 범위를 요약한다. Stage 1--4-2에서는 한 번에 하나의 축만 바꾸고 나머지는 기본값으로 고정했다. Stage 5에서는 우수 구성요소를 고정한 상태에서 end-to-end generation 및 judge를 수행했다. Stage 6에서는 PreR, R, PostR 세 축을 모두 곱한 384개 조합을 평가했다.
+
+\begin{table*}[t]
+\centering
+\caption{컴포넌트 비교 범위}
+\label{tab:scope}
+\small
+\begin{tabularx}{\textwidth}{l r Y}
+\toprule
+축 & 개수 & 포함 항목 요약 \\
+\midrule
+Loader & 7 & PyMuPDF, pdfplumber, PyMuPDF4LLM, pdfminer, docling, pypdf, OpenDataLoader \\
+Parser / Chunker & 42 & LangChain/Chonkie/LlamaIndex 기반 character, token, sentence, semantic, LLM chunker \\
+Embedding & 27 & KoE5, EmbeddingGemma, BGE-M3, Qwen3-Embed, Jina, Snowflake, Nomic, harrier 등 \\
+Retriever & 7 & dense, BM25-KIWI, BM25-whitespace, hybrid RRF 비율 변형 \\
+Pre-retriever & 10 & baseline, HyDE, HyDE-RRF, Query2doc, multi-query, step-back, decompose, expansion, rewrite \\
+Post-retriever & 25 & BGE 계열, dragonkue/shoxa Korean fine-tune, Jina, Qwen3, mxbai, ModernReranker 등 \\
+Generator & 46 & open-weights 27개와 closed/API 19개 \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\subsection{평가 지표}
+검색 성능은 MRR, Hit@1, Hit@5, File@5를 사용했다. MRR은 각 질의에서 정답 chunk의 역순위 평균으로 정의한다.
+\begin{equation}
+\mathrm{MRR}=\frac{1}{N}\sum_{i=1}^{N}\frac{1}{\mathrm{rank}_i}.
+\end{equation}
+생성 품질은 Azure GPT-5.4 judge가 similarity, correctness, completeness, faithfulness를 1--5점으로 각각 채점하고 네 점수의 평균을 \emph{judge}로 정의했다. Stage 6에서는 384개 조합 $\times$ 300문항 $\times$ (1 generation + 4 judge) = 576,000회 LLM 호출이 발생했다.
+
+\subsection{구현과 인프라}
+파이프라인은 LangChain LCEL 기반으로 구현했다. 기본 구성요소는 \code{PyMuPDFLoader}, \code{RecursiveCharacterTextSplitter}, FAISS dense retriever, BM25-KIWI, RRF ensemble, cross-encoder reranker, \code{ChatOpenAI(base\_url=...)}이다. 임베딩과 reranker 추론은 MacBook Pro 14(M5 Max, 128GB), HP Z2 Mini G1a(AMD Ryzen AI Max+ 395, 128GB), DGX Spark, RTX 3090 워크스테이션 및 Azure OpenAI AI Foundry를 혼합 사용했다.
+
+\section{결과}
+\subsection{단변량 비교}
+표~\ref{tab:univariate}는 각 축의 주요 결과를 요약한다. 로더에서는 PyMuPDF가 MRR 0.6486 및 3.1초 parse time으로 가장 좋았다. Markdown 변환 또는 layout/OCR 중심 로더는 비용 대비 이득이 작았다. 청킹에서는 단순한 character-level 계열이 semantic/LLM chunker를 앞섰다. 특히 LLM 기반 Chonkie Slumber는 5,608초가 걸렸지만 기준 LC Recursive 300/50 hybrid보다 낮은 MRR을 보였다.
+
+임베딩에서는 KoE5가 MRR 0.6871로 1위를 기록했고, 대형 Qwen3-Embed-8B보다 약 0.16 MRR 높았다. 검색기는 dense와 BM25-KIWI를 RRF로 결합한 hybrid 3:7이 가장 높았다. BM25-whitespace는 BM25-KIWI보다 14.4pp 낮아 한국어 형태소 분석의 중요성을 확인했다. Reranker에서는 dragonkue/shoxa의 Korean fine-tune BGE-M3가 MRR 0.7697, Hit@1 74.0\%로 Qwen3-Reranker-4B보다 높았다.
+
+\begin{table*}[t]
+\centering
+\caption{단변량 실험의 주요 승자와 해석}
+\label{tab:univariate}
+\small
+\begin{tabularx}{\textwidth}{l l r Y}
+\toprule
+축 & 최고 구성 & 핵심 수치 & 해석 \\
+\midrule
+Loader & PyMuPDF & MRR 0.6486, 3.1s & 단순 평문 추출이 빠르고 충분히 정확함 \\
+Chunker & Chonkie Fast 800 / LC Recursive 300/50 & MRR 0.6903 / 0.6816 & 한국어 단답형 RAG에서는 semantic/LLM chunking보다 character chunking이 효율적 \\
+Embedding & KoE5 & MRR 0.6871 & 한국어 fine-tune 소형 모델이 대형 multilingual embedding을 압도 \\
+Retriever & Hybrid 3:7 & MRR 0.7171, Hit@1 65.3\% & dense와 BM25-KIWI 결합이 단독 검색보다 강함 \\
+PreR & decompose / query expansion & MRR 0.7786 / 0.7783 & 단변량 효과는 baseline 대비 1pp 미만으로 작음 \\
+PostR & dragonkue/shoxa BGE-M3-KO & MRR 0.7697, Hit@1 74.0\% & 한국어 reranker fine-tune의 효과가 큼 \\
+Generator & GPT-5.4 & acc 0.787 & closed 최상위가 가장 높지만 open-weights 상위권과 신뢰구간 일부 중첩 \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+\subsection{Axis-wise End-to-End 평가}
+Stage 5에서는 28개 구성에 대해 검색과 생성 및 judge를 함께 측정했다. PreR 축에서는 query expansion이 judge 3.998로 가장 높았고, R 축에서는 hybrid 5:5가 3.983, PostR 축에서는 Dongjin-kr/ko-reranker가 4.005로 가장 높았다. 중요한 점은 검색 1위와 생성 품질 1위가 일치하지 않는다는 것이다. 검색 MRR 기준으로는 dragonkue/bge-v2-m3-ko가 가장 좋았으나, 최종 답변 품질에서는 다른 한국어 reranker가 더 좋은 분포를 만들었다.
+
+\subsection{Cartesian 전수 탐색}
+Stage 6에서는 8개 PreR, 6개 R, 8개 PostR를 조합한 384개 파이프라인을 전수 평가했다. 표~\ref{tab:cartesian}은 judge 기준 상위와 MRR 기준 상위를 함께 보인다. 최종 답변 품질 1위는 \code{query2doc + hybrid\_7\_3 + jina-reranker-m0}이며 judge 4.0667을 기록했다. 반면 검색 정확도 1위는 \code{multi\_query\_para + hybrid\_5\_5 + jina-reranker-m0}로 MRR 0.7874를 기록했다.
+
+\begin{table*}[t]
+\centering
+\caption{Cartesian 전수 탐색 주요 결과}
+\label{tab:cartesian}
+\small
+\begin{tabularx}{\textwidth}{r l l l r r r}
+\toprule
+순위 & PreR & R & PostR & MRR & Hit@1 & Judge \\
+\midrule
+1(judge) & query2doc & hybrid\_7\_3 & jina-reranker-m0 & 0.7630 & 71.3\% & 4.0667 \\
+2(judge) & query expansion & hybrid\_5\_5 & jina-reranker-m0 & 0.7806 & 74.0\% & 4.0617 \\
+3(judge) & query2doc & hybrid\_5\_5 & jina-reranker-m0 & 0.7726 & 73.0\% & 4.0358 \\
+1(MRR) & multi-query para & hybrid\_5\_5 & jina-reranker-m0 & 0.7874 & 75.0\% & 3.9908 \\
+2(MRR) & multi-query para & hybrid\_ws\_5\_5 & bge-reranker-v2-m3-ko & 0.7850 & 75.0\% & 4.0192 \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+Cartesian 결과의 핵심은 상호작용이다. Axis-wise에서 query2doc는 PreR 1위가 아니었지만, jina-reranker-m0와 결합했을 때 judge 1위가 됐다. 이는 가상 문서 생성 방식이 특정 reranker와 맞물릴 때 답변 품질을 크게 끌어올릴 수 있음을 뜻한다. 또한 judge 기준 Top 10 중 8개가 jina-reranker-m0를 사용했고, Bottom 10은 모두 no-rerank였다. 즉 PostR 선택이 가장 큰 영향 축이다.
+
+\subsection{누적 개선}
+표~\ref{tab:cumulative}는 단순 dense baseline 대비 누적 개선을 보인다. 최종 답변 품질 기준으로는 judge 3.850에서 4.067로 5.6\% 개선됐다. 검색 정확도 기준으로는 MRR 0.6816에서 0.7874로 15.5\%, Hit@1은 59.0\%에서 75.0\%로 16.0pp 증가했다.
+
+\begin{table}[t]
+\centering
+\caption{Baseline 대비 누적 개선}
+\label{tab:cumulative}
+\small
+\begin{tabular}{l r r r}
+\toprule
+구성 & MRR & Hit@1 & Judge \\
+\midrule
+Dense baseline & 0.6816 & 59.0\% & 3.850 \\
++ Hybrid 3:7 & 0.7171 & 65.3\% & 3.869 \\
++ KR reranker & 0.7697 & 74.0\% & 3.916 \\
+Axis-wise winner & 0.7747 & 70.7\% & 3.983 \\
+Cartesian judge winner & 0.7630 & 71.3\% & 4.067 \\
+Cartesian MRR winner & 0.7874 & 75.0\% & 3.991 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{논의}
+\subsection{단변량 최적 조합은 전역 최적이 아니다}
+단변량 실험은 병목을 빠르게 파악하는 데 유용하지만 상호작용을 놓친다. 본 연구에서는 query expansion이 axis-wise PreR 1위였음에도 Cartesian judge 1위는 query2doc 조합이었다. 따라서 비용이 허용되는 경우, 후보 축을 좁힌 뒤 Cartesian 또는 fractional factorial 설계를 수행하는 것이 실전 RAG 최적화에 더 적합하다.
+
+\subsection{한국어 정렬은 모델 크기보다 중요할 수 있다}
+임베딩, sparse retrieval, reranking의 세 축에서 동일한 패턴이 관찰됐다. KoE5는 Qwen3-Embed-8B보다 높았고, BM25-KIWI는 whitespace BM25보다 크게 앞섰으며, 한국어 fine-tune reranker는 Qwen3-Reranker-4B보다 높은 MRR을 기록했다. 이는 한국어 RAG에서 최신 대형 multilingual 모델을 그대로 쓰기보다 한국어 형태소·도메인·질의응답 분포에 정렬된 컴포넌트를 우선 검토해야 함을 시사한다.
+
+\subsection{검색 지표와 답변 품질은 다르다}
+MRR 최고 조합과 judge 최고 조합은 일치하지 않았다. 검색 정확도를 최우선으로 하는 시스템은 \code{multi\_query\_para + hybrid\_5\_5 + jina-reranker-m0}가 적합하지만, 답변 품질을 최우선으로 하는 운영 환경은 \code{query2doc + hybrid\_7\_3 + jina-reranker-m0}를 선택하는 것이 낫다. 따라서 RAG 평가는 Hit@k 또는 MRR만으로 끝내지 말고, 최종 응답의 정확성·완전성·충실성을 별도로 측정해야 한다.
+
+\subsection{한계}
+본 연구는 factoid 성격의 300개 한국어 Q\&A에 집중한다. 멀티홉 추론, 장문 서술, 대화형 질의에서는 최적 chunk size와 PreR 효과가 달라질 수 있다. 또한 Cartesian judge는 단일 GPT-5.4 judge에 의존한다. Phase 5 생성 모델 비교에서는 multi-judge ensemble을 사용했지만, 전체 384개 조합에 ensemble judge를 적용하지는 않았다. 마지막으로 transformers v5 호환성 문제로 일부 reranker는 제외됐다.
+
+\section{결론}
+본 연구는 한국어 RAG 파이프라인을 컴포넌트 단위로 분해하고, 단변량 비교와 Cartesian 전수 탐색을 결합하여 최종 답변 품질을 최적화했다. 실험 결과, 단순한 문자 기반 chunking과 한국어 정렬 embedding/reranker가 비용 대비 강력했으며, reranker 선택이 전체 품질을 가장 크게 좌우했다. 또한 단변량 1위들의 단순 결합이 최적해가 아니며, query2doc와 jina-reranker-m0의 상호작용처럼 Cartesian 평가에서만 드러나는 조합이 존재했다.
+
+운영 목적이 답변 품질이면 다음 파이프라인을 권장한다.
+\begin{quote}\small
+PyMuPDFLoader $\rightarrow$ RecursiveCharacterTextSplitter(300, 50) $\rightarrow$ EmbeddingGemma-300m $\rightarrow$ query2doc $\rightarrow$ Hybrid 7:3(FAISS + BM25-KIWI, RRF) $\rightarrow$ jina-reranker-m0 $\rightarrow$ GPT-5.4.
+\end{quote}
+검색 정확도가 최우선이면 PreR을 multi-query paraphrase로, retriever를 hybrid 5:5로 조정하는 대안을 권장한다. 향후 연구는 멀티홉/장문 한국어 데이터, multi-judge Cartesian 평가, 실패 reranker 재평가, 신규 한국어 fine-tune 모델 추적을 포함한다.
+
+\section*{재현 자료}
+코드와 결과는 \url{https://github.com/BAEM1N/RAG-Evaluation}에 공개되어 있으며, 배포용 벤치마크 데이터는 \url{https://huggingface.co/datasets/BAEM1N/Korean-RAG-LLM-Judge-Benchmark}에서 확인할 수 있다.
+
+\begin{thebibliography}{10}
+\bibitem{lewis2020rag}
+P. Lewis, E. Perez, A. Piktus, F. Petroni, V. Karpukhin, N. Goyal, H. Kuttler, M. Lewis, W. Yih, T. Rocktaschel, S. Riedel, and D. Kiela.
+\newblock Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks.
+\newblock \emph{NeurIPS}, 2020. \url{https://arxiv.org/abs/2005.11401}
+
+\bibitem{gao2023hyde}
+L. Gao, X. Ma, J. Lin, and J. Callan.
+\newblock Precise Zero-Shot Dense Retrieval without Relevance Labels.
+\newblock \emph{ACL}, 2023. \url{https://arxiv.org/abs/2212.10496}
+
+\bibitem{wang2023query2doc}
+L. Wang, N. Yang, and F. Wei.
+\newblock Query2doc: Query Expansion with Large Language Models.
+\newblock \emph{EMNLP}, 2023. \url{https://arxiv.org/abs/2303.07678}
+
+\bibitem{zheng2024stepback}
+H. Zheng et al.
+\newblock Take a Step Back: Evoking Reasoning via Abstraction in Large Language Models.
+\newblock \emph{ICLR}, 2024. \url{https://arxiv.org/abs/2310.06117}
+
+\bibitem{press2023selfask}
+O. Press, M. Zhang, S. Min, L. Schmidt, N. A. Smith, and M. Lewis.
+\newblock Measuring and Narrowing the Compositionality Gap in Language Models.
+\newblock \emph{EMNLP}, 2023. \url{https://arxiv.org/abs/2210.03350}
+
+\bibitem{ma2023query}
+X. Ma, Y. Gong, P. He, H. Zhao, and N. Duan.
+\newblock Query Rewriting for Retrieval-Augmented Large Language Models.
+\newblock \emph{EMNLP}, 2023. \url{https://arxiv.org/abs/2305.14283}
+
+\bibitem{robertson2009bm25}
+S. Robertson and H. Zaragoza.
+\newblock The Probabilistic Relevance Framework: BM25 and Beyond.
+\newblock \emph{Foundations and Trends in Information Retrieval}, 2009. \url{https://doi.org/10.1561/1500000019}
+
+\bibitem{cormack2009rrf}
+G. V. Cormack, C. L. A. Clarke, and S. Buettcher.
+\newblock Reciprocal Rank Fusion Outperforms Condorcet and Individual Rank Learning Methods.
+\newblock \emph{SIGIR}, 2009. \url{https://doi.org/10.1145/1571941.1572114}
+
+\bibitem{chen2024bge}
+J. Chen et al.
+\newblock BGE M3-Embedding: Multi-Lingual, Multi-Functionality, Multi-Granularity Text Embeddings Through Self-Knowledge Distillation.
+\newblock 2024. \url{https://arxiv.org/abs/2402.03216}
+
+\bibitem{liu2023geval}
+Y. Liu, D. Iter, Y. Xu, S. Wang, R. Xu, and C. Zhu.
+\newblock G-Eval: NLG Evaluation using GPT-4 with Better Human Alignment.
+\newblock \emph{EMNLP}, 2023. \url{https://arxiv.org/abs/2303.16634}
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,26 @@
+{
+  "models": [
+    {"id": "x-ai/grok-4.20", "tier": "premium", "reasoning": true, "notes": "xAI flagship"},
+    {"id": "moonshotai/kimi-k2.5", "tier": "premium", "reasoning": false, "notes": "1T params, China flagship"},
+    {"id": "moonshotai/kimi-k2.6", "tier": "premium", "reasoning": false, "notes": "Kimi newer"},
+    {"id": "minimax/minimax-m2.7", "tier": "standard", "reasoning": false, "notes": "230B MoE"},
+    {"id": "minimax/minimax-m2.5", "tier": "standard", "reasoning": false, "notes": "MiniMax older"},
+    {"id": "qwen/qwen3-max-thinking", "tier": "premium", "reasoning": true, "notes": "Qwen flagship thinking"},
+    {"id": "qwen/qwen3.6-plus", "tier": "standard", "reasoning": false, "notes": "Qwen 3.6 gen"},
+    {"id": "z-ai/glm-5.1", "tier": "standard", "reasoning": false, "notes": "Zhipu GLM 5.1"},
+    {"id": "z-ai/glm-5", "tier": "standard", "reasoning": false, "notes": "Zhipu GLM 5"},
+    {"id": "z-ai/glm-4.7", "tier": "standard", "reasoning": false, "notes": "Zhipu GLM 4.7"},
+    {"id": "z-ai/glm-4.7-flash", "tier": "budget", "reasoning": false, "notes": "GLM 4.7 fast"},
+    {"id": "deepseek/deepseek-v4-pro", "tier": "premium", "reasoning": true, "notes": "DeepSeek flagship"},
+    {"id": "deepseek/deepseek-v4-flash", "tier": "budget", "reasoning": false, "notes": "DeepSeek fast"},
+    {"id": "deepseek/deepseek-v3.2", "tier": "standard", "reasoning": false, "notes": "DeepSeek prior gen"},
+    {"id": "xiaomi/mimo-v2.5-pro", "tier": "standard", "reasoning": false, "notes": "Xiaomi MiMo flagship"},
+    {"id": "xiaomi/mimo-v2.5", "tier": "budget", "reasoning": false, "notes": "Xiaomi MiMo base"},
+    {"id": "mistralai/mistral-small-2603", "tier": "budget", "reasoning": false, "notes": "Mistral small"},
+    {"id": "upstage/solar-pro-3", "tier": "standard", "reasoning": false, "notes": "Upstage Solar Pro (Korean-tuned)"},
+    {"id": "nvidia/nemotron-3-nano-30b-a3b", "tier": "budget", "reasoning": false, "notes": "Nemotron 30B MoE"}
+  ],
+  "count": 19,
+  "excluded": ["perplexity/sonar-reasoning-pro", "cohere/command-a", "mistralai/mistral-large-3"],
+  "excluded_reason": "perplexity=search augmented (not pure LLM), cohere=enterprise slant, mistral-large-3=weaker Korean support"
+}

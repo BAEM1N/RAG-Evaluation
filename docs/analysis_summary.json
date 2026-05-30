@@ -1,0 +1,107 @@
+{
+  "n_cands": 46,
+  "n_open": 27,
+  "n_closed": 19,
+  "open_avg": 0.669753086419753,
+  "closed_avg": 0.7133333333333334,
+  "trend_slope": 0.5759103634413687,
+  "trend_intercept": 0.3027724105703601,
+  "correlation_open_vs_closed_pool": 0.7617947412605846,
+  "open_top5": [
+    {
+      "cand": "moonshotai_kimi-k2.5",
+      "cons_acc": 0.74,
+      "open_acc": 0.7074074074074074,
+      "closed_acc": 0.7337037037037039
+    },
+    {
+      "cand": "gpt-oss_120b",
+      "cons_acc": 0.74,
+      "open_acc": 0.7688888888888887,
+      "closed_acc": 0.7074074074074074
+    },
+    {
+      "cand": "moonshotai_kimi-k2.6",
+      "cons_acc": 0.7266666666666667,
+      "open_acc": 0.708888888888889,
+      "closed_acc": 0.7277777777777777
+    },
+    {
+      "cand": "gpt-oss_20b",
+      "cons_acc": 0.7266666666666667,
+      "open_acc": 0.7825925925925925,
+      "closed_acc": 0.6970370370370369
+    },
+    {
+      "cand": "z-ai_glm-4.7",
+      "cons_acc": 0.7166666666666667,
+      "open_acc": 0.6788888888888889,
+      "closed_acc": 0.7
+    }
+  ],
+  "closed_top5": [
+    {
+      "cand": "gpt-5.4",
+      "cons_acc": 0.7866666666666666,
+      "open_acc": 0.7522222222222221,
+      "closed_acc": 0.7622222222222221
+    },
+    {
+      "cand": "gpt-5.4-pro",
+      "cons_acc": 0.7666666666666667,
+      "open_acc": 0.7507407407407407,
+      "closed_acc": 0.7592592592592592
+    },
+    {
+      "cand": "x-ai_grok-4.20",
+      "cons_acc": 0.7566666666666667,
+      "open_acc": 0.7577777777777778,
+      "closed_acc": 0.752962962962963
+    },
+    {
+      "cand": "gemini-3-flash-preview",
+      "cons_acc": 0.74,
+      "open_acc": 0.6988888888888888,
+      "closed_acc": 0.727037037037037
+    },
+    {
+      "cand": "gpt-5.4-mini",
+      "cons_acc": 0.7366666666666667,
+      "open_acc": 0.7359259259259259,
+      "closed_acc": 0.7370370370370369
+    }
+  ],
+  "gpt54pro_cons_acc": 0.7666666666666667,
+  "open_within_5pp_of_gpt54pro": [
+    {
+      "cand": "moonshotai_kimi-k2.5",
+      "cons_acc": 0.74
+    },
+    {
+      "cand": "gpt-oss_120b",
+      "cons_acc": 0.74
+    },
+    {
+      "cand": "moonshotai_kimi-k2.6",
+      "cons_acc": 0.7266666666666667
+    },
+    {
+      "cand": "gpt-oss_20b",
+      "cons_acc": 0.7266666666666667
+    },
+    {
+      "cand": "z-ai_glm-4.7",
+      "cons_acc": 0.7166666666666667
+    }
+  ],
+  "open_above_gpt54mini": [
+    {
+      "cand": "moonshotai_kimi-k2.5",
+      "cons_acc": 0.74
+    },
+    {
+      "cand": "gpt-oss_120b",
+      "cons_acc": 0.74
+    }
+  ]
+}

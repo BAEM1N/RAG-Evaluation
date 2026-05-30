@@ -1,0 +1,477 @@
+{
+  "records": [
+    {
+      "provider": "openai",
+      "model": "gpt-5.4-pro",
+      "we_sent": {
+        "temperature": 0
+      },
+      "provider_defaults_used": {
+        "top_p": 1.0,
+        "frequency_penalty": 0.0,
+        "presence_penalty": 0.0,
+        "n": 1,
+        "seed": null,
+        "stream": false,
+        "reasoning_effort": "high (default for Pro)"
+      },
+      "endpoint": "/v1/chat/completions (Batch API)"
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-5.4",
+      "we_sent": {
+        "temperature": 0
+      },
+      "provider_defaults_used": {
+        "top_p": 1.0,
+        "frequency_penalty": 0.0,
+        "presence_penalty": 0.0,
+        "n": 1,
+        "seed": null,
+        "stream": false,
+        "reasoning_effort": "medium (default)"
+      },
+      "endpoint": "/v1/chat/completions (Batch API)"
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-5.4-mini",
+      "we_sent": {
+        "temperature": 0
+      },
+      "provider_defaults_used": {
+        "top_p": 1.0,
+        "frequency_penalty": 0.0,
+        "presence_penalty": 0.0,
+        "n": 1,
+        "seed": null,
+        "stream": false
+      },
+      "endpoint": "/v1/chat/completions (Batch API)"
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-5.4-nano",
+      "we_sent": {
+        "temperature": 0
+      },
+      "provider_defaults_used": {
+        "top_p": 1.0,
+        "frequency_penalty": 0.0,
+        "presence_penalty": 0.0,
+        "n": 1,
+        "seed": null,
+        "stream": false
+      },
+      "endpoint": "/v1/chat/completions (Batch API)"
+    },
+    {
+      "provider": "anthropic",
+      "model": "claude-opus-4-7",
+      "we_sent": {
+        "max_tokens": 8192
+      },
+      "provider_defaults_used": {
+        "temperature": 1.0,
+        "top_p": -1,
+        "top_k": -1,
+        "stop_sequences": [],
+        "cache_control": "ephemeral (on static prefix)"
+      },
+      "notes": "sampling params 제거 — Opus 4.7 when combined with thinking returns 400 if temperature<1.0; keeping provider-consistent default.",
+      "endpoint": "/v1/messages/batches"
+    },
+    {
+      "provider": "anthropic",
+      "model": "claude-sonnet-4-6",
+      "we_sent": {
+        "max_tokens": 8192
+      },
+      "provider_defaults_used": {
+        "temperature": 1.0,
+        "top_p": -1,
+        "top_k": -1,
+        "stop_sequences": [],
+        "cache_control": "ephemeral (on static prefix)"
+      },
+      "notes": "sampling params 제거 — Opus 4.7 when combined with thinking returns 400 if temperature<1.0; keeping provider-consistent default.",
+      "endpoint": "/v1/messages/batches"
+    },
+    {
+      "provider": "anthropic",
+      "model": "claude-sonnet-4-5",
+      "we_sent": {
+        "max_tokens": 8192
+      },
+      "provider_defaults_used": {
+        "temperature": 1.0,
+        "top_p": -1,
+        "top_k": -1,
+        "stop_sequences": [],
+        "cache_control": "ephemeral (on static prefix)"
+      },
+      "notes": "sampling params 제거 — Opus 4.7 when combined with thinking returns 400 if temperature<1.0; keeping provider-consistent default.",
+      "endpoint": "/v1/messages/batches"
+    },
+    {
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5",
+      "we_sent": {
+        "max_tokens": 8192
+      },
+      "provider_defaults_used": {
+        "temperature": 1.0,
+        "top_p": -1,
+        "top_k": -1,
+        "stop_sequences": [],
+        "cache_control": "ephemeral (on static prefix)"
+      },
+      "notes": "sampling params 제거 — Opus 4.7 when combined with thinking returns 400 if temperature<1.0; keeping provider-consistent default.",
+      "endpoint": "/v1/messages/batches"
+    },
+    {
+      "provider": "anthropic",
+      "model": "claude-opus-4-7-thinking",
+      "we_sent": {
+        "max_tokens": 8192,
+        "thinking": {
+          "type": "enabled"
+        }
+      },
+      "provider_defaults_used": {
+        "temperature": 1.0,
+        "top_p": -1,
+        "top_k": -1,
+        "stop_sequences": [],
+        "cache_control": "ephemeral (on static prefix)"
+      },
+      "notes": "sampling params 제거 — Opus 4.7 when combined with thinking returns 400 if temperature<1.0; keeping provider-consistent default.",
+      "endpoint": "/v1/messages/batches"
+    },
+    {
+      "provider": "anthropic",
+      "model": "claude-sonnet-4-6-thinking",
+      "we_sent": {
+        "max_tokens": 8192,
+        "thinking": {
+          "type": "enabled"
+        }
+      },
+      "provider_defaults_used": {
+        "temperature": 1.0,
+        "top_p": -1,
+        "top_k": -1,
+        "stop_sequences": [],
+        "cache_control": "ephemeral (on static prefix)"
+      },
+      "notes": "sampling params 제거 — Opus 4.7 when combined with thinking returns 400 if temperature<1.0; keeping provider-consistent default.",
+      "endpoint": "/v1/messages/batches"
+    },
+    {
+      "provider": "google",
+      "model": "gemini-3.1-pro-preview",
+      "we_sent": {},
+      "provider_defaults_used": {
+        "temperature": 1.0,
+        "top_p": 0.95,
+        "top_k": 64,
+        "candidate_count": 1
+      },
+      "endpoint": "batchGenerateContent (Batch API)"
+    },
+    {
+      "provider": "google",
+      "model": "gemini-3.1-pro-preview-thinking",
+      "we_sent": {
+        "thinking_config.include_thoughts": true
+      },
+      "provider_defaults_used": {
+        "temperature": 1.0,
+        "top_p": 0.95,
+        "top_k": 64,
+        "candidate_count": 1
+      },
+      "endpoint": "batchGenerateContent (Batch API)"
+    },
+    {
+      "provider": "google",
+      "model": "gemini-3-pro-preview",
+      "we_sent": {},
+      "provider_defaults_used": {
+        "temperature": 1.0,
+        "top_p": 0.95,
+        "top_k": 64,
+        "candidate_count": 1
+      },
+      "endpoint": "batchGenerateContent (Batch API)"
+    },
+    {
+      "provider": "google",
+      "model": "gemini-3-flash-preview",
+      "we_sent": {},
+      "provider_defaults_used": {
+        "temperature": 1.0,
+        "top_p": 0.95,
+        "top_k": 64,
+        "candidate_count": 1
+      },
+      "endpoint": "batchGenerateContent (Batch API)"
+    },
+    {
+      "provider": "google",
+      "model": "gemini-3.1-flash-lite-preview",
+      "we_sent": {},
+      "provider_defaults_used": {
+        "temperature": 1.0,
+        "top_p": 0.95,
+        "top_k": 64,
+        "candidate_count": 1
+      },
+      "endpoint": "batchGenerateContent (Batch API)"
+    },
+    {
+      "provider": "google",
+      "model": "gemini-2.5-flash",
+      "we_sent": {},
+      "provider_defaults_used": {
+        "temperature": 1.0,
+        "top_p": 0.95,
+        "top_k": 64,
+        "candidate_count": 1
+      },
+      "endpoint": "batchGenerateContent (Batch API)"
+    },
+    {
+      "provider": "openrouter",
+      "model": "x-ai/grok-4.20",
+      "upstream": "xAI",
+      "we_sent": {},
+      "provider_defaults_used": {
+        "temperature": 1.0,
+        "top_p": 0.95
+      },
+      "endpoint": "realtime /v1/chat/completions",
+      "notes": "OpenRouter passes through upstream defaults; cache_control: ephemeral sent on static prefix when >4KB"
+    },
+    {
+      "provider": "openrouter",
+      "model": "moonshotai/kimi-k2.5",
+      "upstream": "Moonshot",
+      "we_sent": {},
+      "provider_defaults_used": {
+        "temperature": 0.6,
+        "top_p": 1.0
+      },
+      "endpoint": "realtime /v1/chat/completions",
+      "notes": "OpenRouter passes through upstream defaults; cache_control: ephemeral sent on static prefix when >4KB"
+    },
+    {
+      "provider": "openrouter",
+      "model": "moonshotai/kimi-k2.6",
+      "upstream": "Moonshot",
+      "we_sent": {},
+      "provider_defaults_used": {
+        "temperature": 0.6,
+        "top_p": 1.0
+      },
+      "endpoint": "realtime /v1/chat/completions",
+      "notes": "OpenRouter passes through upstream defaults; cache_control: ephemeral sent on static prefix when >4KB"
+    },
+    {
+      "provider": "openrouter",
+      "model": "minimax/minimax-m2.7",
+      "upstream": "MiniMax",
+      "we_sent": {},
+      "provider_defaults_used": {
+        "temperature": 1.0,
+        "top_p": 0.95
+      },
+      "endpoint": "realtime /v1/chat/completions",
+      "notes": "OpenRouter passes through upstream defaults; cache_control: ephemeral sent on static prefix when >4KB"
+    },
+    {
+      "provider": "openrouter",
+      "model": "minimax/minimax-m2.5",
+      "upstream": "MiniMax",
+      "we_sent": {},
+      "provider_defaults_used": {
+        "temperature": 1.0,
+        "top_p": 0.95
+      },
+      "endpoint": "realtime /v1/chat/completions",
+      "notes": "OpenRouter passes through upstream defaults; cache_control: ephemeral sent on static prefix when >4KB"
+    },
+    {
+      "provider": "openrouter",
+      "model": "qwen/qwen3-max-thinking",
+      "upstream": "Alibaba",
+      "we_sent": {},
+      "provider_defaults_used": {
+        "temperature": 0.7,
+        "top_p": 0.8,
+        "thinking": "auto"
+      },
+      "endpoint": "realtime /v1/chat/completions",
+      "notes": "OpenRouter passes through upstream defaults; cache_control: ephemeral sent on static prefix when >4KB"
+    },
+    {
+      "provider": "openrouter",
+      "model": "qwen/qwen3.6-plus",
+      "upstream": "Alibaba",
+      "we_sent": {},
+      "provider_defaults_used": {
+        "temperature": 0.7,
+        "top_p": 0.8
+      },
+      "endpoint": "realtime /v1/chat/completions",
+      "notes": "OpenRouter passes through upstream defaults; cache_control: ephemeral sent on static prefix when >4KB"
+    },
+    {
+      "provider": "openrouter",
+      "model": "z-ai/glm-5.1",
+      "upstream": "Zhipu",
+      "we_sent": {},
+      "provider_defaults_used": {
+        "temperature": 0.8,
+        "top_p": 0.95
+      },
+      "endpoint": "realtime /v1/chat/completions",
+      "notes": "OpenRouter passes through upstream defaults; cache_control: ephemeral sent on static prefix when >4KB"
+    },
+    {
+      "provider": "openrouter",
+      "model": "z-ai/glm-5",
+      "upstream": "Zhipu",
+      "we_sent": {},
+      "provider_defaults_used": {
+        "temperature": 0.8,
+        "top_p": 0.95
+      },
+      "endpoint": "realtime /v1/chat/completions",
+      "notes": "OpenRouter passes through upstream defaults; cache_control: ephemeral sent on static prefix when >4KB"
+    },
+    {
+      "provider": "openrouter",
+      "model": "z-ai/glm-4.7",
+      "upstream": "Zhipu",
+      "we_sent": {},
+      "provider_defaults_used": {
+        "temperature": 0.8,
+        "top_p": 0.95
+      },
+      "endpoint": "realtime /v1/chat/completions",
+      "notes": "OpenRouter passes through upstream defaults; cache_control: ephemeral sent on static prefix when >4KB"
+    },
+    {
+      "provider": "openrouter",
+      "model": "z-ai/glm-4.7-flash",
+      "upstream": "Zhipu",
+      "we_sent": {},
+      "provider_defaults_used": {
+        "temperature": 0.8,
+        "top_p": 0.95
+      },
+      "endpoint": "realtime /v1/chat/completions",
+      "notes": "OpenRouter passes through upstream defaults; cache_control: ephemeral sent on static prefix when >4KB"
+    },
+    {
+      "provider": "openrouter",
+      "model": "deepseek/deepseek-v4-pro",
+      "upstream": "DeepSeek",
+      "we_sent": {},
+      "provider_defaults_used": {
+        "temperature": 0.7,
+        "top_p": 1.0
+      },
+      "endpoint": "realtime /v1/chat/completions",
+      "notes": "OpenRouter passes through upstream defaults; cache_control: ephemeral sent on static prefix when >4KB"
+    },
+    {
+      "provider": "openrouter",
+      "model": "deepseek/deepseek-v4-flash",
+      "upstream": "DeepSeek",
+      "we_sent": {},
+      "provider_defaults_used": {
+        "temperature": 0.7,
+        "top_p": 1.0
+      },
+      "endpoint": "realtime /v1/chat/completions",
+      "notes": "OpenRouter passes through upstream defaults; cache_control: ephemeral sent on static prefix when >4KB"
+    },
+    {
+      "provider": "openrouter",
+      "model": "deepseek/deepseek-v3.2",
+      "upstream": "DeepSeek",
+      "we_sent": {},
+      "provider_defaults_used": {
+        "temperature": 0.7,
+        "top_p": 1.0
+      },
+      "endpoint": "realtime /v1/chat/completions",
+      "notes": "OpenRouter passes through upstream defaults; cache_control: ephemeral sent on static prefix when >4KB"
+    },
+    {
+      "provider": "openrouter",
+      "model": "xiaomi/mimo-v2.5-pro",
+      "upstream": "Xiaomi",
+      "we_sent": {},
+      "provider_defaults_used": {
+        "temperature": 0.7,
+        "top_p": 0.9
+      },
+      "endpoint": "realtime /v1/chat/completions",
+      "notes": "OpenRouter passes through upstream defaults; cache_control: ephemeral sent on static prefix when >4KB"
+    },
+    {
+      "provider": "openrouter",
+      "model": "xiaomi/mimo-v2.5",
+      "upstream": "Xiaomi",
+      "we_sent": {},
+      "provider_defaults_used": {
+        "temperature": 0.7,
+        "top_p": 0.9
+      },
+      "endpoint": "realtime /v1/chat/completions",
+      "notes": "OpenRouter passes through upstream defaults; cache_control: ephemeral sent on static prefix when >4KB"
+    },
+    {
+      "provider": "openrouter",
+      "model": "mistralai/mistral-small-2603",
+      "upstream": "Mistral",
+      "we_sent": {},
+      "provider_defaults_used": {
+        "temperature": 0.7,
+        "top_p": 1.0
+      },
+      "endpoint": "realtime /v1/chat/completions",
+      "notes": "OpenRouter passes through upstream defaults; cache_control: ephemeral sent on static prefix when >4KB"
+    },
+    {
+      "provider": "openrouter",
+      "model": "upstage/solar-pro-3",
+      "upstream": "Upstage",
+      "we_sent": {},
+      "provider_defaults_used": {
+        "temperature": 0.8,
+        "top_p": 0.95,
+        "top_k": 50
+      },
+      "endpoint": "realtime /v1/chat/completions",
+      "notes": "OpenRouter passes through upstream defaults; cache_control: ephemeral sent on static prefix when >4KB"
+    },
+    {
+      "provider": "openrouter",
+      "model": "nvidia/nemotron-3-nano-30b-a3b",
+      "upstream": "NVIDIA",
+      "we_sent": {},
+      "provider_defaults_used": {
+        "temperature": 0.6,
+        "top_p": 0.95
+      },
+      "endpoint": "realtime /v1/chat/completions",
+      "notes": "OpenRouter passes through upstream defaults; cache_control: ephemeral sent on static prefix when >4KB"
+    }
+  ],
+  "note": "We_sent is what RAG-Evaluation pipeline sent; provider_defaults_used is the value the model actually ran on (either our param or provider default)."
+}
