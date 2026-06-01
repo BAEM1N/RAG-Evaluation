@@ -23,7 +23,7 @@
 | 순위 | 전략 | MRR | Hit@1 | Hit@5 | File@5 | vs baseline (MRR) |
 |---:|---|---:|---:|---:|---:|---:|
 | 🥇 | **multi_query_para** | **0.7189** | **66.0%** | 81.0% | 91.7% | **+0.0018** |
-| — | baseline (no PreR) | 0.7171 | 65.3% | 80.3% | 91.7% | (기준) |
+| — | baseline (no Pre-Retrieval) | 0.7171 | 65.3% | 80.3% | 91.7% | (기준) |
 | 3 | hyde_rrf | 0.7159 | 64.7% | 80.7% | 91.7% | −0.0012 |
 | 4 | hyde | 0.7124 | 64.3% | 81.0% | **92.0%** | −0.0047 |
 | 5 | decompose | 0.7111 | 63.7% | **81.3%** | 91.7% | −0.0060 |
@@ -80,7 +80,7 @@ decompose (0.7111) 는 baseline 보다 약간 낮음. allganize 단답 dataset�
 > **이 데이터셋에서는 pre-retriever를 쓰지 않는 게 합리적**.
 > 굳이 쓴다면 `multi_query_para` (noise 범위 내 +0.0018, LLM 비용 발생) 또는 `hyde_rrf` (안전한 RRF 백오프).
 
-### 다음 stage(생성+평가)에서 PreR 변수 후보 (cartesian top-3)
+### 다음 stage(생성+평가)에서 Pre-Retrieval 변수 후보 (cartesian top-3)
 
 검색 metric 기준 상위 3개:
 1. **baseline** (LLM 0회, 비용 0) — 가장 강력
@@ -123,5 +123,5 @@ decompose (0.7111) 는 baseline 보다 약간 낮음. allganize 단답 dataset�
 
 - ✅ Stage 4-1 검색 metric 단변량 — 완료 (multi_query_para winner, baseline 동급)
 - ⏳ Stage 4-2 확장 — 신 reranker 9종 + non-reranker 전략 4개 (LangChain wrapper로 통일)
-- ⏳ Cartesian (PreR × R × PostR) — 시나리오 D 또는 E (~$30~$820)
+- ⏳ Cartesian (Pre-Retrieval × R × Post-Retrieval) — 시나리오 D 또는 E (~$30~$820)
 - ⏳ axis-wise 생성+평가 (시나리오 A, $10) — retrieval MRR vs generation quality 괴리 측정

@@ -11,7 +11,7 @@
 
 ## 결론
 
-**RAG 파이프라인 최적화가 모델 업그레이드보다 컸습니다.** 동일한 GPT-5.4를 쓰더라도 retrieval/reranker/PreR 조합을 최적화하면 GPT-5.4-pro보다 **+6.0pp 높은 accuracy**를 기록했습니다.
+**RAG 파이프라인 최적화가 모델 업그레이드보다 컸습니다.** 동일한 GPT-5.4를 쓰더라도 retrieval/reranker/Pre-Retrieval 조합을 최적화하면 GPT-5.4-pro보다 **+6.0pp 높은 accuracy**를 기록했습니다.
 
 | Pipeline | Generator | Accuracy |
 |---|---|---:|
@@ -22,7 +22,7 @@
 
 - 동일 GPT-5.4에서 파이프라인 최적화만으로 **+4.0pp accuracy** (0.787 → 0.827)
 - GPT-5.4-pro로 업그레이드한 경우보다 **+6.0pp accuracy**
-- 비용을 더 큰 클로즈 가중치(closed weights) 모델에만 쓰기보다, retrieval/reranker/PreR 조합 탐색에 쓰는 편이 효과적이었습니다.
+- 비용을 더 큰 클로즈 가중치(closed weights) 모델에만 쓰기보다, retrieval/reranker/Pre-Retrieval 조합 탐색에 쓰는 편이 효과적이었습니다.
 
 ## 데이터 / 규모
 
@@ -32,7 +32,7 @@
 | 공개 결과 데이터 | [BAEM1N/Korean-RAG-LLM-Judge-Benchmark](https://huggingface.co/datasets/BAEM1N/Korean-RAG-LLM-Judge-Benchmark) |
 | 규모 | 300 Q&A × 58 PDFs × 5 도메인 |
 | 단변량 평가 | 6 stage, 576 configs 측정값 |
-| Cartesian 평가 | 384 configs = 8 PreR × 6 Retriever × 8 PostR |
+| Cartesian 평가 | 384 configs = 8 Pre-Retrieval × 6 Retrieval × 8 Post-Retrieval |
 | Stage 6 호출량 | 576,000 GPT-5.4 호출 (generation + judge) |
 | 평가 규칙 | 18-judge 4-metric majority O: similarity / correctness / completeness / faithfulness |
 
@@ -47,7 +47,7 @@
 PyMuPDFLoader
   → RecursiveCharacterTextSplitter(300, 50)
   → google/embeddinggemma-300m
-  → query2doc (PreR, GPT-5.4)
+  → query2doc (Pre-Retrieval, GPT-5.4)
   → Hybrid 7:3 (Dense + BM25-KIWI)
   → top-20
   → jinaai/jina-reranker-m0
@@ -77,8 +77,8 @@ naive baseline은 dense only + no rerank 조합입니다.
 | 2. Parser | [`docs/2_parser.md`](docs/2_parser.md) | LC Recursive 300/50 | MRR 0.6816 (dense) / 0.7171 (hybrid) |
 | 3. Embedding | [`docs/3_embedding.md`](docs/3_embedding.md) | KoE5 / embeddinggemma-300m | MRR 0.6871 |
 | 4. Retriever | [`docs/4_retriever.md`](docs/4_retriever.md) | Hybrid 3:7 (Dense + BM25-KIWI) | MRR 0.7171 |
-| 4-1. Pre-Retriever | [`docs/4-1_pre_retriever.md`](docs/4-1_pre_retriever.md) | query_expansion (e2e judge 1위) | Judge 3.998 / MRR 0.7783 |
-| 4-2. Post-Retriever | [`docs/4-2_post_retriever.md`](docs/4-2_post_retriever.md) | dragonkue/bge-reranker-v2-m3-ko (+1.83pp vs Qwen3-Reranker-4B) | MRR 0.7697 |
+| 4-1. Pre-Retrieval | [`docs/4-1_pre_retriever.md`](docs/4-1_pre_retriever.md) | query_expansion (e2e judge 1위) | Judge 3.998 / MRR 0.7783 |
+| 4-2. Post-Retrieval | [`docs/4-2_post_retriever.md`](docs/4-2_post_retriever.md) | dragonkue/bge-reranker-v2-m3-ko (+1.83pp vs Qwen3-Reranker-4B) | MRR 0.7697 |
 | 5. Generation | [`docs/5_generation.md`](docs/5_generation.md) | 오픈 가중치 vs 클로즈 가중치 leaderboard | 46 gen × 18 judge |
 | 5-ext. e2e Axis-wise | [`docs/5_generation_e2e_axis.md`](docs/5_generation_e2e_axis.md) | Hybrid 5:5 + ko-reranker | Judge 3.983 |
 | 6. Cartesian | [`docs/6_cartesian.md`](docs/6_cartesian.md) | query2doc + Hybrid 7:3 + jina-reranker-m0 | Judge 4.067 |
@@ -118,7 +118,7 @@ python scripts/bench_parser_extended.py --strategies all
 python scripts/bench_retriever.py --strategies all
 python scripts/bench_reranker.py --rerankers all
 
-# Stage 4-1 PreR
+# Stage 4-1 Pre-Retrieval
 python scripts/bench_pre_retriever.py --strategies all
 
 # Stage 5 axis-wise

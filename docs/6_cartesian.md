@@ -1,8 +1,8 @@
-# Stage 6: Full Cartesian PreR × R × PostR (Task #37)
+# Stage 6: Full Cartesian Pre-Retrieval × R × Post-Retrieval (Task #37)
 
 > **데이터셋**: allganize/RAG-Evaluation-Dataset-KO (300 Q&A × 58 PDFs)
 >
-> **8 PreR × 6 R × 8 PostR = 384 configs**
+> **8 Pre-Retrieval × 6 Retrieval × 8 Post-Retrieval = 384 configs**
 >
 > **호출**: 576,000 GPT-5.4 (115,200 generation + 460,800 4-metric judge)
 >
@@ -16,15 +16,15 @@
 
 | 축 | 항목 | 개수 |
 |---|---|---:|
-| **PreR** | baseline, hyde, hyde_rrf, query2doc, multi_query_para, decompose, query_expansion, query_rewrite | **8** |
+| **Pre-Retrieval** | baseline, hyde, hyde_rrf, query2doc, multi_query_para, decompose, query_expansion, query_rewrite | **8** |
 | **R** | dense, bm25_kiwi, hybrid_7_3, hybrid_5_5, hybrid_3_7, hybrid_ws_5_5 | **6** |
-| **PostR** | no_rerank, bge-reranker-v2-m3, bge-reranker-v2-m3-ko, ko-reranker, bge-reranker-large, qwen3-reranker-0.6b, mxbai-rerank-base-v2, **jina-reranker-m0** | **8** |
+| **Post-Retrieval** | no_rerank, bge-reranker-v2-m3, bge-reranker-v2-m3-ko, ko-reranker, bge-reranker-large, qwen3-reranker-0.6b, mxbai-rerank-base-v2, **jina-reranker-m0** | **8** |
 | **총** | | **384** |
 
 ### Pruning rationale (770 → 384)
-- PreR: step_back, multi_query_angle 제외 (axis-wise 최하위)
+- Pre-Retrieval: step_back, multi_query_angle 제외 (axis-wise 최하위)
 - R: bm25_whitespace 제외 (gen 3.54, 명백히 망가짐)
-- PostR: mxbai-large, modernReranker, bge-gemma, pixie, qwen3-4b 제외 + sigridjineth/bge-v2-minicpm/bge-v2.5-gemma2-lw/jina-v3/jina-v2-multi 호환성 실패
+- Post-Retrieval: mxbai-large, modernReranker, bge-gemma, pixie, qwen3-4b 제외 + sigridjineth/bge-v2-minicpm/bge-v2.5-gemma2-lw/jina-v3/jina-v2-multi 호환성 실패
 
 ### Device routing (실측 timing 기반)
 
@@ -36,7 +36,7 @@
 
 ## 2. TOP 10 winners (judge mean 기준)
 
-| 순위 | PreR | R | PostR | MRR | Hit@1 | judge_mean | sim | corr | comp | faith |
+| 순위 | Pre-Retrieval | Retrieval | Post-Retrieval | MRR | Hit@1 | judge_mean | sim | corr | comp | faith |
 |---:|---|---|---|---:|---:|---:|---:|---:|---:|---:|
 | 🥇 | **query2doc** | **hybrid_7_3** | **jina-reranker-m0** | 0.7630 | 71.3% | **4.067** | 4.18 | 4.07 | 4.14 | 3.88 |
 | 🥈 | query_expansion | hybrid_5_5 | jina-reranker-m0 | 0.7806 | 74.0% | 4.062 | 4.16 | 4.06 | 4.13 | 3.89 |
@@ -51,7 +51,7 @@
 
 ## 2-b. TOP 5 by MRR (다른 ranking)
 
-| 순위 | PreR | R | PostR | MRR | Hit@1 | judge | acc |
+| 순위 | Pre-Retrieval | Retrieval | Post-Retrieval | MRR | Hit@1 | judge | acc |
 |---:|---|---|---|---:|---:|---:|---:|
 | 🥇 | **multi_query_para** | **hybrid_5_5** | **jina-reranker-m0** | **0.7874** | **75.0%** | 3.991 | 0.790 |
 | 🥈 | multi_query_para | hybrid_ws_5_5 | bge-reranker-v2-m3-ko | 0.7850 | 75.0% | 4.019 | 0.787 |
@@ -61,7 +61,7 @@
 
 ## 2-c. TOP 10 by Accuracy (Phase 5 동일 규칙: 4-metric majority O)
 
-| 순위 | PreR | R | PostR | MRR | judge | **acc** |
+| 순위 | Pre-Retrieval | Retrieval | Post-Retrieval | MRR | judge | **acc** |
 |---:|---|---|---|---:|---:|---:|
 | 🥇 | **query2doc** | **hybrid_7_3** | **jina-reranker-m0** | 0.7630 | **4.067** | **0.827** |
 | 🥈 | hyde_rrf | hybrid_5_5 | qwen3-reranker-0.6b | 0.7237 | 3.997 | 0.820 |
@@ -87,13 +87,13 @@
 | Phase 5 단순 + GPT-5.4-pro (10× 비싸짐) | GPT-5.4-pro | 0.767 |
 | Phase 5 Open 1위 (gpt-oss_120b / kimi-k2.5) | Open Weights | 0.740 |
 
-→ **동일 GPT-5.4 + RAG 파이프라인 최적화만으로 +4.0pp accuracy**. GPT-5.4-pro로 모델 업그레이드한 것보다도 +6.0pp 높음. 즉 모델 더 키우는 것보다 **PreR + Hybrid + Reranker 최적 조합이 더 효과적**.
+→ **동일 GPT-5.4 + RAG 파이프라인 최적화만으로 +4.0pp accuracy**. GPT-5.4-pro로 모델 업그레이드한 것보다도 +6.0pp 높음. 즉 모델 더 키우는 것보다 **Pre-Retrieval + Hybrid + Reranker 최적 조합이 더 효과적**.
 
 ## 3. 핵심 발견 (axis-wise 대비)
 
 ### (1) **jina-reranker-m0가 cartesian winner**
 
-| Stage | 1위 PostR | judge |
+| Stage | 1위 Post-Retrieval | judge |
 |---|---|---:|
 | Stage 4-2 (retrieval만) | dragonkue/bge-v2-m3-ko (0.7697 MRR) | — |
 | Stage 5 axis-wise (gen+judge) | Dongjin-kr/ko-reranker | 4.005 |
@@ -105,7 +105,7 @@
 
 ### (2) query2doc의 부활 — **상호작용 효과 발견**
 
-| PreR | axis-wise judge | cartesian top judge (with jina-m0) |
+| Pre-Retrieval | axis-wise judge | cartesian top judge (with jina-m0) |
 |---|---:|---:|
 | query2doc | 3.967 (4위) | **4.067** (1위) |
 | query_expansion | 3.998 (1위) | 4.062 |
@@ -120,14 +120,14 @@
 | Pipeline | MRR | judge | vs baseline |
 |---|---:|---:|---:|
 | Dense 단독 (Stage 4) | 0.6816 | (gen 미측정) | — |
-| Stage 5 axis-wise winner (PreR=baseline, R=Hybrid_5_5, PostR=ko-reranker) | 0.7747 | 3.983 | retrieval +13.7% |
+| Stage 5 axis-wise winner (Pre-Retrieval=baseline, R=Hybrid_5_5, Post-Retrieval=ko-reranker) | 0.7747 | 3.983 | retrieval +13.7% |
 | **Stage 6 cartesian winner** (query2doc + Hybrid_7_3 + jina-reranker-m0) | 0.7630 | **4.067** | judge +1.5%p vs axis-wise |
 
 → **단변량 → cartesian 추가 개선 ~1.5%**. Marginal but meaningful.
 
 ### (4) **Bottom 10은 모두 no_rerank** — reranker 필수
 
-| 순위 (하위) | PreR | R | PostR | judge |
+| 순위 (하위) | Pre-Retrieval | Retrieval | Post-Retrieval | judge |
 |---:|---|---|---|---:|
 | 384 | hyde | hybrid_ws_5_5 | no_rerank | 3.618 |
 | 383 | hyde_rrf | hybrid_ws_5_5 | no_rerank | 3.623 |
@@ -135,17 +135,17 @@
 
 → **reranker 사용 여부가 가장 큰 영향**. (위/아래 격차 0.45 = 11%)
 
-### (5) PreR/R/PostR 영향력 정량화
+### (5) Pre-Retrieval/Retrieval/Post-Retrieval 영향력 정량화
 
 판단 기준: 각 axis 변수 변화 시 judge_mean 표준편차.
 
 | Axis | 변동 범위 (best - worst, 동일 다른축 평균) | 영향력 |
 |---|---:|---|
-| **PostR** | 약 0.4 (3.62 → 4.07) | **가장 큼** (10% 변동) |
-| R | 약 0.15 | 중간 |
-| PreR | 약 0.05 | 적음 (1%) |
+| **Post-Retrieval** | 약 0.4 (3.62 → 4.07) | **가장 큼** (10% 변동) |
+| Retrieval | 약 0.15 | 중간 |
+| Pre-Retrieval | 약 0.05 | 적음 (1%) |
 
-→ Stage 5 결론 재확인: **PostR > R > PreR**.
+→ Stage 5 결론 재확인: **Post-Retrieval > Retrieval > Pre-Retrieval**.
 
 ## 4. 최종 winner pipeline
 
@@ -153,7 +153,7 @@
 PyMuPDFLoader
   → RecursiveCharacterTextSplitter(300, 50)
   → google/embeddinggemma-300m
-  → query2doc (PreR, GPT-5.4 가상문서 생성)
+  → query2doc (Pre-Retrieval, GPT-5.4 가상문서 생성)
   → Hybrid 7:3 (FAISS dense + BM25-KIWI, RRF k=60)
   → top-20
   → jinaai/jina-reranker-m0 (멀티모달 cross-encoder, 2.4B)
@@ -197,6 +197,6 @@ PyMuPDFLoader
 
 - **Domain-별 분석**: 5 도메인(finance/public/medical/law/commerce) cartesian winner 분리
 - **Context-type 분석**: paragraph/image/table/text 별 reranker 강점 차이
-- **Stage 4-1 PreR 확장**: query2doc 변종 (gen prompt 변경, multi-doc, etc.)
-- **Stage 4-2 PostR 확장**: jina-m0 변종 (jina-reranker-v2-multilingual fix 등)
+- **Stage 4-1 Pre-Retrieval 확장**: query2doc 변종 (gen prompt 변경, multi-doc, etc.)
+- **Stage 4-2 Post-Retrieval 확장**: jina-m0 변종 (jina-reranker-v2-multilingual fix 등)
 - **EmbedGemma 1B**: gemma-embed-1b 새 모델 비교

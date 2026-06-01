@@ -21,11 +21,11 @@
 > 본 문서는 기존 `5_generation.md` (Phase 5, Open vs Closed weights 분석) 의 후속.
 > Stage 1-4-2 단변량 실험 winner들을 고정한 채 **생성·평가까지 end-to-end** 측정한 별도 실험.
 
-## 1. Axis A — Pre-retriever (10 strategies)
+## 1. Axis A — Pre-Retrieval (10 strategies)
 
-> 고정: R = Hybrid 3:7, PostR = `bge-reranker-v2-m3-ko`
+> 고정: R = Hybrid 3:7, Post-Retrieval = `bge-reranker-v2-m3-ko`
 
-| 순위 | PreR | MRR | Hit@1 | judge | sim | corr | comp | faith |
+| 순위 | Pre-Retrieval | MRR | Hit@1 | judge | sim | corr | comp | faith |
 |---:|---|---:|---:|---:|---:|---:|---:|---:|
 | 🥇 | **query_expansion** | 0.7783 | 70.0% | **3.998** | 4.10 | 4.00 | 4.03 | 3.85 |
 | 2 | hyde | 0.7738 | 70.3% | 3.985 | 4.10 | 4.00 | 4.01 | 3.84 |
@@ -38,17 +38,17 @@
 | 9 | **baseline** | 0.7697 | 70.7% | 3.953 | 4.05 | 3.97 | 3.96 | 3.81 |
 | 10 | step_back | 0.7692 | 69.3% | 3.941 | 4.04 | 3.96 | 3.97 | 3.78 |
 
-**결론**: 모든 PreR 전략이 judge 3.94~4.00 (편차 1.5%). **Pre-retriever는 생성 품질에 거의 영향 없음**.
+**결론**: 모든 Pre-Retrieval 전략이 judge 3.94~4.00 (편차 1.5%). **Pre-retriever는 생성 품질에 거의 영향 없음**.
 - 단, **query_expansion** (키워드 추가)이 검색 metric도 좋고 (MRR 0.7783, +1.1pp vs baseline) generation도 1위 — **소소한 효과 존재**.
 - step_back (검색 metric 최하)이 생성 metric에서도 최하 → **검색-생성 일치**.
 
-> 흥미로운 반전: Stage 4-1 단변량(검색 metric만)에선 거의 모든 PreR이 baseline에 패배했으나, **post-rerank 후 생성까지 보면 query_expansion / hyde / decompose 등이 baseline을 미세하게 능가**. Reranker가 PreR로 인한 retrieval noise를 보정해주는 역할.
+> 흥미로운 반전: Stage 4-1 단변량(검색 metric만)에선 거의 모든 Pre-Retrieval이 baseline에 패배했으나, **post-rerank 후 생성까지 보면 query_expansion / hyde / decompose 등이 baseline을 미세하게 능가**. Reranker가 Pre-Retrieval로 인한 retrieval noise를 보정해주는 역할.
 
-## 2. Axis B — Retriever (7 strategies)
+## 2. Axis B — Retrieval (7 strategies)
 
-> 고정: PreR = baseline, PostR = `bge-reranker-v2-m3-ko`
+> 고정: Pre-Retrieval = baseline, Post-Retrieval = `bge-reranker-v2-m3-ko`
 
-| 순위 | R | MRR | Hit@1 | judge | sim | corr | comp | faith |
+| 순위 | Retrieval | MRR | Hit@1 | judge | sim | corr | comp | faith |
 |---:|---|---:|---:|---:|---:|---:|---:|---:|
 | 🥇 | **Hybrid 5:5** | 0.7747 | 70.7% | **3.983** | 4.10 | 3.99 | 4.01 | 3.83 |
 | 2 | Dense | 0.7793 | 70.0% | 3.953 | 4.04 | 3.96 | 3.99 | 3.81 |
@@ -63,9 +63,9 @@
 - BM25 whitespace는 검색 metric도 (0.675) generation도 (3.54) 최악 — **KIWI 형태소 분석 필수성 재확인**.
 - Dense / Hybrid 7:3 / Hybrid 3:7 / Hybrid 5:5 모두 생성 quality 차이 0.06 이내 — **상위 retriever 간 generation 거의 동률**.
 
-## 3. Axis C — Post-retriever / Reranker (11 strategies)
+## 3. Axis C — Post-Retrieval / Reranker (11 strategies)
 
-> 고정: PreR = baseline, R = Hybrid 3:7
+> 고정: Pre-Retrieval = baseline, R = Hybrid 3:7
 
 | 순위 | Reranker | MRR | Hit@1 | judge | sim | corr | comp | faith |
 |---:|---|---:|---:|---:|---:|---:|---:|---:|
@@ -93,9 +93,9 @@
 
 | Axis | Retrieval 1위 | Generation 1위 | 일치? |
 |---|---|---|---|
-| A PreR | decompose / multi_query_para | query_expansion | 다름 (인접) |
+| A Pre-Retrieval | decompose / multi_query_para | query_expansion | 다름 (인접) |
 | B R | Dense | Hybrid 5:5 | 다름 (인접) |
-| C PostR | bge-v2-m3-ko | ko-reranker | 다름 (둘 다 KR) |
+| C Post-Retrieval | bge-v2-m3-ko | ko-reranker | 다름 (둘 다 KR) |
 
 → **상관관계는 강하지만 1위 결정은 generation까지 봐야 함**.
 
@@ -109,15 +109,15 @@
 
 ### (3) Pre-retriever는 생성에 영향 미미 (편차 1.5%)
 
-→ 한국어 단답형 RAG에선 **PreR 단계 생략 또는 query_expansion 정도면 충분**.
+→ 한국어 단답형 RAG에선 **Pre-Retrieval 단계 생략 또는 query_expansion 정도면 충분**.
 
 ### (4) Reranker가 생성 품질에 가장 큰 효과
 
 - 최고 reranker (ko-reranker) vs no_rerank: judge **+0.13** (+3.5%)
 - 최고 retriever (Hybrid 5:5) vs 차하위 (Hybrid 7:3): judge **+0.04** (+1.1%)
-- 최고 PreR (query_expansion) vs baseline: judge **+0.05** (+1.1%)
+- 최고 Pre-Retrieval (query_expansion) vs baseline: judge **+0.05** (+1.1%)
 
-→ **PostR > R > PreR** (생성 품질 영향 순서).
+→ **Post-Retrieval > Retrieval > Pre-Retrieval** (생성 품질 영향 순서).
 
 ### (5) 한국어 RAG에서 winner pipeline (재확정)
 
@@ -168,6 +168,6 @@ PyMuPDFLoader
 ## 7. 다음 단계
 
 - ✅ Axis-wise 생성+평가 완료
-- ⏳ Full cartesian (10 PreR × 7 R × 11 PostR = 770 configs, 약 $400-600) — 상호작용 효과 측정용
+- ⏳ Full cartesian (10 Pre-Retrieval × 7 Retrieval × 11 Post-Retrieval = 770 configs, 약 $400-600) — 상호작용 효과 측정용
 - ⏳ Domain-별 분석 (finance/public/medical/law/commerce 5 도메인 break-down)
 - ⏳ Context-type별 분석 (paragraph/image/table/text)

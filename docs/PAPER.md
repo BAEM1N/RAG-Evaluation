@@ -10,7 +10,7 @@
 
 ## 초록
 
-본 연구는 한국어 Retrieval-Augmented Generation (RAG) 파이프라인의 각 컴포넌트가 최종 답변 품질에 미치는 효과를 정량적으로 분해한다. allganize/RAG-Evaluation-Dataset-KO (300 Q&A × 58 PDFs × 5 도메인)를 사용해 (1) 단변량 비교(6 stage, 총 95+ 구성 요소), (2) end-to-end axis-wise 평가(28 configs), (3) Cartesian 전수 탐색(384 configs = 8 PreR × 6 R × 8 PostR)을 수행하여 약 1.2M LLM 호출의 평가 데이터를 산출했다. 주요 발견은 다음과 같다. (i) 단순한 character-level recursive splitter(300/50)가 LLM-기반 chunker 등 39종 비교에서 winner임을 확인했다. (ii) 한국어 fine-tune reranker(dragonkue/bge-reranker-v2-m3-ko)가 2025 SOTA multilingual reranker(Qwen3-Reranker-4B, 약 6.7배 큰 모델)를 +1.83pp MRR 능가했다. (iii) Pre-retriever 단변량 효과는 미미(±1%)했으나 Cartesian에서 query2doc × jina-reranker-m0 상호작용을 통해 답변 품질 1위(judge 4.067)에 도달했다. (iv) 컴포넌트 영향력 순서는 PostR > R > PreR이며, 가장 단순한 baseline 대비 누적 개선은 MRR +15.5%, Hit@1 +16.0pp(+27.1% 상대), judge +5.6%였다.
+본 연구는 한국어 Retrieval-Augmented Generation (RAG) 파이프라인의 각 컴포넌트가 최종 답변 품질에 미치는 효과를 정량적으로 분해한다. allganize/RAG-Evaluation-Dataset-KO (300 Q&A × 58 PDFs × 5 도메인)를 사용해 (1) 단변량 비교(6 stage, 총 95+ 구성 요소), (2) end-to-end axis-wise 평가(28 configs), (3) Cartesian 전수 탐색(384 configs = 8 Pre-Retrieval × 6 Retrieval × 8 Post-Retrieval)을 수행하여 약 1.2M LLM 호출의 평가 데이터를 산출했다. 주요 발견은 다음과 같다. (i) 단순한 character-level recursive splitter(300/50)가 LLM-기반 chunker 등 39종 비교에서 winner임을 확인했다. (ii) 한국어 fine-tune reranker(dragonkue/bge-reranker-v2-m3-ko)가 2025 SOTA multilingual reranker(Qwen3-Reranker-4B, 약 6.7배 큰 모델)를 +1.83pp MRR 능가했다. (iii) Pre-retriever 단변량 효과는 미미(±1%)했으나 Cartesian에서 query2doc × jina-reranker-m0 상호작용을 통해 답변 품질 1위(judge 4.067)에 도달했다. (iv) 컴포넌트 영향력 순서는 Post-Retrieval > Retrieval > Pre-Retrieval이며, 가장 단순한 baseline 대비 누적 개선은 MRR +15.5%, Hit@1 +16.0pp(+27.1% 상대), judge +5.6%였다.
 
 **키워드**: Korean RAG, retrieval evaluation, reranker, LLM-as-judge, cartesian benchmark
 
@@ -36,7 +36,7 @@ Retrieval-Augmented Generation은 대형 언어 모델의 hallucination과 outda
 ### 1.3 기여
 
 1. 한국어 RAG의 컴포넌트별 효과를 단변량 + axis-wise + 전 Cartesian 3 단계로 분해한 첫 통합 벤치마크
-2. 95+ 구성 요소 비교 (7 loader / 42 chunker / 27 embedding / 7 retriever / 10 PreR / 25 reranker / 46 generator) 및 580K+ LLM-as-Judge 평가
+2. 95+ 구성 요소 비교 (7 loader / 42 chunker / 27 embedding / 7 retriever / 10 Pre-Retrieval / 25 reranker / 46 generator) 및 580K+ LLM-as-Judge 평가
 3. 한국어 fine-tune reranker가 2025 SOTA multilingual reranker를 능가함을 실증
 4. Pre-retriever와 reranker 간 상호작용(query2doc × jina-reranker-m0)을 발견, Cartesian 평가의 필요성 입증
 5. 전체 실험 코드·데이터·결과를 MIT 라이선스로 공개
@@ -109,7 +109,7 @@ LLM-as-Judge는 GPT-5.4 (reasoning_effort=none) 단일 모델 4-metric 분리 �
 
 **Stage 5 axis-wise (시나리오 F)**: Stage 1-4-2 winner들을 고정한 채 각 axis만 변화 (28 configs = 10 + 7 + 11). 검색 metric에 추가로 LLM-as-Judge 4-metric 측정.
 
-**Stage 6 Cartesian (Task #37)**: 8 PreR × 6 R × 8 PostR = 384 configs. 모든 조합 평가하여 상호작용 효과 탐색.
+**Stage 6 Cartesian (Task #37)**: 8 Pre-Retrieval × 6 Retrieval × 8 Post-Retrieval = 384 configs. 모든 조합 평가하여 상호작용 효과 탐색.
 
 ### 3.5 인프라
 
@@ -200,7 +200,7 @@ LLM-as-Judge는 GPT-5.4 (reasoning_effort=none) 단일 모델 4-metric 분리 �
 
 ### 4.5 Stage 4-1: Pre-retriever (RQ1)
 
-Stage 4 winner + Stage 4-2 winner 고정한 채 PreR만 변경. LLM = GPT-5.4. winner 는 **end-to-end judge** 기준(MRR 은 retrieval-only 보조 지표, 전략 간 차이 ±0.001 noise).
+Stage 4 winner + Stage 4-2 winner 고정한 채 Pre-Retrieval만 변경. LLM = GPT-5.4. winner 는 **end-to-end judge** 기준(MRR 은 retrieval-only 보조 지표, 전략 간 차이 ±0.001 noise).
 
 | 전략 | judge | MRR | vs baseline (MRR) |
 |---|---:|---:|---:|
@@ -209,7 +209,7 @@ Stage 4 winner + Stage 4-2 winner 고정한 채 PreR만 변경. LLM = GPT-5.4. w
 | decompose | 3.967 | 0.7786 | +0.0089 |
 | query2doc | 3.967 | 0.7768 | +0.0071 |
 | multi_query_para | 3.953 | 0.7780 | +0.0083 |
-| baseline (no PreR) | 3.953 | 0.7697 | (기준) |
+| baseline (no Pre-Retrieval) | 3.953 | 0.7697 | (기준) |
 | step_back | 3.941 | 0.7692 | −0.0005 |
 
 → **Pre-retriever 단변량 효과는 사실상 noise 범위** (judge 3.94~4.00). query_expansion 이 judge 1위지만 baseline 과 +0.045 차에 불과. decompose 가 MRR 은 근소 우위(0.7786)이나 judge 는 하위 → 순위는 생성 품질(judge) 기준. step_back 같은 추상화는 오히려 약간 손해. 단답형 한국어 RAG에서 query는 이미 정확하므로 변형 효과 미미.
@@ -237,9 +237,9 @@ Stage 4 winner + Stage 4-2 winner 고정한 채 PreR만 변경. LLM = GPT-5.4. w
 
 | Axis | Winner | judge |
 |---|---|---:|
-| A. PreR | query_expansion | 3.998 |
+| A. Pre-Retrieval | query_expansion | 3.998 |
 | B. R | Hybrid 5:5 | 3.983 |
-| C. PostR | **Dongjin-kr/ko-reranker** | **4.005** |
+| C. Post-Retrieval | **Dongjin-kr/ko-reranker** | **4.005** |
 
 **검색 1위와 생성 1위가 다르다**: retrieval에서 dragonkue/bge-v2-m3-ko가 1위(MRR 0.7697)였으나 generation 품질은 Dongjin-kr/ko-reranker가 1위(judge 4.005). 두 모델 모두 한국어 fine-tune 변종이지만 미세한 응답 분포 차이가 생성 품질에 다른 영향.
 
@@ -249,7 +249,7 @@ Stage 4 winner + Stage 4-2 winner 고정한 채 PreR만 변경. LLM = GPT-5.4. w
 
 **Top 10 (judge 기준)**:
 
-| 순위 | PreR | R | PostR | MRR | judge |
+| 순위 | Pre-Retrieval | Retrieval | Post-Retrieval | MRR | judge |
 |---:|---|---|---|---:|---:|
 | 🥇 | **query2doc** | **hybrid_7_3** | **jina-reranker-m0** | 0.7630 | **4.067** |
 | 🥈 | query_expansion | hybrid_5_5 | jina-reranker-m0 | 0.7806 | 4.062 |
@@ -267,13 +267,13 @@ Stage 4 winner + Stage 4-2 winner 고정한 채 PreR만 변경. LLM = GPT-5.4. w
 **핵심 발견 (RQ2 답)**:
 
 1. **jina-reranker-m0가 cartesian winner** — axis-wise 미실험이었던 멀티모달 reranker(Qwen2-VL 2.4B 백본)가 Top 10 중 8개를 차지하며 압도적 우세.
-2. **query2doc × jina-m0 상호작용**: axis-wise PreR ranking에서 query2doc는 4위였으나 cartesian에서 jina-m0와 조합 시 1, 3, 5, 7, 8위 등장. 단변량 평가는 이 상호작용을 발견하지 못한다.
-3. **컴포넌트 영향력 정량화**: judge 변동 폭으로 측정 시 PostR (Δ0.45, 12%) > R (Δ0.31, 8%) > PreR (Δ0.06, 1.5%). **Reranker 선택이 압도적 중요**.
+2. **query2doc × jina-m0 상호작용**: axis-wise Pre-Retrieval ranking에서 query2doc는 4위였으나 cartesian에서 jina-m0와 조합 시 1, 3, 5, 7, 8위 등장. 단변량 평가는 이 상호작용을 발견하지 못한다.
+3. **컴포넌트 영향력 정량화**: judge 변동 폭으로 측정 시 Post-Retrieval (Δ0.45, 12%) > R (Δ0.31, 8%) > Pre-Retrieval (Δ0.06, 1.5%). **Reranker 선택이 압도적 중요**.
 4. **Bottom 10 전부 no_rerank** — 가장 안 좋은 component가 가장 큰 영향. Reranker 사용 자체가 필수.
 
 ### 4.9 누적 개선 분석 (RQ4)
 
-가장 단순한 baseline (PreR=baseline + R=dense + PostR=no_rerank) 대비:
+가장 단순한 baseline (Pre-Retrieval=baseline + R=dense + Post-Retrieval=no_rerank) 대비:
 
 | 단계 | MRR | Δ MRR | Hit@1 | Δ Hit@1 | judge | Δ judge |
 |---|---:|---:|---:|---:|---:|---:|
@@ -319,9 +319,9 @@ Cartesian과 Phase 5는 동일 dataset(allganize 300 Q&A), 동일 embedding (gem
 
 본 연구는 동일 데이터셋에서 두 가지 평가 방식을 모두 수행하여 그 차이를 정량화했다.
 
-| 평가 | 1위 PreR | 1위 PostR | judge gain over naive |
+| 평가 | 1위 Pre-Retrieval | 1위 Post-Retrieval | judge gain over naive |
 |---|---|---|---:|
-| Stage 4-1 단변량 (retrieval만) | query_expansion | (PostR axis 동결) | retrieval +0.18pp MRR |
+| Stage 4-1 단변량 (retrieval만) | query_expansion | (Post-Retrieval axis 동결) | retrieval +0.18pp MRR |
 | Stage 5 axis-wise (gen+judge) | query_expansion | ko-reranker | +3.1% |
 | **Stage 6 Cartesian** | **query2doc** | **jina-reranker-m0** | **+5.6%** |
 
@@ -369,7 +369,7 @@ cartesian에서 MRR 최고 조합과 judge 최고 조합이 다르다.
 
 본 연구는 한국어 RAG 파이프라인의 컴포넌트별 효과를 단변량 + cartesian 두 단계로 분해 평가했다. 95+ 구성 요소 비교와 580K+ LLM-as-Judge 호출을 통해 다음을 실증했다.
 
-1. **RQ1**: 컴포넌트 영향력은 PostR > R > PreR 순서. Reranker가 압도적 가장 중요 (judge 변동 폭 12%).
+1. **RQ1**: 컴포넌트 영향력은 Post-Retrieval > Retrieval > Pre-Retrieval 순서. Reranker가 압도적 가장 중요 (judge 변동 폭 12%).
 2. **RQ2**: Cartesian 평가는 단변량 대비 +2.1pp judge gain을 추가 발견 (query2doc × jina-m0 상호작용).
 3. **RQ3**: 한국어 fine-tune이 일반 multilingual SOTA를 일관되게 능가 (embedding, BM25, reranker 모두).
 4. **RQ4**: 단순 dense baseline → 최적 cartesian: 누적 MRR +15.5%, Hit@1 +27.1%, judge +5.6%.
@@ -380,7 +380,7 @@ cartesian에서 MRR 최고 조합과 judge 최고 조합이 다르다.
 PyMuPDFLoader
   → RecursiveCharacterTextSplitter(300, 50)
   → google/embeddinggemma-300m
-  → query2doc (PreR, GPT-5.4 가상문서 생성)
+  → query2doc (Pre-Retrieval, GPT-5.4 가상문서 생성)
   → Hybrid 7:3 (FAISS Dense + BM25-KIWI, RRF k=60)
   → top-20
   → jinaai/jina-reranker-m0
@@ -401,7 +401,7 @@ PyMuPDFLoader
 | 단계 | 호출 수 | 시간 | 비용 |
 |---|---:|---:|---:|
 | Stage 1-4 단변량 (로컬) | 0 | 8h | $0 |
-| Stage 4-1 PreR (GPT-5.4) | 2,400 | 5분 | ~$3 |
+| Stage 4-1 Pre-Retrieval (GPT-5.4) | 2,400 | 5분 | ~$3 |
 | Stage 5 axis-wise (GPT-5.4) | 42,000 | 2h | ~$21 |
 | Stage 6 Cartesian (GPT-5.4) | 576,000 | 2.5h | ~$290 |
 | Stage 5 Phase 5 (multi-vendor) | ~240,000 | 48h batch | ~$240 |

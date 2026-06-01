@@ -133,10 +133,10 @@ python scripts/bench_reranker.py --rerankers all
 
 | 시나리오 | 변수 | configs | 비용 |
 |---|---|---:|---:|
-| **A. PreR 단변량** | 10 PreR × R-winner × PostR-winner | 10 | **$10** |
-| **B. R 단변량** | PreR-winner × 7 R × PostR-winner | 7 | **$7** |
-| **C. PostR 단변량** | PreR-winner × R-winner × 12 PostR (3 기존 + 7 new + 2 strategy) | 12 | **$12** |
-| **D. 선별 cartesian** | PreR top-3 × R top-3 × PostR top-3 | 27 | **$27** |
+| **A. Pre-Retrieval 단변량** | 10 Pre-Retrieval × R-winner × Post-Retrieval-winner | 10 | **$10** |
+| **B. R 단변량** | Pre-Retrieval-winner × 7 R × Post-Retrieval-winner | 7 | **$7** |
+| **C. Post-Retrieval 단변량** | Pre-Retrieval-winner × R-winner × 12 Post-Retrieval (3 기존 + 7 new + 2 strategy) | 12 | **$12** |
+| **D. 선별 cartesian** | Pre-Retrieval top-3 × R top-3 × Post-Retrieval top-3 | 27 | **$27** |
 | **E. 전체 cartesian** | 10 × 7 × 12 | 840 | ~$820 |
 | **F. End-to-end pipeline survey** | A+B+C 합산 | 29 | **$29** |
 
@@ -144,13 +144,13 @@ python scripts/bench_reranker.py --rerankers all
 
 ```
 1단계 [검색metric만, 무료]: Stage 4-1 완료 (현재 진행) + Stage 4-2 신모델 추가
-  → PreR/R/PostR top-3 winner 식별
+  → Pre-Retrieval/Retrieval/Post-Retrieval top-3 winner 식별
 
 2단계 [생성+평가, ~$29]: 시나리오 F (axis-wise A+B+C)
   → 각 axis별 생성품질 영향 정량화
 
 3단계 [선별 cartesian, ~$27]: 시나리오 D
-  → PreR×R×PostR 상호작용 효과 측정 (top-3씩만)
+  → Pre-Retrieval×R×Post-Retrieval 상호작용 효과 측정 (top-3씩만)
 
 4단계 [선택]: 전체 cartesian E ($820) 또는 GPT-5.4-pro pro ($2,100)
 ```
@@ -181,7 +181,7 @@ python scripts/bench_reranker.py --rerankers all
 **핵심 의사결정 시점**:
 - P1+P2+P3 완료 후 retrieval winner 재확정
 - P4 결과로 생성품질이 검색metric과 얼마나 상관/괴리하는지 정량화
-- P5 결과로 PreR/R/PostR 간 시너지 (특히 PreR + Reranker 결합 효과) 확인
+- P5 결과로 Pre-Retrieval/Retrieval/Post-Retrieval 간 시너지 (특히 Pre-Retrieval + Reranker 결합 효과) 확인
 
 ---
 
@@ -192,8 +192,8 @@ python scripts/bench_reranker.py --rerankers all
 | 문서 | 갱신 내용 |
 |---|---|
 | `docs/2_parser.md` | semantic chunker 8종 결과 추가 |
-| `docs/4-1_pre_retriever.md` | 10 PreR 전략 신규 작성 (현재 미작성) |
-| `docs/4-2_post_retriever.md` | 12 PostR 전략 + 신모델 9종 갱신 |
+| `docs/4-1_pre_retriever.md` | 10 Pre-Retrieval 전략 신규 작성 (현재 미작성) |
+| `docs/4-2_post_retriever.md` | 12 Post-Retrieval 전략 + 신모델 9종 갱신 |
 | `docs/5_generation.md` | axis-wise 생성품질 영향 + cartesian 결과 |
 | `docs/REPORT.md` | end-to-end winner pipeline 갱신 |
 | HuggingFace dataset | parquet에 신 strategy 결과 추가 |
