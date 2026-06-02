@@ -138,23 +138,26 @@
 
 > 상세: [`3_embedding.md`](./3_embedding.md)
 
-### Top 10 (27 모델 leaderboard)
+### Top 10 (31 모델 leaderboard — 로컬 27 + API 4)
 
 | 순위 | 모델 | dim | MRR | 비고 |
 |---:|---|---:|---:|---|
 | 🥇 | **koe5** | 1024 | **0.6871** | 한국어 특화 |
-| 🥈 | gemma-embed-300m | 768 | 0.6650 | 최고 소형 |
+| 🥈 | gemma-embed-300m | 768 | 0.6650 | 최고 소형 (운영) |
 | 🥉 | pixie-rune-v1 | 1024 | 0.6627 | |
 | 4 | snowflake-arctic-ko | 1024 | 0.6612 | 한국어 튜닝 |
-| 5 | snowflake-arctic-l-v2 | 1024 | 0.6495 | |
-| 6 | jina-v4-retrieval | 4096 | 0.6449 | |
-| 7 | nomic-embed-v2-moe | 768 | 0.6435 | MoE |
-| 8 | kure-v1 | 1024 | 0.6267 | 한국어 |
-| 9 | harrier-0.6b | 1024 | 0.6131 | pooling=last |
-| 10 | granite-278m | 768 | 0.5969 | IBM |
+| 5 | **gemini-embed-001** | 3072 | 0.6518 | **API**·Google·raw |
+| 6 | snowflake-arctic-l-v2 | 1024 | 0.6495 | |
+| 7 | jina-v4-retrieval | 4096 | 0.6449 | |
+| 8 | nomic-embed-v2-moe | 768 | 0.6435 | MoE |
+| 9 | kure-v1 | 1024 | 0.6267 | 한국어 |
+| 10 | **gemini-embed-2** | 3072 | 0.6210 | **API**·Google·raw |
+
+> API 임베딩 4종(2026-06-02 추가)은 로컬과 동일 raw·prompt-free 조건. **OpenAI 3-large(#12, 0.6016)·3-small(#18, 0.5417)·Gemini 001(#5)·Gemini 2(#10) 모두 koe5·gemma-300m 하위** — 한국어 정렬이 차원·브랜드를 이김. 최신 Gemini-2가 001보다 낮은 점도 특기.
 
 ### 결론
 - **한국어에서는 작은 모델이 큰 영어 모델을 이긴다**: KoE5(1024d) > qwen3-embed-8b(4096d), MRR +0.16
+- **대형 상용 API 임베딩도 한국어 로컬에 밀린다**: gemini-001(0.6518)·openai-3-large(0.6016) < gemma-300m(0.6650) — 정확도 우위. (API는 호출비·외부 의존 추가; 비용은 본 벤치 측정 대상 아님)
 - 한국어 특화 임베딩(koe5, snowflake-arctic-ko, kure-v1) 상위 점유
 - harrier-27b 5376 차원 중 97% dead dim — 한국어 query/doc 분리 실패
 - 본 데이터셋의 이후 stage는 **gemma-embed-300m** 사용 (운영 안정성)
