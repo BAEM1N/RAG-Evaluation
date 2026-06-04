@@ -1,0 +1,20 @@
+{
+ "alias": "me5-large-instruct",
+ "src": "intfloat/multilingual-e5-large-instruct",
+ "dim": 1024,
+ "engine": "prompted",
+ "metrics": {
+  "total": 300,
+  "mrr": 0.6156,
+  "page_hit@1": 0.55,
+  "file_hit@1": 0.7767,
+  "page_hit@3": 0.6633,
+  "file_hit@3": 0.8267,
+  "page_hit@5": 0.7033,
+  "file_hit@5": 0.8367,
+  "page_hit@10": 0.7433,
+  "file_hit@10": 0.8533
+ },
+ "scored": 300,
+ "embed_sec": 32.5
+}

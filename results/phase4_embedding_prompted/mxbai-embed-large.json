@@ -1,0 +1,20 @@
+{
+ "alias": "mxbai-embed-large",
+ "src": "mixedbread-ai/mxbai-embed-large-v1",
+ "dim": 1024,
+ "engine": "prompted",
+ "metrics": {
+  "total": 300,
+  "mrr": 0.1639,
+  "page_hit@1": 0.1267,
+  "file_hit@1": 0.3033,
+  "page_hit@3": 0.1833,
+  "file_hit@3": 0.3933,
+  "page_hit@5": 0.21,
+  "file_hit@5": 0.46,
+  "page_hit@10": 0.2633,
+  "file_hit@10": 0.5633
+ },
+ "scored": 300,
+ "embed_sec": 85.1
+}

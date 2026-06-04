@@ -55,6 +55,39 @@
 | 39 | mxbai-embed-large | 1024 | 0.1533 | 12.0% | 20.7% | 46.7% | prompt 의존(영어) |
 | 40 | harrier-27b | 5376 | 0.0170 | 1.0% | 2.3% | 15.7% | 변환 한계로 제외(구 측정값) |
 
+## raw vs prompted (프롬프트 방식 비교)
+
+위 리더보드는 **raw**(질문·문서를 동일하게, 프롬프트/instruction/query·document 무구분) 기준이다. 비교를 위해 각 모델의 **권장 프롬프트 방식**(query/document 구분 — e5 `query:`/`passage:`, qwen3 instruct, mxbai/embeddinggemma 전용 프롬프트, API는 input_type query/document)도 동일 데이터로 측정했다.
+
+| 모델 | raw | prompted | Δ |
+|---|---:|---:|---:|
+| me5-large-instruct | 0.5576 | 0.6156 | **+0.058** |
+| upstage-solar-large | 0.6325 | 0.6771 | **+0.045** |
+| voyage-multilingual-2 | 0.6436 | 0.6604 | +0.017 |
+| cohere-embed-v4 | 0.6516 | 0.6674 | +0.016 |
+| nomic-embed-v2-moe | 0.6027 | 0.6167 | +0.014 |
+| qwen3-embed-0.6b | 0.6163 | 0.6295 | +0.013 |
+| snowflake-arctic-l-v2 | 0.6204 | 0.6330 | +0.013 |
+| snowflake-arctic-ko | 0.6516 | 0.6620 | +0.010 |
+| qwen3-embed-4b | 0.6512 | 0.6611 | +0.010 |
+| qwen3-embed-8b | 0.6502 | 0.6541 | +0.004 |
+| voyage-3-large | 0.6873 | 0.6899 | +0.003 |
+| koe5 | 0.6422 | 0.6437 | +0.002 |
+| jina-v4-retrieval | 0.6359 | 0.6434 | +0.008 |
+| mxbai-embed-large | 0.1533 | 0.1639 | +0.011 |
+| e5-mistral-7b | 0.2016 | 0.2111 | +0.010 |
+| gemini-embed-001 | 0.6518 | 0.6443 | **-0.008** |
+| gemma-embed-300m | 0.6350 | 0.6247 | **-0.010** |
+| jina-v4-code | 0.5438 | 0.4968 | **-0.047** |
+
+> 대칭(symmetric) 모델 — BERT 계열(bge-m3·kure·pixie·granite·labse·snowflake-arctic-ko 일부·ko-sroberta·kosimcse·harrier·jina-v5·nemotron 등) — 은 query/document 프롬프트 개념이 없어 prompted = raw.
+
+**해석**:
+- **프롬프트가 대체로 소폭(+0.01~0.06) 도움** — 특히 instruction 튜닝 모델(`me5-large-instruct` +0.058)과 query/passage 모델 분리형 API(`upstage` +0.045)에서 효과가 크다.
+- **그러나 보편적이지 않다 — 오히려 손해 보는 모델도 있다**: `gemma-embed-300m`(-0.010)·`gemini-embedding-001`(-0.008)은 권장 프롬프트가 이 한국어 문서검색 코퍼스엔 부적합. `jina-v4-code`는 **-0.047** — code-task 프롬프트가 일반 문서검색에 맞지 않아 크게 하락(같은 모델의 retrieval-task는 +0.008).
+- **순위 영향 제한적**: 상위권은 raw·prompted 모두 voyage/kure/snowflake-ko/cohere/qwen3·upstage(prompted 시) 군집. prompt 의존이 큰 `e5-mistral`·`mxbai`는 프롬프트를 줘도 여전히 한국어에서 바닥(0.21·0.16).
+- **결론**: raw는 전 모델을 동일 footing에 올리는 **공정한 공통 기준선**, prompted는 각 모델의 "권장 사용 시 상한"을 보여준다. 실제 운영에선 모델별 권장 프롬프트를 쓰는 게 보통 미세하게 유리하나, **모델·도메인에 따라 역효과도 나므로 검증 후 적용**해야 한다.
+
 ## 핵심 관찰
 
 1. **상위권은 오픈/API 혼전**: 1위 `voyage-3-large`(0.687, API)와 2위 `kure-v1`(0.669, 오픈)을 필두로 pixie·gemini-001·snowflake-ko·cohere·qwen3-4b/8b가 **0.65대에 군집**. 차원·오픈/클로즈보다 한국어 정렬이 지배적.

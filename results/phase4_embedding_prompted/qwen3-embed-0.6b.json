@@ -1,0 +1,20 @@
+{
+ "alias": "qwen3-embed-0.6b",
+ "src": "Qwen/Qwen3-Embedding-0.6B",
+ "dim": 1024,
+ "engine": "prompted",
+ "metrics": {
+  "total": 300,
+  "mrr": 0.6295,
+  "page_hit@1": 0.5533,
+  "file_hit@1": 0.8,
+  "page_hit@3": 0.69,
+  "file_hit@3": 0.83,
+  "page_hit@5": 0.7367,
+  "file_hit@5": 0.8467,
+  "page_hit@10": 0.7667,
+  "file_hit@10": 0.8567
+ },
+ "scored": 300,
+ "embed_sec": 165.0
+}

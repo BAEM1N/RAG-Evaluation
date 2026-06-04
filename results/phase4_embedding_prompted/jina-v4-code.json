@@ -1,0 +1,20 @@
+{
+ "alias": "jina-v4-code",
+ "src": "jinaai/jina-embeddings-v4",
+ "dim": 2048,
+ "engine": "prompted+jina_v4",
+ "metrics": {
+  "total": 300,
+  "mrr": 0.4968,
+  "page_hit@1": 0.4067,
+  "file_hit@1": 0.69,
+  "page_hit@3": 0.57,
+  "file_hit@3": 0.7833,
+  "page_hit@5": 0.6133,
+  "file_hit@5": 0.8133,
+  "page_hit@10": 0.6733,
+  "file_hit@10": 0.83
+ },
+ "scored": 300,
+ "embed_sec": 1302.1
+}

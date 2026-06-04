@@ -1,0 +1,20 @@
+{
+ "alias": "jina-v4-retrieval",
+ "src": "jinaai/jina-embeddings-v4",
+ "dim": 2048,
+ "engine": "prompted+jina_v4",
+ "metrics": {
+  "total": 300,
+  "mrr": 0.6434,
+  "page_hit@1": 0.5733,
+  "file_hit@1": 0.8,
+  "page_hit@3": 0.7,
+  "file_hit@3": 0.84,
+  "page_hit@5": 0.7267,
+  "file_hit@5": 0.8567,
+  "page_hit@10": 0.7667,
+  "file_hit@10": 0.87
+ },
+ "scored": 300,
+ "embed_sec": 1152.4
+}

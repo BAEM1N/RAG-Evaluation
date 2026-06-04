@@ -1,0 +1,20 @@
+{
+ "alias": "e5-mistral-7b",
+ "src": "intfloat/e5-mistral-7b-instruct",
+ "dim": 4096,
+ "engine": "prompted",
+ "metrics": {
+  "total": 300,
+  "mrr": 0.2111,
+  "page_hit@1": 0.1533,
+  "file_hit@1": 0.46,
+  "page_hit@3": 0.24,
+  "file_hit@3": 0.5967,
+  "page_hit@5": 0.2833,
+  "file_hit@5": 0.6567,
+  "page_hit@10": 0.36,
+  "file_hit@10": 0.7167
+ },
+ "scored": 300,
+ "embed_sec": 775.6
+}

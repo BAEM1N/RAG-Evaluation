@@ -1,0 +1,20 @@
+{
+ "alias": "nomic-embed-v2-moe",
+ "src": "nomic-ai/nomic-embed-text-v2-moe",
+ "dim": 768,
+ "engine": "prompted",
+ "metrics": {
+  "total": 300,
+  "mrr": 0.6167,
+  "page_hit@1": 0.5467,
+  "file_hit@1": 0.7833,
+  "page_hit@3": 0.68,
+  "file_hit@3": 0.8167,
+  "page_hit@5": 0.7033,
+  "file_hit@5": 0.8267,
+  "page_hit@10": 0.74,
+  "file_hit@10": 0.85
+ },
+ "scored": 300,
+ "embed_sec": 113.2
+}
