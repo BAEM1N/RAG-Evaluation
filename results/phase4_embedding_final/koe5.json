@@ -1,0 +1,20 @@
+{
+ "alias": "koe5",
+ "src": "nlpai-lab/KoE5",
+ "dim": 1024,
+ "engine": "sentence-transformers",
+ "metrics": {
+  "total": 300,
+  "mrr": 0.6422,
+  "page_hit@1": 0.5733,
+  "file_hit@1": 0.79,
+  "page_hit@3": 0.6967,
+  "file_hit@3": 0.83,
+  "page_hit@5": 0.7367,
+  "file_hit@5": 0.8433,
+  "page_hit@10": 0.77,
+  "file_hit@10": 0.86
+ },
+ "scored": 300,
+ "embed_sec": 221.3
+}

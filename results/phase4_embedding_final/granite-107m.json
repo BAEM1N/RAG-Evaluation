@@ -1,0 +1,20 @@
+{
+ "alias": "granite-107m",
+ "src": "ibm-granite/granite-embedding-107m-multilingual",
+ "dim": 384,
+ "engine": "sentence-transformers",
+ "metrics": {
+  "total": 300,
+  "mrr": 0.533,
+  "page_hit@1": 0.4467,
+  "file_hit@1": 0.69,
+  "page_hit@3": 0.5867,
+  "file_hit@3": 0.7667,
+  "page_hit@5": 0.66,
+  "file_hit@5": 0.7933,
+  "page_hit@10": 0.7033,
+  "file_hit@10": 0.8133
+ },
+ "scored": 300,
+ "embed_sec": 32.1
+}

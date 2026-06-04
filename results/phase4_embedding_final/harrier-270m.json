@@ -1,0 +1,20 @@
+{
+ "alias": "harrier-270m",
+ "src": "microsoft/harrier-oss-v1-270m",
+ "dim": 640,
+ "engine": "sentence-transformers",
+ "metrics": {
+  "total": 300,
+  "mrr": 0.5052,
+  "page_hit@1": 0.4233,
+  "file_hit@1": 0.6967,
+  "page_hit@3": 0.5833,
+  "file_hit@3": 0.79,
+  "page_hit@5": 0.6133,
+  "file_hit@5": 0.8133,
+  "page_hit@10": 0.6633,
+  "file_hit@10": 0.8333
+ },
+ "scored": 300,
+ "embed_sec": 56.6
+}

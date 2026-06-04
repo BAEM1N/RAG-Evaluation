@@ -1,0 +1,20 @@
+{
+ "alias": "qwen3-embed-8b",
+ "src": "Qwen/Qwen3-Embedding-8B",
+ "dim": 4096,
+ "engine": "sentence-transformers",
+ "metrics": {
+  "total": 300,
+  "mrr": 0.6502,
+  "page_hit@1": 0.5767,
+  "file_hit@1": 0.81,
+  "page_hit@3": 0.71,
+  "file_hit@3": 0.8567,
+  "page_hit@5": 0.75,
+  "file_hit@5": 0.8567,
+  "page_hit@10": 0.77,
+  "file_hit@10": 0.8767
+ },
+ "scored": 300,
+ "embed_sec": 568.6
+}

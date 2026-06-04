@@ -1,0 +1,20 @@
+{
+ "alias": "pixie-rune-v1",
+ "src": "telepix/PIXIE-Rune-v1.0",
+ "dim": 1024,
+ "engine": "sentence-transformers",
+ "metrics": {
+  "total": 300,
+  "mrr": 0.6581,
+  "page_hit@1": 0.5967,
+  "file_hit@1": 0.8133,
+  "page_hit@3": 0.7033,
+  "file_hit@3": 0.84,
+  "page_hit@5": 0.7433,
+  "file_hit@5": 0.85,
+  "page_hit@10": 0.78,
+  "file_hit@10": 0.86
+ },
+ "scored": 300,
+ "embed_sec": 246.3
+}

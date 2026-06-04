@@ -1,0 +1,20 @@
+{
+ "alias": "snowflake-arctic-l-v2",
+ "src": "Snowflake/snowflake-arctic-embed-l-v2.0",
+ "dim": 1024,
+ "engine": "sentence-transformers",
+ "metrics": {
+  "total": 300,
+  "mrr": 0.6204,
+  "page_hit@1": 0.55,
+  "file_hit@1": 0.79,
+  "page_hit@3": 0.6767,
+  "file_hit@3": 0.83,
+  "page_hit@5": 0.7033,
+  "file_hit@5": 0.84,
+  "page_hit@10": 0.75,
+  "file_hit@10": 0.8533
+ },
+ "scored": 300,
+ "embed_sec": 249.9
+}

@@ -1,0 +1,20 @@
+{
+ "alias": "jina-v5-small-retrieval",
+ "src": "jinaai/jina-embeddings-v5-text-small-retrieval",
+ "dim": 1024,
+ "engine": "sentence-transformers",
+ "metrics": {
+  "total": 300,
+  "mrr": 0.437,
+  "page_hit@1": 0.37,
+  "file_hit@1": 0.62,
+  "page_hit@3": 0.49,
+  "file_hit@3": 0.6867,
+  "page_hit@5": 0.5367,
+  "file_hit@5": 0.7133,
+  "page_hit@10": 0.5833,
+  "file_hit@10": 0.7367
+ },
+ "scored": 300,
+ "embed_sec": 171.7
+}

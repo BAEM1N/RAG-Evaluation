@@ -4,84 +4,93 @@
 >
 > **고정 조건**: parser=pymupdf4llm, chunking=500/100, FAISS, top-k=5 (Stage 2 winner 확정 전 측정 — 이후 stage들과 다른 베이스라인)
 >
-> **측정**: MRR / Hit@1 / Hit@5 / File@5
+> **측정**: MRR / Hit@1 / Hit@5 / File@5 (page-match)
 >
-> **공정성 보강**: 500자 truncation 제거, harrier 계열에는 `--pooling last`, context window 8192 강제
+> **방법론 통일 (raw)**: 전 모델 동일 청크·동일 300 gt·cosine·**raw 입력(프롬프트/instruction/query·document 무구분)**. 각 모델은 자기 **올바른 구성**(네이티브 pooling, 올바른 라이브러리 버전, 정확한 dtype)으로 측정 — 데이터·metric은 100% 동일, 구현 디테일만 모델별 최적.
 
-> ⚠️ **고정 조건 변경 이력**: 본 Stage 3 측정은 Stage 1·2 winner 확정 전에 진행돼 parser=pymupdf4llm + chunk 500/100 베이스라인 사용. 이후 stage들은 pymupdf + LC Recursive 300/50 로 갱신됨. 임베딩 모델 간 상대 순위는 변화 없을 것으로 추정 (chunker 효과는 모델 전반에 균등 작용).
+> ⚠️ **재현·교정 이력 (2026-06-04)**: 초기 측정은 멀티모델 게이트웨이(llama.cpp)에서 **pooling 미지정(기본 mean)**으로 일부 모델이 과소평가됐었음. 전 모델을 **올바른 네이티브 pooling + 올바른 버전**으로 raw 재측정해 교정. 주요 교정: `qwen3-embed-8b` 0.527→**0.650**(+0.123, last-pooling), `qwen3-embed-4b` +0.066, `bge-m3` +0.060, `labse` 0.047→**0.332**(깨진 변환→정상), `jina-v5-nano` 0.179→**0.524**. 상용 API는 query/document task 차별 없이 raw로 통일(대부분 기존값과 동일, upstage·cohere만 소폭 하락). 자체 파인튜닝 모델은 본 표에서 제외.
 
-## 31 모델 leaderboard (API 임베딩 4종 추가 — OpenAI 2 / Gemini 2)
-
-> **API 임베딩 추가 (2026-06-02)**: 로컬 27종에 OpenAI `text-embedding-3-large/small`, Google `gemini-embedding-001`·`gemini-embedding-2`를 동일 조건으로 추가. **모든 모델 raw text·prompt-free·query/doc 무구분**(로컬과 100% 동일 방법론). Gemini에 `RETRIEVAL_QUERY/DOCUMENT` task-type을 줘도 001은 0.644로 *소폭 하락*. 흥미롭게 **최신 `gemini-embedding-2`(0.6210)가 구버전 `001`(0.6518)보다 낮음** — 한국어 도메인에선 신버전이 더 약함.
+## 40 모델 leaderboard (로컬 + 상용 API, 전부 raw)
 
 | 순위 | 모델 | dim | MRR | Hit@1 | Hit@5 | File@5 | 비고 |
 |---:|---|---:|---:|---:|---:|---:|---|
-| 🥇 | **koe5** | 1024 | 0.6871 | 60.7% | 80.7% | 91.3% | 한국어 특화 |
-| 🥈 | **gemma-embed-300m** | 768 | 0.6650 | 57.3% | 79.7% | 91.7% | 최고의 소형 모델 (운영) |
-| 🥉 | pixie-rune-v1 | 1024 | 0.6627 | 58.7% | 76.0% | 92.0% |  |
-| 4 | snowflake-arctic-ko | 1024 | 0.6612 | 58.3% | 75.0% | 91.7% | 한국어 튜닝 |
-| 5 | **gemini-embed-001** | 3072 | 0.6518 | 58.7% | 74.0% | 87.0% | **API**·Google·raw (task-type 시 0.644) |
-| 6 | snowflake-arctic-l-v2 | 1024 | 0.6495 | 58.3% | 73.0% | 89.0% |  |
-| 7 | jina-v4-retrieval | 4096 | 0.6449 | 54.7% | 78.7% | 91.7% |  |
-| 8 | nomic-embed-v2-moe | 768 | 0.6435 | 56.7% | 75.3% | 90.0% | MoE |
-| 9 | kure-v1 | 1024 | 0.6267 | 54.7% | 74.3% | 91.0% | 한국어 |
-| 10 | **gemini-embed-2** | 3072 | 0.6210 | 54.7% | 71.0% | 87.0% | **API**·Google·raw (최신이나 001보다 낮음) |
-| 11 | harrier-0.6b | 1024 | 0.6131 | 53.3% | 70.3% | 88.7% | pooling=last |
-| 12 | **openai-embed-3-large** | 3072 | 0.6016 | 52.3% | 71.7% | 84.0% | **API**·OpenAI·raw |
-| 13 | granite-278m | 768 | 0.5969 | 50.3% | 72.0% | 87.3% | IBM |
-| 14 | me5-large-instruct | 1024 | 0.5882 | 50.7% | 70.7% | 90.7% | Multilingual-E5 |
-| 15 | qwen3-embed-4b | 4096 | 0.5850 | 48.0% | 73.0% | 89.7% |  |
-| 16 | bge-m3 | 1024 | 0.5630 | 48.7% | 66.7% | 89.7% |  |
-| 17 | qwen3-embed-0.6b | 1024 | 0.5564 | 46.3% | 67.0% | 87.7% |  |
-| 18 | **openai-embed-3-small** | 1536 | 0.5417 | 45.3% | 66.0% | 77.7% | **API**·OpenAI·raw |
-| 19 | jina-v4-code | 4096 | 0.5334 | 42.3% | 67.7% | 88.0% | 코드 특화 |
-| 20 | harrier-270m | 640 | 0.5291 | 43.7% | 65.3% | 88.3% | pooling=last |
-| 21 | qwen3-embed-8b | 4096 | 0.5271 | 44.3% | 64.7% | 86.3% |  |
-| 22 | granite-107m | 768 | 0.4786 | 38.0% | 60.3% | 83.0% |  |
-| 23 | llama-embed-nemotron-8b | 4096 | 0.4617 | 36.3% | 59.0% | 88.0% | nemotron-8b와 동일 |
-| 24 | nemotron-embed-8b | 4096 | 0.4617 | 36.3% | 59.0% | 88.0% |  |
-| 25 | jina-v5-small-retrieval | 1024 | 0.3898 | 31.7% | 48.3% | 74.3% |  |
-| 26 | jina-code-1.5b | 1024 | 0.3248 | 23.0% | 46.3% | 82.0% | 코드 특화 |
-| 27 | e5-mistral-7b | 4096 | 0.2843 | 22.7% | 36.0% | 69.3% | 영어 편향 |
-| 28 | jina-v5-nano-matching | 512 | 0.1791 | 12.7% | 26.3% | 62.0% | matching 튜닝 |
-| 29 | mxbai-embed-large | 1024 | 0.1157 | 8.7% | 15.7% | 38.7% | 영어 전용 |
-| 30 | labse | 768 | 0.0472 | 2.7% | 8.0% | 27.3% | 구형 |
-| 31 | harrier-27b | 5376 | 0.0170 | 1.0% | 2.3% | 15.7% | 한국어에 부적합 |
+| 🥇 | **voyage-3-large** | 1024 | 0.6873 | 62.3% | 76.3% | 87.3% | **API**·Voyage |
+| 🥈 | **kure-v1** | 1024 | 0.6687 | 61.3% | 73.7% | 85.3% | 한국어 특화(BGE-M3 기반), 오픈 1위 |
+| 🥉 | pixie-rune-v1 | 1024 | 0.6581 | 59.7% | 74.3% | 85.0% | 한국어 |
+| 4 | **gemini-embed-001** | 3072 | 0.6518 | 58.7% | 74.0% | 87.0% | **API**·Google |
+| 5 | snowflake-arctic-ko | 1024 | 0.6516 | 59.0% | 73.7% | 85.0% | 한국어 튜닝 |
+| 6 | **cohere-embed-v4** | 1536 | 0.6516 | 58.0% | 75.3% | 86.0% | **API**·Cohere |
+| 7 | qwen3-embed-4b | 4096 | 0.6512 | 58.3% | 74.0% | 86.3% | pooling=last |
+| 8 | qwen3-embed-8b | 4096 | 0.6502 | 57.7% | 75.0% | 85.7% | pooling=last (교정 +0.123) |
+| 9 | **voyage-multilingual-2** | 1024 | 0.6436 | 58.3% | 73.0% | 86.0% | **API**·Voyage |
+| 10 | koe5 | 1024 | 0.6422 | 57.3% | 73.7% | 84.3% | 한국어(E5 기반) |
+| 11 | jina-v4-retrieval | 4096 | 0.6359 | 56.3% | 73.0% | 86.3% | VL(Qwen2.5-VL) |
+| 12 | **gemma-embed-300m** | 768 | 0.6350 | 56.0% | 71.7% | 84.0% | 최고의 소형 모델(운영) |
+| 13 | **upstage-solar-large** | 4096 | 0.6325 | 55.7% | 73.3% | 84.7% | **API**·Upstage |
+| 14 | bge-m3 | 1024 | 0.6227 | 54.7% | 73.3% | 85.0% | pooling=cls |
+| 15 | **gemini-embed-2** | 3072 | 0.6210 | 54.7% | 71.0% | 87.0% | **API**·Google (001보다 낮음) |
+| 16 | snowflake-arctic-l-v2 | 1024 | 0.6204 | 55.0% | 70.3% | 84.0% |  |
+| 17 | qwen3-embed-0.6b | 1024 | 0.6163 | 53.3% | 73.7% | 83.7% |  |
+| 18 | me5-large | 1024 | 0.6120 | 53.3% | 71.7% | 83.7% | Multilingual-E5 |
+| 19 | nomic-embed-v2-moe | 768 | 0.6027 | 53.7% | 70.7% | 82.3% | MoE |
+| 20 | **openai-embed-3-large** | 3072 | 0.6008 | 52.3% | 71.7% | 84.0% | **API**·OpenAI |
+| 21 | jina-v3 | 1024 | 0.5824 | 50.3% | 69.7% | 84.0% |  |
+| 22 | harrier-0.6b | 1024 | 0.5810 | 50.7% | 66.3% | 81.0% | pooling=last |
+| 23 | bge-mult-gemma2 | 3584 | 0.5684 | 49.7% | 66.3% | 81.7% |  |
+| 24 | granite-278m | 768 | 0.5657 | 48.7% | 66.0% | 79.3% | IBM |
+| 25 | me5-large-instruct | 1024 | 0.5576 | 48.3% | 67.0% | 83.3% |  |
+| 26 | jina-v4-code | 4096 | 0.5438 | 46.0% | 65.0% | 82.0% | 코드 특화 |
+| 27 | **openai-embed-3-small** | 1536 | 0.5417 | 45.3% | 66.0% | 77.7% | **API**·OpenAI |
+| 28 | granite-107m | 768 | 0.5330 | 44.7% | 66.0% | 79.3% |  |
+| 29 | jina-v5-nano-matching | 512 | 0.5238 | 43.3% | 62.7% | 81.0% | matching 튜닝 |
+| 30 | harrier-270m | 640 | 0.5052 | 42.3% | 61.3% | 81.3% | pooling=last |
+| 31 | ko-sroberta | 768 | 0.4935 | 41.0% | 61.3% | 82.7% |  |
+| 32 | kosimcse-roberta | 768 | 0.4483 | 35.3% | 56.0% | 77.7% |  |
+| 33 | llama-embed-nemotron-8b | 4096 | 0.4404 | 35.3% | 56.0% | 80.3% | nemotron-8b와 동일 |
+| 34 | nemotron-embed-8b | 4096 | 0.4404 | 35.3% | 56.0% | 80.3% | bidirectional |
+| 35 | jina-v5-small-retrieval | 1024 | 0.4370 | 37.0% | 53.7% | 71.3% |  |
+| 36 | jina-code-1.5b | 1024 | 0.3621 | 26.7% | 49.0% | 71.3% | 코드 특화 |
+| 37 | labse | 768 | 0.3320 | 25.0% | 45.7% | 68.7% | BERT 다국어 |
+| 38 | e5-mistral-7b | 4096 | 0.2016 | 14.3% | 28.7% | 63.3% | instruction 모델(raw 부적합) |
+| 39 | mxbai-embed-large | 1024 | 0.1533 | 12.0% | 20.7% | 46.7% | prompt 의존(영어) |
+| 40 | harrier-27b | 5376 | 0.0170 | 1.0% | 2.3% | 15.7% | 변환 한계로 제외(구 측정값) |
 
 ## 핵심 관찰
 
-1. **한국어에서는 작은 모델이 큰 영어 모델을 이긴다**: `koe5`(1024d) > `qwen3-embed-8b`(4096d), MRR 차이 **+0.16**.
-2. **대형 상용 API 임베딩도 한국어 로컬에 밀린다**: `gemini-embedding-001`(3072d, 0.6518)·`openai text-embedding-3-large`(3072d, 0.6016)가 모두 `koe5`(1024d, 0.6871)·`gemma-embed-300m`(768d, 0.6650)보다 낮음. 업계 표준 OpenAI 3-large도 300M 로컬 모델 대비 **-0.063**, koe5 대비 **-0.086**. 차원·브랜드보다 **한국어 정렬**이 지배적. Gemini가 OpenAI보다 나은 건 다국어 정렬 차이로 추정.
-3. **한국어 특화 임베딩이 강세**: koe5, snowflake-arctic-ko, kure-v1, pixie-rune-v1 모두 Top 9.
-4. **harrier-27b 붕괴**: 5376 차원 중 약 97%가 dead dim (variance < 0.0001). 한국어 query–document 분리 자체가 실패.
-5. **중복 모델 발견**: `nemotron-embed-8b`와 `llama-embed-nemotron-8b`는 동일 아키텍처/가중치 (MRR 동일 0.4617).
-6. **영어 전용 모델은 하위권**: mxbai, labse, e5-mistral 모두 한국어 RAG에서 의미 없는 수준.
+1. **상위권은 오픈/API 혼전**: 1위 `voyage-3-large`(0.687, API)와 2위 `kure-v1`(0.669, 오픈)을 필두로 pixie·gemini-001·snowflake-ko·cohere·qwen3-4b/8b가 **0.65대에 군집**. 차원·오픈/클로즈보다 한국어 정렬이 지배적.
+2. **pooling 교정의 충격**: 초기 게이트웨이가 pooling을 미지정(mean)해 `qwen3-embed-8b`가 0.527로 바닥권이었으나, 올바른 last-pooling raw 재측정 시 **0.650(+0.123)**으로 상위권 진입. `qwen3-4b`·`bge-m3`도 +0.06. **측정 설정이 모델 순위를 좌우할 수 있음**을 보여주는 사례.
+3. **한국어 특화 강세**: kure-v1·pixie-rune-v1·snowflake-arctic-ko·koe5·gemma-300m 모두 상위권(0.63~0.67).
+4. **상용 API ≈ 오픈**: voyage-3-large는 최상위지만, gemini-001·cohere-v4·upstage·openai-3-large는 한국어 오픈 모델과 동급이거나 낮음. 차원·브랜드보다 한국어 정렬이 우세. 최신 `gemini-embedding-2`(0.621)가 구버전 `001`(0.652)보다 낮은 현상 지속.
+5. **raw 기준의 한계 = 모델 특성**: instruction/prompt 의존 모델(`e5-mistral-7b` 0.202, `mxbai-embed-large` 0.153)은 raw에서 약함. 이는 측정 오류가 아니라 "프롬프트 없이는 약한" 모델 특성.
+6. **중복 모델**: `nemotron-embed-8b` = `llama-embed-nemotron-8b` (동일 가중치, MRR 0.4404).
+7. **harrier-27b 붕괴**: 약 97% dead dim, 한국어 query–document 분리 실패(구 측정 0.017, 본 재측정에서 제외).
 
-## 공정성 보강 작업
+## 방법론 통일 작업 (2026-06-04)
 
 | 항목 | 영향 |
 |---|---|
-| 500자 truncation 제거 | 대형 모델의 long-context 손해 완화 |
-| harrier-0.6b `--pooling last` | MRR +0.094 vs mean pooling |
-| harrier-270m mean pooling | last보다 marginally 우세 (0.5479 → 0.5291) |
-| harrier-27b 양쪽 pooling 측정 | last 약간 우세 (0.0033 → 0.0170), 그래도 사용 불가 |
-| qwen3-embed-8b ctx=8192 명시 | MRR 변화 없음, 0.5271 확정 |
+| 전 모델 raw 통일 (프롬프트/query·doc 무구분) | 오픈·API 동일 footing |
+| 게이트웨이 pooling 미지정 → 네이티브 pooling 교정 | qwen3-8b +0.123, qwen3-4b +0.066, bge-m3 +0.060 |
+| 512-context 모델 max_seq_length 절단 | granite/me5/mxbai 등 정상화 |
+| 모델별 올바른 라이브러리 버전 | gemma(양방향) / jina-v4(task adapter) 정확 로드 |
+| 상용 API query/doc task 제거(raw) | upstage -0.045, cohere -0.017, 나머지는 동일 |
 
 ## 결론
 
-- **메인 권장**: `koe5` (한국어 RAG 1순위)
-- **소형 인프라 / 본 벤치 운영**: `gemma-embed-300m` (768d, MRR 0.6650, 빠른 latency) — Stage 4 이후 모든 stage에서 사용
-- **다국어 호환 필요**: `snowflake-arctic-l-v2` 또는 `jina-v4-retrieval`
-- **상용 API 임베딩(OpenAI/Gemini)은 한국어 도메인에서 정확도 이점이 없음**: 한국어 로컬 모델 대비 낮음(Gemini-001 0.6518, OpenAI 3-large 0.6016 < gemma-300m 0.6650). 정확도 열위는 본 벤치로 확인되며, 추가로 API는 호출비·외부 의존이 따른다(비용 자체는 본 벤치 측정 대상 아님).
+- **최고 정확도(비용 무관)**: `voyage-3-large` (API, 0.687)
+- **오픈 1순위 / 메인 권장**: `kure-v1` (0.669) 또는 `pixie-rune-v1`(0.658)·`snowflake-arctic-ko`(0.652)
+- **소형 인프라 / 본 벤치 운영**: `gemma-embed-300m` (768d, 0.635, 빠른 latency) — Stage 4 이후 모든 stage에서 사용
+- **대형 오픈 경쟁력 확인**: `qwen3-embed-8b/4b`(0.65)는 올바른 pooling 시 상용 API와 동급 — 초기 과소평가는 측정 설정 문제였음
+- **상용 API**: voyage-3-large는 최상위, 그 외 gemini/cohere/upstage/openai는 한국어 오픈 모델과 동급 — 비용·외부 의존을 감수할 만한 압도적 우위는 없음
 
 ## 레퍼런스
 
-- KoE5 — [HF](https://huggingface.co/nlpai-lab/KoE5), [GitHub](https://github.com/nlpai-lab/KoE5) (Jang, Son, Lee 2024)
-- EmbeddingGemma 300m — [HF](https://huggingface.co/google/embeddinggemma-300m), [Google AI docs](https://ai.google.dev/gemma/docs/embeddinggemma)
+- KoE5 — [HF](https://huggingface.co/nlpai-lab/KoE5) (Jang, Son, Lee 2024)
+- KURE-v1 — [HF](https://huggingface.co/nlpai-lab/KURE-v1)
+- EmbeddingGemma 300m — [HF](https://huggingface.co/google/embeddinggemma-300m)
 - Snowflake Arctic Embed L v2 — [HF](https://huggingface.co/Snowflake/snowflake-arctic-embed-l-v2.0)
 - BGE-M3 — Chen et al. 2024 [arXiv:2402.03216](https://arxiv.org/abs/2402.03216)
 - Jina embeddings v4 — [HF](https://huggingface.co/jinaai/jina-embeddings-v4)
-- Nomic Embed Text v2 MoE — [HF](https://huggingface.co/nomic-ai/nomic-embed-text-v2-moe)
-- OpenAI text-embedding-3 — [docs](https://platform.openai.com/docs/guides/embeddings)
-- Gemini embedding (001 / 2) — [docs](https://ai.google.dev/gemini-api/docs/embeddings)
-- 평가: 로컬 27 모델 `scripts/bench_phase4_parallel.py`, API 4 모델은 OpenAI/Gemini SDK로 동일 raw 조건 평가
+- Qwen3 Embedding — [HF](https://huggingface.co/Qwen/Qwen3-Embedding-8B)
+- Voyage / Cohere / Upstage / OpenAI / Gemini embeddings — 각 공식 API
+- 평가: 로컬 `scripts/bench_phase4_parallel.py`, raw 재측정 `scripts/bench_embedding_api_raw.py` (API) + sentence-transformers(로컬), 결과 `results/phase4_embedding_final/`

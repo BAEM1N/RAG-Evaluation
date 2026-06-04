@@ -1,0 +1,20 @@
+{
+ "alias": "gemma-embed-300m",
+ "src": "google/embeddinggemma-300m",
+ "dim": 768,
+ "engine": "sentence-transformers",
+ "metrics": {
+  "total": 300,
+  "mrr": 0.635,
+  "page_hit@1": 0.56,
+  "file_hit@1": 0.78,
+  "page_hit@3": 0.6933,
+  "file_hit@3": 0.84,
+  "page_hit@5": 0.7167,
+  "file_hit@5": 0.84,
+  "page_hit@10": 0.7567,
+  "file_hit@10": 0.85
+ },
+ "scored": 300,
+ "embed_sec": 158.3
+}

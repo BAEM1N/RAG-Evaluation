@@ -1,0 +1,20 @@
+{
+ "alias": "jina-v5-nano-matching",
+ "src": "jinaai/jina-embeddings-v5-text-nano-text-matching",
+ "dim": 768,
+ "engine": "sentence-transformers",
+ "metrics": {
+  "total": 300,
+  "mrr": 0.5238,
+  "page_hit@1": 0.4333,
+  "file_hit@1": 0.7467,
+  "page_hit@3": 0.59,
+  "file_hit@3": 0.8033,
+  "page_hit@5": 0.6267,
+  "file_hit@5": 0.81,
+  "page_hit@10": 0.6833,
+  "file_hit@10": 0.8333
+ },
+ "scored": 300,
+ "embed_sec": 52.6
+}

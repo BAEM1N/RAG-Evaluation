@@ -1,0 +1,136 @@
+{
+ "model": "openai-embed-3-small",
+ "dim": 1536,
+ "vram_gb": 0.0,
+ "total_chunks": 3166,
+ "embed_time_sec": 10.51,
+ "embed_speed": 301.3,
+ "metrics": {
+  "total": 300,
+  "mrr": 0.5417,
+  "page_hit@1": 0.4533,
+  "file_hit@1": 0.6933,
+  "page_hit@3": 0.62,
+  "file_hit@3": 0.7767,
+  "page_hit@5": 0.66,
+  "file_hit@5": 0.7767,
+  "page_hit@10": 0.7067,
+  "file_hit@10": 0.81,
+  "embed_speed_chunks_per_sec": 301.3,
+  "dim": 1536,
+  "vram_gb": 0.0
+ },
+ "by_domain": {
+  "finance": {
+   "total": 60,
+   "mrr": 0.4317,
+   "page_hit@1": 0.3333,
+   "file_hit@1": 0.65,
+   "page_hit@3": 0.5,
+   "file_hit@3": 0.7667,
+   "page_hit@5": 0.5667,
+   "file_hit@5": 0.7667,
+   "page_hit@10": 0.6,
+   "file_hit@10": 0.7667
+  },
+  "public": {
+   "total": 60,
+   "mrr": 0.5096,
+   "page_hit@1": 0.4167,
+   "file_hit@1": 0.7167,
+   "page_hit@3": 0.5833,
+   "file_hit@3": 0.8333,
+   "page_hit@5": 0.65,
+   "file_hit@5": 0.8333,
+   "page_hit@10": 0.7167,
+   "file_hit@10": 0.8833
+  },
+  "medical": {
+   "total": 60,
+   "mrr": 0.7054,
+   "page_hit@1": 0.6,
+   "file_hit@1": 0.8167,
+   "page_hit@3": 0.8,
+   "file_hit@3": 0.9,
+   "page_hit@5": 0.8333,
+   "file_hit@5": 0.9,
+   "page_hit@10": 0.9167,
+   "file_hit@10": 0.95
+  },
+  "law": {
+   "total": 60,
+   "mrr": 0.3903,
+   "page_hit@1": 0.3333,
+   "file_hit@1": 0.5333,
+   "page_hit@3": 0.45,
+   "file_hit@3": 0.55,
+   "page_hit@5": 0.45,
+   "file_hit@5": 0.55,
+   "page_hit@10": 0.4833,
+   "file_hit@10": 0.5833
+  },
+  "commerce": {
+   "total": 60,
+   "mrr": 0.6714,
+   "page_hit@1": 0.5833,
+   "file_hit@1": 0.75,
+   "page_hit@3": 0.7667,
+   "file_hit@3": 0.8333,
+   "page_hit@5": 0.8,
+   "file_hit@5": 0.8333,
+   "page_hit@10": 0.8167,
+   "file_hit@10": 0.8667
+  }
+ },
+ "by_context_type": {
+  "paragraph": {
+   "total": 148,
+   "mrr": 0.6004,
+   "page_hit@1": 0.5135,
+   "file_hit@1": 0.7365,
+   "page_hit@3": 0.6824,
+   "file_hit@3": 0.8108,
+   "page_hit@5": 0.7095,
+   "file_hit@5": 0.8108,
+   "page_hit@10": 0.7568,
+   "file_hit@10": 0.8311
+  },
+  "table": {
+   "total": 50,
+   "mrr": 0.4763,
+   "page_hit@1": 0.36,
+   "file_hit@1": 0.66,
+   "page_hit@3": 0.56,
+   "file_hit@3": 0.76,
+   "page_hit@5": 0.64,
+   "file_hit@5": 0.76,
+   "page_hit@10": 0.68,
+   "file_hit@10": 0.78
+  },
+  "image": {
+   "total": 57,
+   "mrr": 0.282,
+   "page_hit@1": 0.2105,
+   "file_hit@1": 0.4737,
+   "page_hit@3": 0.3509,
+   "file_hit@3": 0.5965,
+   "page_hit@5": 0.386,
+   "file_hit@5": 0.5965,
+   "page_hit@10": 0.4211,
+   "file_hit@10": 0.6842
+  },
+  "text": {
+   "total": 45,
+   "mrr": 0.75,
+   "page_hit@1": 0.6667,
+   "file_hit@1": 0.8667,
+   "page_hit@3": 0.8222,
+   "file_hit@3": 0.9111,
+   "page_hit@5": 0.8667,
+   "file_hit@5": 0.9111,
+   "page_hit@10": 0.9333,
+   "file_hit@10": 0.9333
+  }
+ },
+ "engine": "api-raw"
+}
