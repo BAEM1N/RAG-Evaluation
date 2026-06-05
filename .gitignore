@@ -63,3 +63,4 @@ data/prepared_chunks.json
 data/ground_truth*.json
 # 단, 코드성 메타(pdf_mapping 등)는 추적
 !data/pdf_mapping.json
+_local/
