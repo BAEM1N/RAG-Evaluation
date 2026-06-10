@@ -68,7 +68,7 @@ def embed_upstage(model, texts, dim, is_query):
 def embed_gemini(model, texts, dim, is_query):
     from google import genai
     from google.genai import types
-    c = genai.Client(api_key=os.environ.get("GEMINI_API_KEY") or os.environ["GOOGLE_API_KEY"])
+    c = genai.Client(api_key=os.environ.get("GEMINI_API_KEY") or os.environ["GOOGLE_API_KEY"], http_options=types.HttpOptions(timeout=30000))
     task = "RETRIEVAL_QUERY" if is_query else "RETRIEVAL_DOCUMENT"
     cfg = types.EmbedContentConfig(output_dimensionality=dim, task_type=task)
     def call(contents):
